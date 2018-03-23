@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="gb2312"?>
+<root>
+	<config>
+		<kcbp_svr_name value="KCBPB01"/>
+		<kcbp_svr_protocal value="0"/>
+		<kcbp_svr_ip value="192.168.205.214"/>
+		<kcbp_svr_port value="21000"/>
+		<send_queue_name value="req_otcts_test"/>
+		<recv_queue_name value="ans_otcts_test"/>
+		<user_name value="KCXP00"/>
+		<user_pwd value="888888"/>
+	</config>
+	<lbms DefParam="F_FUNCTION:,F_SUBSYS:14,F_OP_USER:8888,F_OP_ROLE:2,F_OP_SITE:127.0.0.1,F_CHANNEL:0,F_SESSION:aaaaaaaaaaaaaaaa,F_RUNTIME:,F_REMOTE_OP_ORG:,F_REMOTE_OP_USER:,F_OP_ORG:0,">
+		<lbm Id="L2620200" NeedDef="1" Param="CUST_CODE:,CUACCT_CODE:,TA_ACCT:,ISS_CODE:,INST_CODE:,INST_ID:,INT_ORG:,TA_CODES:,MKT_CODE:,INST_TYPE:,INST_CLS:,PAGE_RECNUM:,PAGE_RECCNT:,USER_TYPE:,"/>
+		<lbm Id="L7200030" NeedDef="0" Param="rqsSeqNo:1001,txnDate:20180125,innerCustNo:1234,innerAccount:1234,payAccount:1234,pdCode:2001,amount:100,"/>
+		<lbm Id="L7200031" NeedDef="0" Param="rqsSeqNo:1001,txnDate:20180125,innerCustNo:1234,innerAccount:1234,payAccount:1234,pdCode:2001,amount:100,"/>
+		<lbm Id="L1234567" NeedDef="1" Param=""/>
+		<lbm Id="L7200012" NeedDef="1" Param="_ENDIAN:0,LAST_QUERY_SEQ:1000,ROW_LIMIT:5,SRC_STM_CODE:KD_OTCV2,KCBP_NODE:311,"/>
+		<lbm Id="L7200013" NeedDef="1" Param=""/>
+		<lbm Id="L7200014" NeedDef="1" Param=""/>
+		<lbm Id="L7200016" NeedDef="1" Param=""/>
+		<lbm Id="L7200022" NeedDef="1" Param=""/>
+		<lbm Id="L3604909" NeedDef="1" Param=""/>
+		<lbm Id="L1000013" NeedDef="1" Param="BIZ_TYPE:OtcGateWay,"/>
+		<lbm Id="L1000016" NeedDef="1" Param="REGKEY_ID:QSZWMC,"/>
+		<lbm Id="L0000601" NeedDef="1" Param="PRODUCT_NAME:,"/>
+		<lbm Id="L0000507" NeedDef="1" Param="USER_CODE:8888,USER_ROLE:2,AUTH_DATA:3kht448AdJu1AKn+Hp5x6g==,SECRECY_CODE:0000,"/>
+		<lbm Id="L2700531" NeedDef="1" Param="SCDM:0,"/>
+		<lbm Id="L2700240" NeedDef="1" Param="CPBM:LCCP93,JYRQ:20170822,"/>
+		<lbm Id="L2700130" NeedDef="1" Param="JYRQ:20170817,FBZT:0,FBLSH:123,HYDM:OT3,XXLX:0,"/>
+		<lbm Id="L2700515" NeedDef="1" Param="SCDM:,"/>
+		<lbm Id="L2700154" NeedDef="1" Param=""/>
+		<lbm Id="L2620200" NeedDef="1" Param="CUST_CODE:,CUACCT_CODE:,TA_ACCT:,ISS_CODE:,INST_CODE:,INST_ID:,INT_ORG:,TA_CODES:,MKT_CODE:,INST_TYPE:,INST_CLS:,PAGE_RECNUM:,PAGE_RECCNT:,USER_TYPE:,"/>
+		<lbm Id="L2610035" NeedDef="1" Param=""/>
+		<lbm Id="L2610095" NeedDef="1" Param=""/>
+		<lbm Id="L2623522" NeedDef="1" Param=""/>
+		<lbm Id="L2623518" NeedDef="1" Param="FUND_SYS_FLAG:,APP_DATE:20170928,APP_SNO:100001,CUST_CODE:8888,ASS_MKT_CODE:2,STK_CODE:600570,ORD_STAT:0,CUACCT_CODE:100001,SECU_ACCT:100001,EXT_CNTR_NO:1234,TRD_ID:110,"/>
+		<lbm Id="L2873119" NeedDef="1" Param=""/>
+		<lbm Id="L2623313" NeedDef="1" Param=""/>
+		<lbm Id="L2623607" NeedDef="1" Param=""/>
+		<lbm Id="L2623608" NeedDef="1" Param=""/>
+		<lbm Id="L2623522" NeedDef="1" Param=""/>
+		<lbm Id="L2623518" NeedDef="1" Param=""/>
+		<lbm Id="L2623313" NeedDef="1" Param=""/>
+		<lbm Id="L2623607" NeedDef="1" Param=""/>
+		<lbm Id="L2623608" NeedDef="1" Param=""/>
+		<lbm Id="L2620340" NeedDef="1" Param=""/>
+	</lbms>
+</root>

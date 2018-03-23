@@ -1,0 +1,21 @@
+﻿生成启动时间为 2018/3/8 16:45:32。
+     1>项目“F:\__Project\Project_Cpp\VS2010_Projects\google_breakpad_test_sln\breakpad_test\breakpad_test\breakpad_test.vcxproj”在节点 2 上(build 个目标)。
+     1>InitializeBuildStatus:
+         正在创建“Debug\breakpad_test.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       ClCompile:
+         所有输出均为最新。
+         所有输出均为最新。
+       ManifestResourceCompile:
+         所有输出均为最新。
+       Link:
+         所有输出均为最新。
+       Manifest:
+         所有输出均为最新。
+       FinalizeBuildStatus:
+         正在删除文件“Debug\breakpad_test.unsuccessfulbuild”。
+         正在对“Debug\breakpad_test.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“F:\__Project\Project_Cpp\VS2010_Projects\google_breakpad_test_sln\breakpad_test\breakpad_test\breakpad_test.vcxproj”(build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:00.07
