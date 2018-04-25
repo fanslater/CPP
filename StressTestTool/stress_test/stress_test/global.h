@@ -30,18 +30,26 @@ struct LogData
     tstring strText;
 };
 typedef CPCQueue<LogData> LogDataCpcq;
+typedef std::map<tstring,tstring> kvMap;
+typedef std::pair<tstring,tstring> kvPair;
 
 
 
 /************************************************************************/
 namespace global
-{
+{    
     void ShowWindow(const tstring& data);
     void ShowWindow(const char* format, ...);
     void InitLog();
     void UninitLog();
     void WriteLog(emLogLevel iLvl, const tstring& data);
     void WriteLog(emLogLevel iLvl, const char* format, ...);
+}
+
+namespace test
+{
+    void test_kcbp();
+    void test_log();
 }
 
 /************************************************************************/

@@ -1,6 +1,7 @@
 #pragma once
 #include "tstring.h"
 #include "KCBPCli.h"
+#include "global.h"
 
 struct KcbpConfig
 {
@@ -44,8 +45,8 @@ public:
     int UninitAll();
     void SetConfig(const KcbpConfig& bp);
     int Connect(tstring& errmsg);
-    int Disconnect();
-    int CallLbm();    
+    int Disconnect(tstring& errmsg);
+    int CallLbm_UseForTest(const tstring& strLbmNo, const kvMap& mpInParam, tstring& errmsg);    
 private:
     KcbpConfig m_stConfig;
     KCBPCLIHANDLE m_kcbp_handle;

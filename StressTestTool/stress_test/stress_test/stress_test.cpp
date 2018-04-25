@@ -37,8 +37,8 @@ int _tmain(int argc, _TCHAR* argv[])
     }
 
     global::InitLog();
-    global::WriteLog(ll_debug,"%s",strCfgPath.c_str());
-    global::ShowWindow("%s",strCfgPath.c_str());
+    
+    
 
     
     CommandLine();
