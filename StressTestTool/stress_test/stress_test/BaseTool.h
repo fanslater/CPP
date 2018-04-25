@@ -47,4 +47,6 @@ public:
     //操作系统相关
     static tstring GetLocalIpAddress();
     static tstring GetProcedurePath();
+    static bool IsPathExists(const tstring& path);
+    static int CreatePath(const tstring& path);
 };

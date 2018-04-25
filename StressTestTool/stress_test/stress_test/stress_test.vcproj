@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="F:\__Project\__third_sdk_library__\jsoncpp\include;&quot;F:\__Project\__third_sdk_library__\boost_1_64_0\vs2008\include\boost-1_64&quot;"
+				AdditionalIncludeDirectories="F:\__Project\__third_sdk_library__\jsoncpp\include;&quot;F:\__Project\__third_sdk_library__\boost_1_64_0\vs2008\include\boost-1_64&quot;;./depends/kcbp;&quot;F:\__Project\__third_sdk_library__\log4cplus-1.2.1-rc2\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,9 +61,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="json_vc71_libmdd.lib"
+				AdditionalDependencies="json_vc71_libmdd.lib KCBPCli.lib log4cplusD.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="F:\__Project\__third_sdk_library__\jsoncpp\lib;F:\__Project\__third_sdk_library__\boost_1_64_0\vs2008\lib"
+				AdditionalLibraryDirectories="F:\__Project\__third_sdk_library__\jsoncpp\lib;F:\__Project\__third_sdk_library__\boost_1_64_0\vs2008\lib;./depends/kcbp;&quot;F:\__Project\__third_sdk_library__\log4cplus-1.2.1-rc2\lib&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -233,6 +233,14 @@
 		<Filter
 			Name="log"
 			>
+			<File
+				RelativePath=".\LogShell.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\LogShell.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="cfg"
@@ -259,6 +267,14 @@
 			</File>
 			<File
 				RelativePath=".\CPCQueue.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\global.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\global.h"
 				>
 			</File>
 			<File

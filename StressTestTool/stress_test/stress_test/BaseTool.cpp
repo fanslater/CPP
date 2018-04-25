@@ -357,3 +357,18 @@ tstring CBaseTool::GetProcedurePath()
     strPath = all_replace(strPath,tstring("\\"),tstring("/"));  //这里需要杜绝转移符的歧义
     return strPath;
 }
+
+bool CBaseTool::IsPathExists(const tstring& path)
+{
+    return boost::filesystem::exists(path);
+}
+
+int CBaseTool::CreatePath(const tstring& path)
+{
+    bool bRet = boost::filesystem::create_directories(path);
+    if (false == bRet)
+    {
+        return -1;
+    }
+    return 0;
+}
