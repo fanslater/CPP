@@ -7,7 +7,7 @@ log4cplus.appender.STDOUT=log4cplus::ConsoleAppender
 log4cplus.appender.STDOUT.layout=log4cplus::PatternLayout
 log4cplus.appender.STDOUT.layout.ConversionPattern=%D{%Y-%m-%d %H:%M:%S} %-5p %c{2} - %m%n
 log4cplus.appender.STDOUT.filters.1=log4cplus::spi::LogLevelRangeFilter
-log4cplus.appender.STDOUT.filters.1.LogLevelMin=DEBUG
+log4cplus.appender.STDOUT.filters.1.LogLevelMin=TRACE
 log4cplus.appender.STDOUT.filters.1.LogLevelMax=FATAL
 #DailyRollingFileAppender按时间类型更新文件，RollingFileAppender 按大小更新文件
 log4cplus.appender.ALL_MSGS=log4cplus::DailyRollingFileAppender
