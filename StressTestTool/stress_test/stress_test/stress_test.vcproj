@@ -245,6 +245,22 @@
 		<Filter
 			Name="cfg"
 			>
+			<File
+				RelativePath=".\SysCfgCtrl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SysCfgCtrl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\XmlIniReader.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\XmlIniReader.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="com"

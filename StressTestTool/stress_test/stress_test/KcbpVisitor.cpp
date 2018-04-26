@@ -48,7 +48,7 @@ int CKcbpVisitor::Connect(tstring &errmsg)
     //…Ë÷√≤Œ ˝
     tagKCBPConnectOption stKCBPConnection = {0};
     strcpy_s(stKCBPConnection.szServerName, m_stConfig.strName.c_str());
-    stKCBPConnection.nProtocal = 0;
+    stKCBPConnection.nProtocal = atoi(m_stConfig.strProtocal.c_str());
     strcpy_s(stKCBPConnection.szAddress, m_stConfig.strIp.c_str());
     stKCBPConnection.nPort = atoi(m_stConfig.strPort.c_str());
     strcpy_s(stKCBPConnection.szSendQName, m_stConfig.strReqQue.c_str());

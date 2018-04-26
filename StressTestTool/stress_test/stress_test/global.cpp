@@ -3,6 +3,7 @@
 #include "BaseTool.h"
 #include "LogShell.h"
 #include "KcbpVisitor.h"
+#include "SysCfgCtrl.h"
 
 CLogShell g_LogShell;
 
@@ -16,6 +17,7 @@ void test::test_kcbp()
     c.strReqQue = "req_otcts_test";
     c.strRespQue = "ans_otcts_test";
     c.strUser = "KCXP00";
+    c.strProtocal = "0";
     CKcbpVisitor kcbp;
     kcbp.SetConfig(c);
     tstring msg;
@@ -48,6 +50,16 @@ void test::test_log()
     global::WriteLog(ll_warning,"ll_warning");
     global::WriteLog(ll_error,"ll_error");
     global::WriteLog(ll_fatal,"ll_fatal");
+}
+
+void test::test_cfgCtrl()
+{
+    CSysCfgCtrl cls;
+    tstring msg;
+    cls.LoadCfg(path_default_cfg,msg);
+    KcbpConfig st = cls.GetKcbpCfg();
+    UseCaseMap mp = cls.GetUserCaseCfg();
+    UseCaseInfo info = cls.GetCaseInfo("410810");
 }
 
 void global::ShowWindow(const tstring& data)

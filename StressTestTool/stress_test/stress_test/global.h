@@ -33,7 +33,46 @@ typedef CPCQueue<LogData> LogDataCpcq;
 typedef std::map<tstring,tstring> kvMap;
 typedef std::pair<tstring,tstring> kvPair;
 
+struct KcbpConfig
+{
+    tstring strIp;
+    tstring strPort;
+    tstring strName;
+    tstring strReqQue;
+    tstring strRespQue;
+    tstring strUser;
+    tstring strPwd;
+    tstring strProtocal;
+    KcbpConfig()
+    {
+        clear();
+    };
+    ~KcbpConfig()
+    {
+        clear();
+    };
+    void clear()
+    {
+        strIp.clear();
+        strPort.clear();
+        strName.clear();
+        strReqQue.clear();
+        strRespQue.clear();
+        strUser.clear();
+        strPwd.clear();
+        strProtocal.clear();
+    }
+};
 
+struct UseCaseInfo
+{
+    tstring strBatFile;
+    tstring strUseCaseFile;
+    int iThreadSum;
+    int iExecuteSum;
+};
+typedef std::map<tstring,UseCaseInfo> UseCaseMap;
+typedef std::pair<tstring,UseCaseInfo> UseCasePair;
 
 /************************************************************************/
 namespace global
@@ -50,6 +89,7 @@ namespace test
 {
     void test_kcbp();
     void test_log();
+    void test_cfgCtrl();
 }
 
 /************************************************************************/

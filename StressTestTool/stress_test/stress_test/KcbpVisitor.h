@@ -3,35 +3,6 @@
 #include "KCBPCli.h"
 #include "global.h"
 
-struct KcbpConfig
-{
-    tstring strIp;
-    tstring strPort;
-    tstring strName;
-    tstring strReqQue;
-    tstring strRespQue;
-    tstring strUser;
-    tstring strPwd;
-    KcbpConfig()
-    {
-        clear();
-    };
-    ~KcbpConfig()
-    {
-        clear();
-    };
-    void clear()
-    {
-        strIp.clear();
-        strPort.clear();
-        strName.clear();
-        strReqQue.clear();
-        strRespQue.clear();
-        strUser.clear();
-        strPwd.clear();
-    }
-};
-
 class CKcbpVisitor
 {
 public:
