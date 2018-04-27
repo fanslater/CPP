@@ -282,7 +282,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\CPCQueue.hpp"
+				RelativePath=".\CPCQueue.h"
 				>
 			</File>
 			<File

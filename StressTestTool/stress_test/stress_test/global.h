@@ -1,8 +1,10 @@
 #pragma once
 
-#include "CPCQueue.hpp"
+#include "CPCQueue.h"
 #include "json/json.h"
 #include "CAutoLock.h"
+#include "tstring.h"
+#include "BaseTool.h"
 
 #define path_default_cfg        "./config.ini"
 #define path_log4plus_cfg       "./cfglog.dat"

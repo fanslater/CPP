@@ -38,7 +38,10 @@ int _tmain(int argc, _TCHAR* argv[])
 
     global::InitLog();
     
+    test::test_kcbp();
+    test::test_log();
     test::test_cfgCtrl();
+    
 
     
     CommandLine();
