@@ -75,6 +75,7 @@ struct UseCaseInfo
 };
 typedef std::map<tstring,UseCaseInfo> UseCaseMap;
 typedef std::pair<tstring,UseCaseInfo> UseCasePair;
+typedef std::map<tstring,kvMap> CaseTestData;
 
 /************************************************************************/
 namespace global

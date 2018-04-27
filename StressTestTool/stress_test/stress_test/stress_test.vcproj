@@ -246,6 +246,14 @@
 			Name="cfg"
 			>
 			<File
+				RelativePath=".\CaseCfgCtrl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\CaseCfgCtrl.h"
+				>
+			</File>
+			<File
 				RelativePath=".\SysCfgCtrl.cpp"
 				>
 			</File>

@@ -44,8 +44,8 @@ int CSysCfgCtrl::LoadCfg(const tstring& path ,tstring& errmsg)
     //测试列表
     try
     {
-        boost::property_tree::ptree teUseCase = reader.getTree("测试列表");
-        BOOST_FOREACH(boost::property_tree::ptree::value_type & vt1, teUseCase)
+        boost::property_tree::ptree treeUseCase = reader.getTree("测试列表");
+        BOOST_FOREACH(boost::property_tree::ptree::value_type & vt1, treeUseCase)
         {
             tstring strCaseName = vt1.first;
             tstring strCaseInfo = vt1.second.data();
