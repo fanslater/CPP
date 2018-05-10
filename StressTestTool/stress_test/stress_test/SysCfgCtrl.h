@@ -11,9 +11,9 @@ private:
 public:
     int LoadCfg(const tstring& path ,tstring& errmsg);
     KcbpConfig GetKcbpCfg();
-    UseCaseMap GetUserCaseCfg();
+    UseCaseMap GetCaseInfoSet();
     UseCaseInfo GetCaseInfo(const tstring& strCaseName);    
 private:
     KcbpConfig m_stKcbpCfg;
-    UseCaseMap m_mpUseCase;
+    UseCaseMap m_mpCaseInfos;
 };

@@ -15,7 +15,7 @@ CSysCfgCtrl::~CSysCfgCtrl(void)
 void CSysCfgCtrl::CleanSelf()
 {
     m_stKcbpCfg.clear();
-    m_mpUseCase.clear();
+    m_mpCaseInfos.clear();
 }
 
 int CSysCfgCtrl::LoadCfg(const tstring& path ,tstring& errmsg)
@@ -61,7 +61,7 @@ int CSysCfgCtrl::LoadCfg(const tstring& path ,tstring& errmsg)
             uci.strUseCaseFile = vcFilter[1];
             uci.iThreadSum = atoi(vcFilter[2].c_str());
             uci.iExecuteSum = atoi(vcFilter[3].c_str());
-            m_mpUseCase.insert(UseCasePair(strCaseName,uci));
+            m_mpCaseInfos.insert(UseCasePair(strCaseName,uci));
         }
     }
     catch (std::exception e)
@@ -78,16 +78,16 @@ KcbpConfig CSysCfgCtrl::GetKcbpCfg()
     return m_stKcbpCfg;
 }
 
-UseCaseMap CSysCfgCtrl::GetUserCaseCfg()
+UseCaseMap CSysCfgCtrl::GetCaseInfoSet()
 {
-    return m_mpUseCase;
+    return m_mpCaseInfos;
 }
 
 UseCaseInfo CSysCfgCtrl::GetCaseInfo(const tstring& strCaseName)
 {
     UseCaseInfo ret;
-    UseCaseMap::iterator it = m_mpUseCase.find(strCaseName);
-    if (it != m_mpUseCase.end())
+    UseCaseMap::iterator it = m_mpCaseInfos.find(strCaseName);
+    if (it != m_mpCaseInfos.end())
     {
         ret = it->second;
     }

@@ -11,6 +11,7 @@ private:
     void Clean();
 public:
     int LoadCfg(const tstring& path ,tstring& errmsg);
+    CaseDataVector GetCaseDetailSet();
 private:
-    CaseTestData m_mpCaseTestData;
+    CaseDataVector m_vcCaseDetails;
 };

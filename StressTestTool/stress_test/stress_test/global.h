@@ -5,6 +5,7 @@
 #include "CAutoLock.h"
 #include "tstring.h"
 #include "BaseTool.h"
+#include <unordered_map>
 
 #define path_default_cfg        "./config.ini"
 #define path_log4plus_cfg       "./cfglog.dat"
@@ -34,6 +35,7 @@ struct LogData
 typedef CPCQueue<LogData> LogDataCpcq;
 typedef std::map<tstring,tstring> kvMap;
 typedef std::pair<tstring,tstring> kvPair;
+typedef std::vector<tstring> stringVector;
 
 struct KcbpConfig
 {
@@ -75,7 +77,12 @@ struct UseCaseInfo
 };
 typedef std::map<tstring,UseCaseInfo> UseCaseMap;
 typedef std::pair<tstring,UseCaseInfo> UseCasePair;
-typedef std::map<tstring,kvMap> CaseTestData;
+struct CaseDetail
+{
+    tstring strLbmNo;
+    kvMap mpFields;
+};
+typedef std::vector<CaseDetail> CaseDataVector;
 
 /************************************************************************/
 namespace global

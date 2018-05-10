@@ -66,9 +66,10 @@ void CUnitTest::test_cfgCtrl()
     tstring msg;
     cls.LoadCfg(path_default_cfg, msg);
     KcbpConfig st = cls.GetKcbpCfg();
-    UseCaseMap mp = cls.GetUserCaseCfg();
-    UseCaseInfo info = cls.GetCaseInfo("case1");
+    UseCaseMap ucm = cls.GetCaseInfoSet();
+    UseCaseInfo info = cls.GetCaseInfo("case3");
     CCaseCfgCtrl Case;
     Case.LoadCfg(info.strUseCaseFile,msg);
+    CaseDataVector cdm = Case.GetCaseDetailSet();    
 }
 
