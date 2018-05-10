@@ -17,7 +17,7 @@ public:
     void SetConfig(const KcbpConfig& bp);
     int Connect(tstring& errmsg);
     int Disconnect(tstring& errmsg);
-    int CallLbm_UseForTest(const tstring& strLbmNo, const kvMap& mpInParam, tstring& errmsg);    
+    int CallLbm_Result1(const tstring& strLbmNo, const kvMap& mpInParam, kvMap& mpResult1, tstring& errmsg);    
 private:
     KcbpConfig m_stConfig;
     KCBPCLIHANDLE m_kcbp_handle;

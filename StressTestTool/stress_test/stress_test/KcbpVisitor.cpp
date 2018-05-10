@@ -88,7 +88,7 @@ int CKcbpVisitor::Disconnect(tstring &errmsg)
     return 0;
 }
 
-int CKcbpVisitor::CallLbm_UseForTest(const tstring &strLbmNo, const kvMap &mpInParam, tstring &errmsg)
+int CKcbpVisitor::CallLbm_Result1(const tstring &strLbmNo, const kvMap &mpInParam, kvMap &mpResult1, tstring &errmsg)
 {
     if (m_kcbp_handle == NULL)
     {
@@ -136,7 +136,8 @@ int CKcbpVisitor::CallLbm_UseForTest(const tstring &strLbmNo, const kvMap &mpInP
         KCBPCLI_RsGetColByName(m_kcbp_handle, "MSG_CODE", szMsgCode);
         char szMsgText[512] = {0};
         KCBPCLI_RsGetColByName(m_kcbp_handle, "MSG_TEXT", szMsgText);
-        errmsg = CBaseTool::tformat("MSG_CODE=[%s] MSG_TEXT=[%s]", szMsgCode, szMsgText);
+        mpResult1.insert(kvPair("MSG_CODE", szMsgCode));
+        mpResult1.insert(kvPair("MSG_TEXT", szMsgText));
     }
     while(0);
     if(KCBPCLI_RsClose(m_kcbp_handle) != 0)

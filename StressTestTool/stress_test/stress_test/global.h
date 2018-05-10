@@ -87,14 +87,6 @@ namespace global
     void WriteLog(emLogLevel iLvl, const tstring& data);
     void WriteLog(emLogLevel iLvl, const char* format, ...);
 }
-
-namespace test
-{
-    void test_kcbp();
-    void test_log();
-    void test_cfgCtrl();
-}
-
 /************************************************************************/
 /*
 

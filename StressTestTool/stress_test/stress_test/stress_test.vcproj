@@ -306,6 +306,18 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="test"
+			>
+			<File
+				RelativePath=".\UnitTest.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UnitTest.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"
 			>

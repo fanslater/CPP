@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include <string>
 #include "global.h"
+#include "UnitTest.h"
 
 void CommandLine()
 {    
@@ -38,9 +39,9 @@ int _tmain(int argc, _TCHAR* argv[])
 
     global::InitLog();
     
-    test::test_kcbp();
-    test::test_log();
-    test::test_cfgCtrl();
+    CUnitTest::test_kcbp();
+    CUnitTest::test_log();
+    CUnitTest::test_cfgCtrl();
     
 
     
