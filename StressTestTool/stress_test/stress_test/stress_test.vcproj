@@ -318,6 +318,18 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="stress"
+			>
+			<File
+				RelativePath=".\StressTestAdmin.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\StressTestAdmin.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"
 			>

@@ -57,8 +57,8 @@ int CSysCfgCtrl::LoadCfg(const tstring& path ,tstring& errmsg)
                 continue;
             }
             UseCaseInfo uci;            
-            uci.strBatFile = vcFilter[0];
-            uci.strUseCaseFile = vcFilter[1];
+            uci.strBatFilePath = vcFilter[0];
+            uci.strUseCaseFilePath = vcFilter[1];
             uci.iThreadSum = atoi(vcFilter[2].c_str());
             uci.iExecuteSum = atoi(vcFilter[3].c_str());
             m_mpCaseInfos.insert(UseCasePair(strCaseName,uci));

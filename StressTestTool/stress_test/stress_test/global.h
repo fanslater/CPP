@@ -14,15 +14,15 @@
 #define THREAD_RUNNING		    1
 
 #define FORMAT_LEN              8*1024
-#define WRITE_LOG_INTERVAL      1        
+#define WRITE_LOG_INTERVAL      1
 #define LOGSHELL_POP_INTERVAL   1
 
 enum emLogLevel
 {
     ll_trace = 0,
     ll_debug,
-    ll_info, 
-    ll_warning, 
+    ll_info,
+    ll_warning,
     ll_error,
     ll_fatal
 };
@@ -33,8 +33,8 @@ struct LogData
     tstring strText;
 };
 typedef CPCQueue<LogData> LogDataCpcq;
-typedef std::map<tstring,tstring> kvMap;
-typedef std::pair<tstring,tstring> kvPair;
+typedef std::map<tstring, tstring> kvMap;
+typedef std::pair<tstring, tstring> kvPair;
 typedef std::vector<tstring> stringVector;
 
 struct KcbpConfig
@@ -70,29 +70,65 @@ struct KcbpConfig
 
 struct UseCaseInfo
 {
-    tstring strBatFile;
-    tstring strUseCaseFile;
+    tstring strBatFilePath;
+    tstring strUseCaseFilePath;
     int iThreadSum;
     int iExecuteSum;
+    UseCaseInfo()
+    {
+        clear();
+    }
+    ~UseCaseInfo()
+    {
+        clear();
+    }
+    void clear()
+    {
+        strBatFilePath.clear();
+        strUseCaseFilePath.clear();
+        iThreadSum = 0;
+        iExecuteSum = 0;
+    }
 };
-typedef std::map<tstring,UseCaseInfo> UseCaseMap;
-typedef std::pair<tstring,UseCaseInfo> UseCasePair;
+typedef std::map<tstring, UseCaseInfo> UseCaseMap;
+typedef std::pair<tstring, UseCaseInfo> UseCasePair;
 struct CaseDetail
 {
     tstring strLbmNo;
     kvMap mpFields;
+    CaseDetail()
+    {
+        clear();
+    }
+    ~CaseDetail()
+    {
+        clear();
+    }
+    void clear()
+    {
+        strLbmNo.clear();
+        mpFields.clear();
+    }
 };
 typedef std::vector<CaseDetail> CaseDataVector;
 
+struct StressData
+{
+    tstring strCaseName;
+    UseCaseInfo stUseCaseInfo;
+    CaseDataVector vcUseCaseDetail;
+};
+typedef std::vector<StressData> StressDataVector;
+
 /************************************************************************/
 namespace global
-{    
-    void ShowWindow(const tstring& data);
-    void ShowWindow(const char* format, ...);
+{
+    void ShowWindow(const tstring &data);
+    void ShowWindow(const char *format, ...);
     void InitLog();
     void UninitLog();
-    void WriteLog(emLogLevel iLvl, const tstring& data);
-    void WriteLog(emLogLevel iLvl, const char* format, ...);
+    void WriteLog(emLogLevel iLvl, const tstring &data);
+    void WriteLog(emLogLevel iLvl, const char *format, ...);
 }
 /************************************************************************/
 /*

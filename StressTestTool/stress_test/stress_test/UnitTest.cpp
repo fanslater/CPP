@@ -69,7 +69,7 @@ void CUnitTest::test_cfgCtrl()
     UseCaseMap ucm = cls.GetCaseInfoSet();
     UseCaseInfo info = cls.GetCaseInfo("case3");
     CCaseCfgCtrl Case;
-    Case.LoadCfg(info.strUseCaseFile,msg);
+    Case.LoadCfg(info.strUseCaseFilePath,msg);
     CaseDataVector cdm = Case.GetCaseDetailSet();    
 }
 

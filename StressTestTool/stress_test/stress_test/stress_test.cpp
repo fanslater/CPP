@@ -5,6 +5,7 @@
 #include <string>
 #include "global.h"
 #include "UnitTest.h"
+#include "StressTestAdmin.h"
 
 void CommandLine()
 {    
@@ -31,23 +32,17 @@ int _tmain(int argc, _TCHAR* argv[])
 {
     EnableMenuItem(GetSystemMenu(GetConsoleWindow(), FALSE), SC_CLOSE, MF_GRAYED);
 
-    std::string strCfgPath(path_default_cfg);
+    std::string strMainCfgPath(path_default_cfg);
     if (argc == 2)
     {
-        strCfgPath = argv[1];
+        strMainCfgPath = argv[1];
     }
-
-    global::InitLog();
     
-    CUnitTest::test_kcbp();
-    CUnitTest::test_log();
-    CUnitTest::test_cfgCtrl();
-    
-
-    
-    CommandLine();
-
-    global::UninitLog();
+    CStressTestAdmin clsAdmin;    
+    clsAdmin.SetMainCfg(strMainCfgPath);
+    clsAdmin.InitAll();
+    CommandLine();     
+    clsAdmin.UninitAll();
     
 	return 0;
 }
