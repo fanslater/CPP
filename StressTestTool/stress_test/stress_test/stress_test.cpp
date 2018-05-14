@@ -39,8 +39,9 @@ int _tmain(int argc, _TCHAR* argv[])
     }
     
     CStressTestAdmin clsAdmin;    
-    clsAdmin.SetMainCfg(strMainCfgPath);
+    clsAdmin.SetMainCfg(strMainCfgPath);   
     clsAdmin.InitAll();
+    clsAdmin.RunStressTests();    
     CommandLine();     
     clsAdmin.UninitAll();
     

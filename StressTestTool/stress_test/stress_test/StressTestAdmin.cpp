@@ -2,7 +2,7 @@
 #include "StressTestAdmin.h"
 #include "SysCfgCtrl.h"
 #include "CaseCfgCtrl.h"
-
+#include "StressUnit.h"
 
 CStressTestAdmin::CStressTestAdmin(void)
 {
@@ -48,6 +48,7 @@ int CStressTestAdmin::InitStressData()
         global::WriteLog(ll_error, "函数[%s]加载[%s]出现错误[%s]", __FUNCTION__, m_strMainCfgPath.c_str(), strErrMsg.c_str());
         return -1;
     }
+    m_stKcbpConfig = clsSysCfgCtrl.GetKcbpCfg();
     UseCaseMap mpUseCase = clsSysCfgCtrl.GetCaseInfoSet();
     for (UseCaseMap::iterator ucmi = mpUseCase.begin() ; ucmi != mpUseCase.end() ; ucmi ++)
     {
@@ -103,7 +104,31 @@ int CStressTestAdmin::RunStressTests()
 int CStressTestAdmin::RunStressTest(const StressData& stStressData)
 {
     global::ShowWindow("即将执行压测[%s]",stStressData.strCaseName.c_str());
-    ExecuteBatFile(stStressData.stUseCaseInfo.strBatFilePath);
+    //执行bat
+    ExecuteBatFile(stStressData.stUseCaseInfo.strBatFilePath);        
+    //初始化测试单元
+    int iExecuteSum = stStressData.stUseCaseInfo.iExecuteSum;
+    int iThreadSum = stStressData.stUseCaseInfo.iThreadSum;
+    int iUseCaseDetailNum = stStressData.vcUseCaseDetail.size();
+    int iCopyNum = iExecuteSum / iUseCaseDetailNum;
+    int iModNum = iExecuteSum % iUseCaseDetailNum;
+    CaseDataPointerVector vcWholeUseCaseDetail;    
+    while(iCopyNum--)
+    {        
+        for (CaseDataVector::const_iterator cdvci = stStressData.vcUseCaseDetail.begin() ; cdvci != stStressData.vcUseCaseDetail.end() ; cdvci++)
+        {            
+            vcWholeUseCaseDetail.push_back(&(*cdvci));
+        }
+    }  
+        
+    std::vector<CStressUnit> vcStressUnitSet;
+    for (int i = 0; i < iThreadSum; i++)
+    {
+        
+    }
+    //开启调用
+    
+
     return 0;
 }
 

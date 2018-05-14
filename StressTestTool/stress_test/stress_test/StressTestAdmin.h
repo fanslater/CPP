@@ -13,13 +13,14 @@ public:
     void SetMainCfg(const tstring& path);
     int InitAll();      
     int UninitAll();
-    int RunStressTests();
-    int RunStressTest(const StressData& stStressData);
+    int RunStressTests();    
 private:
     int InitStressData();
     int UninitStressData();
+    int RunStressTest(const StressData& stStressData);
     int ExecuteBatFile(const tstring& path);
 private:
-    tstring m_strMainCfgPath;      
+    tstring m_strMainCfgPath;  
+    KcbpConfig m_stKcbpConfig;
     StressDataVector m_vcStressData;
 };

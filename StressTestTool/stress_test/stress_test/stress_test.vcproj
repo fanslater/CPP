@@ -329,6 +329,14 @@
 				RelativePath=".\StressTestAdmin.h"
 				>
 			</File>
+			<File
+				RelativePath=".\StressUnit.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\StressUnit.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"

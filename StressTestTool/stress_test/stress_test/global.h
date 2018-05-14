@@ -111,6 +111,7 @@ struct CaseDetail
     }
 };
 typedef std::vector<CaseDetail> CaseDataVector;
+typedef std::vector<const CaseDetail*> CaseDataPointerVector;
 
 struct StressData
 {
