@@ -56,6 +56,20 @@ tstring CBaseTool::GetPhysicsDateTime_AsStr()
     return tstring(GetPhysicsDate_AsStr() + GetPhysicsTime_AsStr());
 }
 
+long long CBaseTool::GetTimestamp_Milli()
+{
+    boost::posix_time::ptime epoch(boost::gregorian::date(1970, boost::gregorian::Jan, 1));
+    boost::posix_time::time_duration time_from_epoch =  boost::posix_time::microsec_clock::universal_time() - epoch;
+    return time_from_epoch.total_milliseconds();
+}
+
+long long CBaseTool::GetTimestamp_Micro()
+{
+    boost::posix_time::ptime epoch(boost::gregorian::date(1970, boost::gregorian::Jan, 1));
+    boost::posix_time::time_duration time_from_epoch =  boost::posix_time::microsec_clock::universal_time() - epoch;
+    return time_from_epoch.total_microseconds();
+}
+
 tstring CBaseTool::tformat(const char *format, ...)
 {
     char szTmp[FORMAT_LEN] = {0};

@@ -29,7 +29,7 @@ int CStressTestAdmin::InitAll()
     global::InitLog();
 
     int iRet = 0;
-    iRet = InitStressData();    
+    iRet = InitStressData();
     if (iRet)
     {
         return -1;
@@ -40,7 +40,7 @@ int CStressTestAdmin::InitAll()
 int CStressTestAdmin::InitStressData()
 {
     int iRet = 0;
-    tstring strErrMsg;    
+    tstring strErrMsg;
     CSysCfgCtrl clsSysCfgCtrl;
     iRet = clsSysCfgCtrl.LoadCfg(m_strMainCfgPath, strErrMsg);
     if (iRet)
@@ -64,24 +64,24 @@ int CStressTestAdmin::InitStressData()
             global::WriteLog(ll_error, "函数[%s]加载[%s]出现错误[%s]", __FUNCTION__, stStressData.stUseCaseInfo.strUseCaseFilePath.c_str(), strErrMsg.c_str());
             return -1;
         }
-        stStressData.vcUseCaseDetail = clsCaseCfgCtrl.GetCaseDetailSet();    
+        stStressData.vcUseCaseDetail = clsCaseCfgCtrl.GetCaseDetailSet();
         m_vcStressData.push_back(stStressData);
     }
     return 0;
 }
 
 int CStressTestAdmin::UninitStressData()
-{    
+{
     m_vcStressData.clear();
     return 0;
 }
 
-int CStressTestAdmin::ExecuteBatFile(const tstring& path)
+int CStressTestAdmin::ExecuteBatFile(const tstring &path)
 {
     if (path.length() > 0)
     {
         WinExec(path.c_str(), SW_SHOWNORMAL);
-    }  
+    }
     return 0;
 }
 
@@ -101,33 +101,61 @@ int CStressTestAdmin::RunStressTests()
     return 0;
 }
 
-int CStressTestAdmin::RunStressTest(const StressData& stStressData)
+int CStressTestAdmin::RunStressTest(const StressData &stStressData)
 {
-    global::ShowWindow("即将执行压测[%s]",stStressData.strCaseName.c_str());
+    global::WriteLog(ll_info, "即将执行压测 [ %s ]", stStressData.strCaseName.c_str());
     //执行bat
-    ExecuteBatFile(stStressData.stUseCaseInfo.strBatFilePath);        
-    //初始化测试单元
+    ExecuteBatFile(stStressData.stUseCaseInfo.strBatFilePath);
+    //整理所有需要调用的用例明细
     int iExecuteSum = stStressData.stUseCaseInfo.iExecuteSum;
     int iThreadSum = stStressData.stUseCaseInfo.iThreadSum;
     int iUseCaseDetailNum = stStressData.vcUseCaseDetail.size();
-    int iCopyNum = iExecuteSum / iUseCaseDetailNum;
-    int iModNum = iExecuteSum % iUseCaseDetailNum;
-    CaseDataPointerVector vcWholeUseCaseDetail;    
-    while(iCopyNum--)
-    {        
-        for (CaseDataVector::const_iterator cdvci = stStressData.vcUseCaseDetail.begin() ; cdvci != stStressData.vcUseCaseDetail.end() ; cdvci++)
-        {            
-            vcWholeUseCaseDetail.push_back(&(*cdvci));
+    CaseDataPointerVector vcWholeUseCaseDetail;
+    if (iExecuteSum > iUseCaseDetailNum)
+    {
+        for (int i = 0 ; i < iExecuteSum ; i++)
+        {
+            vcWholeUseCaseDetail.push_back(&stStressData.vcUseCaseDetail[i % iUseCaseDetailNum]);   //少则复制填充
         }
-    }  
-        
-    std::vector<CStressUnit> vcStressUnitSet;
+    }
+    else
+    {
+        for (CaseDataVector::const_iterator cdvci = stStressData.vcUseCaseDetail.begin() ; cdvci != stStressData.vcUseCaseDetail.end() ; cdvci++)
+        {
+            vcWholeUseCaseDetail.push_back(&(*cdvci));  //多则继续
+        }
+    }
+    //初始化每个线程对象
+    std::vector<CStressUnit*> vcStressUnitSet;
     for (int i = 0; i < iThreadSum; i++)
     {
-        
+        CStressUnit* pclsUnit = new CStressUnit;
+        pclsUnit->SetBpCfg(m_stKcbpConfig);
+        pclsUnit->InitAll();
+        vcStressUnitSet.push_back(pclsUnit);
+    }
+    //分发测试用例明细
+    for (CaseDataPointerVector::iterator cdpvi = vcWholeUseCaseDetail.begin() ; cdpvi != vcWholeUseCaseDetail.end() ; cdpvi++)
+    {
+        int iCurIndex = cdpvi - vcWholeUseCaseDetail.begin();
+        vcStressUnitSet[iCurIndex % iThreadSum]->AddOneTestData(*cdpvi);
     }
     //开启调用
-    
+    for (std::vector<CStressUnit*>::iterator suvi = vcStressUnitSet.begin() ; suvi != vcStressUnitSet.end() ; suvi ++)
+    {
+        CStressUnit *pclsUnit = (*suvi);
+        pclsUnit->BeginTest();
+    }
+    //清理
+    for (std::vector<CStressUnit*>::iterator suvi = vcStressUnitSet.begin() ; suvi != vcStressUnitSet.end() ; suvi ++)
+    {
+        CStressUnit *pclsUnit = (*suvi);
+        if (pclsUnit != NULL)
+        {
+            delete pclsUnit;
+        }        
+    }
+    vcStressUnitSet.clear();
 
     return 0;
 }

@@ -9,4 +9,5 @@ public:
     static void test_kcbp();
     static void test_log();
     static void test_cfgCtrl();
+    static void test_function();
 };

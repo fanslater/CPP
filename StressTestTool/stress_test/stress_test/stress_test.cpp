@@ -30,7 +30,7 @@ void CommandLine()
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-    EnableMenuItem(GetSystemMenu(GetConsoleWindow(), FALSE), SC_CLOSE, MF_GRAYED);
+    EnableMenuItem(GetSystemMenu(GetConsoleWindow(), FALSE), SC_CLOSE, MF_GRAYED);   
 
     std::string strMainCfgPath(path_default_cfg);
     if (argc == 2)

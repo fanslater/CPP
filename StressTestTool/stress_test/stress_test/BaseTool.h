@@ -20,6 +20,8 @@ public:
     static tstring GetPhysicsTime_AsStr();
     static long long GetPhysicsDateTime_Asll();
     static tstring GetPhysicsDateTime_AsStr();
+    static long long GetTimestamp_Milli();
+    static long long GetTimestamp_Micro();        
 
     //×Ö·û´®Ïà¹Ø
     static tstring tformat(const char* format, ...);
@@ -50,3 +52,4 @@ public:
     static bool IsPathExists(const tstring& path);
     static int CreatePath(const tstring& path);
 };
+
