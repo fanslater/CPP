@@ -2,7 +2,9 @@
 #include "StressTestAdmin.h"
 #include "SysCfgCtrl.h"
 #include "CaseCfgCtrl.h"
-#include "StressUnit.h"
+#include <boost/thread.hpp>
+#include <boost/thread/barrier.hpp>
+
 
 CStressTestAdmin::CStressTestAdmin(void)
 {
@@ -16,7 +18,9 @@ CStressTestAdmin::~CStressTestAdmin(void)
 
 void CStressTestAdmin::clean()
 {
-
+    m_iProgressFlag = 0;
+    m_strMainCfgPath.clear();
+    m_vcStressData.clear();
 }
 
 void CStressTestAdmin::SetMainCfg(const tstring &path)
@@ -85,6 +89,50 @@ int CStressTestAdmin::ExecuteBatFile(const tstring &path)
     return 0;
 }
 
+int CStressTestAdmin::ProgressThreadFunc(const int &iRealExecuteSum, const CStressUnitPointVector &csupv)
+{
+    FILETIME ftLastIdleTime;    //上一次闲置时间量
+    FILETIME ftLastKernelTime;  //上一次内核时间量
+    FILETIME ftLastUserTime;    //上一次用户时间量
+    FILETIME ftIdleTime;        //闲置时间量
+    FILETIME ftKernelTime;      //内核时间量
+    FILETIME ftUserTime;        //用户时间量
+    GetSystemTimes(&ftIdleTime, &ftKernelTime, &ftUserTime);
+    ftLastIdleTime = ftIdleTime;
+    ftLastKernelTime = ftKernelTime;
+    ftLastUserTime = ftUserTime;
+    long long llStartTime = CBaseTool::GetTimestamp_Milli();
+    while(m_iProgressFlag == THREAD_RUNNING)
+    {
+        boost::this_thread::sleep(boost::posix_time::seconds(1));
+        //统计当前总执行次数
+        int iThisCountSum = 0;
+        for (CStressUnitPointVector::const_iterator supvci = csupv.begin() ; supvci != csupv.end() ; supvci ++)
+        {
+            CStressUnit *pclsUnit = (*supvci);
+            iThisCountSum += pclsUnit->GetCurrentCount();
+        }
+        //计算CPU
+        GetSystemTimes(&ftIdleTime, &ftKernelTime, &ftUserTime);
+        long long llIdleDiff = CBaseTool::CompareFileTime(ftLastIdleTime, ftIdleTime);
+        long long llKernelDiff = CBaseTool::CompareFileTime(ftLastKernelTime, ftKernelTime);
+        long long llUserDiff = CBaseTool::CompareFileTime(ftLastUserTime, ftUserTime);
+        long long llCpuUse = (llKernelDiff + llUserDiff - llIdleDiff) * 100 / (llKernelDiff + llUserDiff);
+        long long llCpuIdle = (llIdleDiff) * 100 / (llKernelDiff + llUserDiff);
+        ftLastIdleTime = ftIdleTime;
+        ftLastKernelTime = ftKernelTime;
+        ftLastUserTime = ftUserTime;
+        //计算速度
+        long long llThisTamsp = CBaseTool::GetTimestamp_Milli();
+        double dWorkSpeed = (double)iThisCountSum / ((double)(llThisTamsp - llStartTime) / 1000);
+        //打印日志
+        global::WriteLog(ll_info, "执行进度=[%d/%d]，当前速度(次/秒)=[%.2lf]，内存使用率=[%d%%]，CPU使用率=[%lld%%]，CPU空闲率=[%lld%%]",
+                         iThisCountSum, iRealExecuteSum, dWorkSpeed, CBaseTool::GetMemoryPercent(), llCpuUse, llCpuIdle);
+    }
+
+    return 0;
+}
+
 int CStressTestAdmin::UninitAll()
 {
     UninitStressData();
@@ -96,14 +144,16 @@ int CStressTestAdmin::RunStressTests()
 {
     for (StressDataVector::iterator sdvi = m_vcStressData.begin() ; sdvi != m_vcStressData.end() ; sdvi ++)
     {
+        global::WriteLog(ll_info, tstring("****************************"));
         RunStressTest(*sdvi);
-    }    
+        global::WriteLog(ll_info, tstring("****************************"));
+    }
     return 0;
 }
 
 int CStressTestAdmin::RunStressTest(const StressData &stStressData)
 {
-    global::WriteLog(ll_info, "即将执行压测 [ %s ]", stStressData.strCaseName.c_str());
+    global::WriteLog(ll_info, "[%s] 即将执行...", stStressData.strCaseName.c_str());
     //执行bat
     ExecuteBatFile(stStressData.stUseCaseInfo.strBatFilePath);
     //整理所有需要调用的用例明细
@@ -125,37 +175,55 @@ int CStressTestAdmin::RunStressTest(const StressData &stStressData)
             vcWholeUseCaseDetail.push_back(&(*cdvci));  //多则继续
         }
     }
-    //初始化每个线程对象
-    std::vector<CStressUnit*> vcStressUnitSet;
+    //初始化每个单元并分发测试用例明细
+    int iEachUnitAmount = (int)vcWholeUseCaseDetail.size() / iThreadSum;   //每个线程分配执行次数
+    CStressUnitPointVector vcStressUnitSet;
+    int iDetailIndex = 0;
     for (int i = 0; i < iThreadSum; i++)
     {
-        CStressUnit* pclsUnit = new CStressUnit;
+        CaseDataPointerVector vcEachUseCaseDetail(vcWholeUseCaseDetail.begin() + iDetailIndex, vcWholeUseCaseDetail.begin() + iDetailIndex + iEachUnitAmount);                
+        iDetailIndex += iEachUnitAmount;
+        CStressUnit *pclsUnit = new CStressUnit;
         pclsUnit->SetBpCfg(m_stKcbpConfig);
+        pclsUnit->InputTestData(vcEachUseCaseDetail);
         pclsUnit->InitAll();
         vcStressUnitSet.push_back(pclsUnit);
     }
-    //分发测试用例明细
-    for (CaseDataPointerVector::iterator cdpvi = vcWholeUseCaseDetail.begin() ; cdpvi != vcWholeUseCaseDetail.end() ; cdpvi++)
+    int iRealExecuteSum = iEachUnitAmount * iThreadSum;     //计算最终真实的总执行次数
+    //启动线程池执行压力测试
+    m_iProgressFlag = THREAD_RUNNING;
+    boost::thread thdProgress(boost::bind(&CStressTestAdmin::ProgressThreadFunc, boost::ref(this), boost::ref(iRealExecuteSum), boost::ref(vcStressUnitSet)));
+    long long llStartStamp = 0, llEndStamp = 0;
     {
-        int iCurIndex = cdpvi - vcWholeUseCaseDetail.begin();
-        vcStressUnitSet[iCurIndex % iThreadSum]->AddOneTestData(*cdpvi);
+        llStartStamp = CBaseTool::GetTimestamp_Milli();
+        boost::thread_group ThreadPool;
+        boost::barrier *pBarrier = new boost::barrier(iThreadSum + 1);
+        for (int i = 0; i < iThreadSum; i++)
+        {
+            ThreadPool.create_thread( boost::bind( &CStressUnit::StressThreadFunc, boost::ref(vcStressUnitSet[i]), boost::ref(pBarrier)));
+        }
+        pBarrier->wait();
+        ThreadPool.join_all();
+        delete pBarrier;
+        llEndStamp = CBaseTool::GetTimestamp_Milli();
     }
-    //开启调用
-    for (std::vector<CStressUnit*>::iterator suvi = vcStressUnitSet.begin() ; suvi != vcStressUnitSet.end() ; suvi ++)
+    m_iProgressFlag = THREAD_STOPPED;
+    thdProgress.join();
+    //反初始化每个单元
+    for (CStressUnitPointVector::iterator supvi = vcStressUnitSet.begin() ; supvi != vcStressUnitSet.end() ; supvi ++)
     {
-        CStressUnit *pclsUnit = (*suvi);
-        pclsUnit->BeginTest();
-    }
-    //清理
-    for (std::vector<CStressUnit*>::iterator suvi = vcStressUnitSet.begin() ; suvi != vcStressUnitSet.end() ; suvi ++)
-    {
-        CStressUnit *pclsUnit = (*suvi);
+        CStressUnit *pclsUnit = (*supvi);
         if (pclsUnit != NULL)
         {
+            pclsUnit->UninitAll();
             delete pclsUnit;
-        }        
+        }
     }
-    vcStressUnitSet.clear();
+
+    //写测试结果日志
+    double dUseTime = double(llEndStamp - llStartStamp) / 1000;
+    global::WriteLog(ll_info, "[%s] 执行结束，处理线程数=[%d]，总执行次数=[%d]，总用时(秒)=[%.2lf]，平均每秒执行次数=[%.2lf]",
+                     stStressData.strCaseName.c_str(), iThreadSum, iRealExecuteSum, dUseTime, ((double)iRealExecuteSum) / dUseTime);
 
     return 0;
 }

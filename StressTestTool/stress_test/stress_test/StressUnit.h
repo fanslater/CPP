@@ -1,8 +1,7 @@
 #pragma once
 #include "global.h"
 #include "KcbpVisitor.h"
-#include <boost/thread.hpp> 
-#include <boost/thread/barrier.hpp> 
+#include <boost/thread/barrier.hpp>
 
 class CStressUnit
 {
@@ -15,15 +14,12 @@ public:
     int SetBpCfg(const KcbpConfig& bp);
     int InitAll();
     int UninitAll();
-    int AddOneTestData(const CaseDetail* data);
-    int BeginTest();
+    int InputTestData(const CaseDataPointerVector& data);    
+    int StressThreadFunc(boost::barrier* pBarrier);
+    int GetCurrentCount();
 private:
     KcbpConfig m_BpCfg;
     CKcbpVisitor m_clsKcbpVisitor;
     CaseDataPointerVector m_vcCaseDataSet;
-private:
-    int WorkThreadFunc();    
-private:
-    boost::thread_group m_ThreadPool;		
-    boost::barrier* m_pBarrier;
+    int m_iCount;
 };

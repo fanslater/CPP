@@ -3,6 +3,7 @@
 #include <vector>
 #include "json/json.h"
 #include <boost/property_tree/ptree.hpp> 
+#include <Windows.h>
 
 
 class CBaseTool
@@ -51,5 +52,8 @@ public:
     static tstring GetProcedurePath();
     static bool IsPathExists(const tstring& path);
     static int CreatePath(const tstring& path);
+    static void ShowCpuPercent();   //因为CPU需要时间差计算，这里只是给了显示例子。
+    static int GetMemoryPercent();
+    static long long CompareFileTime(FILETIME time1, FILETIME time2);
 };
 

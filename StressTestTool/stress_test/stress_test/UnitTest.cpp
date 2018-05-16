@@ -74,8 +74,7 @@ void CUnitTest::test_cfgCtrl()
 }
 
 void CUnitTest::test_function()
-{
-    printf("%lld\n",CBaseTool::GetTimestamp_Milli());
-    printf("%lld\n",CBaseTool::GetTimestamp_Micro());
+{    
+    printf("%lf\n",CBaseTool::GetMemoryPercent());
 }
 

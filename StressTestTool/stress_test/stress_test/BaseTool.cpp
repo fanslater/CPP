@@ -7,7 +7,7 @@
 //#include <boost/asio.hpp>
 //#include <WinSock2.h>
 //#include <sstream>
-#include <Windows.h>
+//#include <Windows.h>
 #include "global.h"
 
 CBaseTool::CBaseTool(void)
@@ -386,4 +386,52 @@ int CBaseTool::CreatePath(const tstring &path)
         return -1;
     }
     return 0;
+}
+
+void CBaseTool::ShowCpuPercent()
+{
+    HANDLE hEvent;
+    BOOL iRet;
+    FILETIME ftLastIdleTime;    //上一次闲置时间量
+    FILETIME ftLastKernelTime;  //上一次内核时间量
+    FILETIME ftLastUserTime;    //上一次用户时间量
+    FILETIME ftIdleTime;        //闲置时间量
+    FILETIME ftKernelTime;      //内核时间量
+    FILETIME ftUserTime;        //用户时间量
+
+    iRet = GetSystemTimes(&ftIdleTime, &ftKernelTime, &ftUserTime);
+    ftLastIdleTime = ftIdleTime;
+    ftLastKernelTime = ftKernelTime;
+    ftLastUserTime = ftUserTime;
+
+    hEvent = CreateEventA(NULL, FALSE, FALSE, NULL);
+
+    while (true)
+    {
+        WaitForSingleObject(hEvent, 1000);
+        iRet = GetSystemTimes(&ftIdleTime, &ftKernelTime, &ftUserTime);
+        long long llIdleDiff = CompareFileTime(ftLastIdleTime, ftIdleTime);
+        long long llKernelDiff = CompareFileTime(ftLastKernelTime, ftKernelTime);
+        long long llUserDiff = CompareFileTime(ftLastUserTime, ftUserTime);
+        long long llCpuUse = (llKernelDiff + llUserDiff - llIdleDiff) * 100 / (llKernelDiff + llUserDiff);
+        long long llCpuIdle = (llIdleDiff) * 100 / (llKernelDiff + llUserDiff);
+        global::ShowWindow("CPU使用率=[%lld%%] CPU空闲率=[%lld%%]\n", llCpuUse, llCpuIdle);
+        ftLastIdleTime = ftIdleTime;
+        ftLastKernelTime = ftKernelTime;
+        ftLastUserTime = ftUserTime;
+    }
+}
+
+int CBaseTool::GetMemoryPercent()
+{
+    MEMORYSTATUS ms;
+    ::GlobalMemoryStatus(&ms);
+    return (int)ms.dwMemoryLoad;
+}
+
+long long CBaseTool::CompareFileTime(FILETIME time1, FILETIME time2)
+{
+    long long a = (long long)time1.dwHighDateTime << 32 | time1.dwLowDateTime;
+    long long b = (long long)time2.dwHighDateTime << 32 | time2.dwLowDateTime;
+    return (b - a);
 }

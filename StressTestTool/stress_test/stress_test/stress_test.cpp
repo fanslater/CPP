@@ -8,13 +8,11 @@
 #include "StressTestAdmin.h"
 
 void CommandLine()
-{    
-    std::cout << "press 'exit' to Exit ..." << std::endl;
+{        
     while(1)
     {
         Sleep(1);
-        char szLine[8*1024] = {0};
-        std::cout << "stress_test:>";
+        char szLine[256] = {0};        
         gets_s(szLine);
         tstring strLine = CBaseTool::trim(tstring(szLine));
         if (strLine.length() == 0)

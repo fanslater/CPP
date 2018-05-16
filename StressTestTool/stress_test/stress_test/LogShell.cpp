@@ -29,7 +29,7 @@ void CLogShell::CleanSelf()
 int CLogShell::WorkThreadFunc()
 {    
     log4cplus::PropertyConfigurator::doConfigure(path_log4plus_cfg);
-    log4cplus::Logger logger = log4cplus::Logger::getInstance("stress_test");
+    log4cplus::Logger logger = log4cplus::Logger::getInstance("");
 
     m_pBarrier->wait();
     while ( THREAD_RUNNING == m_iThreadRunFlag )
