@@ -7,6 +7,12 @@
 #include "UnitTest.h"
 #include "StressTestAdmin.h"
 
+#define SET_COLOR(L)	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),L)
+#define light_green		10
+#define light_bluegreen 11
+#define light_red		12
+#define light_yellow	14
+
 void CommandLine()
 {        
     while(1)
@@ -28,8 +34,9 @@ void CommandLine()
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-    EnableMenuItem(GetSystemMenu(GetConsoleWindow(), FALSE), SC_CLOSE, MF_GRAYED);   
-    system("color 0B");    
+    EnableMenuItem(GetSystemMenu(GetConsoleWindow(), FALSE), SC_CLOSE, MF_GRAYED);       
+    SET_COLOR(light_bluegreen);
+    SendMessage(GetConsoleWindow(), WM_SETICON, ICON_SMALL, (LPARAM)LoadIcon(NULL, _T("IDI_ICON1"))); 
 
     std::string strMainCfgPath(path_default_cfg);
     if (argc == 2)
