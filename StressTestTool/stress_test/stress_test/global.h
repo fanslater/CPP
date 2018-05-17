@@ -90,7 +90,7 @@ struct UseCaseInfo
         iExecuteSum = 0;
     }
 };
-typedef std::map<tstring, UseCaseInfo> UseCaseMap;
+typedef std::tr1::unordered_map<tstring, UseCaseInfo> UseCaseMap;
 typedef std::pair<tstring, UseCaseInfo> UseCasePair;
 struct CaseDetail
 {

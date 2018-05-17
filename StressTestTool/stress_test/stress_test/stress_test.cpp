@@ -29,7 +29,7 @@ void CommandLine()
 int _tmain(int argc, _TCHAR* argv[])
 {
     EnableMenuItem(GetSystemMenu(GetConsoleWindow(), FALSE), SC_CLOSE, MF_GRAYED);   
-    system("color 0B");
+    system("color 0B");    
 
     std::string strMainCfgPath(path_default_cfg);
     if (argc == 2)

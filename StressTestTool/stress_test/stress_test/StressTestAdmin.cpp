@@ -53,7 +53,7 @@ int CStressTestAdmin::InitStressData()
         return -1;
     }
     m_stKcbpConfig = clsSysCfgCtrl.GetKcbpCfg();
-    UseCaseMap mpUseCase = clsSysCfgCtrl.GetCaseInfoSet();
+    UseCaseMap mpUseCase = clsSysCfgCtrl.GetCaseInfoSet();    
     for (UseCaseMap::iterator ucmi = mpUseCase.begin() ; ucmi != mpUseCase.end() ; ucmi ++)
     {
         StressData stStressData;
@@ -82,11 +82,19 @@ int CStressTestAdmin::UninitStressData()
 
 int CStressTestAdmin::ExecuteBatFile(const tstring &path)
 {
+    tstring strCmd1 = CBaseTool::tformat("\"%s\"",path.c_str());    
+    strCmd1 = CBaseTool::all_replace(strCmd1,tstring("/"),tstring("\\\\"));
+    int iRet = 0;
     if (path.length() > 0)
     {
-        WinExec(path.c_str(), SW_SHOWNORMAL);
+        iRet = system(strCmd1.c_str());         //此为同步调用，阻塞式可以获得执行文件的返回值。默认0为成功，1为失败。
+        //iRet = WinExec(strCmd2.c_str(), SW_SHOWNORMAL);     //经过测试，WinExec是异步执行bat，非阻塞不满足此处的需求。返回值大于31，则表示运行成功。
+        if (iRet != 0)
+        {
+            global::WriteLog(ll_warning,"执行脚本文件=[%s]失败，返回码=[%d]", path.c_str(), iRet);
+        }
     }
-    return 0;
+    return iRet;
 }
 
 int CStressTestAdmin::ProgressThreadFunc(const int &iRealExecuteSum, const CStressUnitPointVector &csupv)
@@ -209,7 +217,7 @@ int CStressTestAdmin::RunStressTest(const StressData &stStressData)
     }
     m_iProgressFlag = THREAD_STOPPED;
     thdProgress.join();
-    //反初始化每个单元
+    //反初始化每个单元    
     for (CStressUnitPointVector::iterator supvi = vcStressUnitSet.begin() ; supvi != vcStressUnitSet.end() ; supvi ++)
     {
         CStressUnit *pclsUnit = (*supvi);
