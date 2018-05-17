@@ -330,7 +330,7 @@ void CBaseTool::OutputDebugStringEx(const char *format, ...)
 #ifdef _DEBUG //如果是调试版本，在最后加个回车换行，要不然在VC里显示成一堆难看
     _snprintf_s(szMessage, sizeof(szMessage) - 1, "%03u [%04x][%s]\n", (WORD)dwCount, GetCurrentThreadId(), szMessageTemp);
 #else
-    _snprintf(szMessage, sizeof(szMessage) - 1, "%03u [%04x][%s]", (WORD)dwCount, GetCurrentThreadId(), szMessageTemp);
+    _snprintf_s(szMessage, sizeof(szMessage) - 1, "%03u [%04x][%s]", (WORD)dwCount, GetCurrentThreadId(), szMessageTemp);
 #endif
 
 #ifdef WIN32

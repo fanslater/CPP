@@ -95,7 +95,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="1"
+			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -117,6 +117,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="F:\__Project\__third_sdk_library__\jsoncpp\include;&quot;F:\__Project\__third_sdk_library__\boost_1_64_0\vs2008\include\boost-1_64&quot;;./depends/kcbp;&quot;F:\__Project\__third_sdk_library__\log4cplus-1.2.1-rc2\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -135,7 +136,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="json_vc71_libmd.lib KCBPCli.lib log4cplus.lib"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="F:\__Project\__third_sdk_library__\jsoncpp\lib;F:\__Project\__third_sdk_library__\boost_1_64_0\vs2008\lib;./depends/kcbp;&quot;F:\__Project\__third_sdk_library__\log4cplus-1.2.1-rc2\lib&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"

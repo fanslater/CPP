@@ -1,0 +1,32 @@
+#日志级别按严重程度从低到高依次为TRACE,DEBUG,INFO,WARN,ERROR,FATAL
+#以下是网关配置的日志
+configDebug=false
+log4cplus.rootLogger=TRACE, STDOUT, ALL_MSGS
+log4cplus.appender.STDOUT=log4cplus::ConsoleAppender
+;log4cplus.appender.STDOUT.layout=log4cplus::TTCCLayout
+log4cplus.appender.STDOUT.layout=log4cplus::PatternLayout
+log4cplus.appender.STDOUT.layout.ConversionPattern=%D{%Y-%m-%d %H:%M:%S} %-5p %c{2} - %m%n
+log4cplus.appender.STDOUT.filters.1=log4cplus::spi::LogLevelRangeFilter
+log4cplus.appender.STDOUT.filters.1.LogLevelMin=TRACE
+log4cplus.appender.STDOUT.filters.1.LogLevelMax=FATAL
+#DailyRollingFileAppender按时间类型更新文件，RollingFileAppender 按大小更新文件
+log4cplus.appender.ALL_MSGS=log4cplus::DailyRollingFileAppender
+#可设置为:MONTHLY,WEEKLY,DAILY,TWICE_DAILY,HOURLY,MINUTELY 
+log4cplus.appender.ALL_MSGS.Schedule=DAILY
+#log4cplus.appender.ALL_MSGS.DatePattern=yyyy-MM-dd
+log4cplus.appender.ALL_MSGS.File=./log/stress_test.log
+log4cplus.appender.ALL_MSGS.ImmediateFlush=true
+log4cplus.appender.ALL_MSGS.Append=true
+#log4cplus.appender.ALL_MSGS.MaxFileSize=10MB
+log4cplus.appender.ALL_MSGS.MaxBackupIndex=1024
+log4cplus.appender.ALL_MSGS.layout=log4cplus::PatternLayout
+log4cplus.appender.ALL_MSGS.layout.ConversionPattern=%D{%Y-%m-%d %H:%M:%S.%Q} %-5p %c{2} - %m%n
+
+
+
+
+
+
+
+
+
