@@ -50,7 +50,8 @@ END_MESSAGE_MAP()
 CTextDeEncryptDlg::CTextDeEncryptDlg(CWnd *pParent /*=NULL*/)
     : CDialog(CTextDeEncryptDlg::IDD, pParent)
 {
-    m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+    //m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+    m_hIcon = AfxGetApp()->LoadIcon(IDI_ICON1);
 }
 
 void CTextDeEncryptDlg::DoDataExchange(CDataExchange *pDX)

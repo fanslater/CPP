@@ -252,6 +252,10 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
+				RelativePath="..\..\..\..\..\__图片文件\ICO\jm3dtb\半透明按钮图标\3919\29.ico"
+				>
+			</File>
+			<File
 				RelativePath=".\res\TextDeEncrypt.ico"
 				>
 			</File>

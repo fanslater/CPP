@@ -6,7 +6,8 @@
 #define IDD_ABOUTBOX                    100
 #define IDS_ABOUTBOX                    101
 #define IDD_TEXTDEENCRYPT_DIALOG        102
-#define IDR_MAINFRAME                   128
+#define IDR_MAINFRAME                   130
+#define IDI_ICON1                       129
 #define IDC_EDIT_KEYWORD                1000
 #define IDC_EDIT_TEXT1                  1001
 #define IDC_BUTTON_encrypt_l2r          1002
@@ -22,7 +23,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        129
+#define _APS_NEXT_RESOURCE_VALUE        130
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1009
 #define _APS_NEXT_SYMED_VALUE           101
