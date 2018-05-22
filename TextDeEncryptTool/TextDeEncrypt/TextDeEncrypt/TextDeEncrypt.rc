@@ -70,8 +70,8 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON                    "res\\TextDeEncrypt.ico"
 IDI_ICON1               ICON                    "F:\\__图片文件\\ICO\\jm3dtb\\半透明按钮图标\\3919\\29.ico"
+IDR_MAINFRAME           ICON                    "res\\TextDeEncrypt.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -95,15 +95,15 @@ EXSTYLE WS_EX_APPWINDOW
 CAPTION "文本加解密工具"
 FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-    EDITTEXT        IDC_EDIT_KEYWORD,50,7,75,14,ES_PASSWORD | ES_AUTOHSCROLL
-    LTEXT           "数字密码：",IDC_STATIC,9,9,39,11
+    EDITTEXT        IDC_EDIT_KEYWORD,37,7,75,14,ES_PASSWORD | ES_AUTOHSCROLL
+    LTEXT           "秘钥串：",IDC_STATIC,9,9,28,11
     EDITTEXT        IDC_EDIT_TEXT1,7,30,152,203,ES_MULTILINE | ES_AUTOVSCROLL | WS_VSCROLL
     PUSHBUTTON      "加密 →",IDC_BUTTON_encrypt_l2r,164,31,43,22
     PUSHBUTTON      "解密 →",IDC_BUTTON_decrypt_l2r,164,100,43,22
     EDITTEXT        IDC_EDIT_TEXT2,212,30,152,203,ES_MULTILINE | ES_AUTOVSCROLL | WS_VSCROLL
     PUSHBUTTON      "← 加密",IDC_BUTTON_encrypt_r2l,164,127,43,22
     PUSHBUTTON      "← 解密",IDC_BUTTON_decrypt_r2l,164,58,43,22
-    CONTROL         "显示密码",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,129,8,43,10
+    CONTROL         "显示密码",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,118,8,43,10
     PUSHBUTTON      "清理",IDC_BUTTON_clean1,159,219,22,14
     PUSHBUTTON      "清理",IDC_BUTTON_clean2,189,219,22,14
 END

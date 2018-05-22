@@ -3,7 +3,7 @@
 //
 
 #pragma once
-#include "encrypt.h"
+
 
 #define BUFFER_SIZE        4*1024
 

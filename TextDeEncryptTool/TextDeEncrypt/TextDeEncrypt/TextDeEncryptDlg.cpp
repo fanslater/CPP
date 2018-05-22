@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "TextDeEncrypt.h"
 #include "TextDeEncryptDlg.h"
+#include "AesEncryptor.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -180,48 +181,44 @@ void CTextDeEncryptDlg::OnBnClickedButtonencryptl2r()
 {
     CString ctrKeyword;
     GetDlgItemText(IDC_EDIT_KEYWORD, ctrKeyword);
-    __int64 i64Keyword = atol(ctrKeyword.GetString());
     CString ctrLeftText;
     GetDlgItemText(IDC_EDIT_TEXT1, ctrLeftText);
-    char szEncryptResult[BUFFER_SIZE] = {0};
-    AES_Encrypt1(szEncryptResult, sizeof(szEncryptResult), i64Keyword, ctrLeftText.GetString());
-    SetDlgItemText(IDC_EDIT_TEXT2, szEncryptResult);
+    AesEncryptor clsAes((unsigned char *)ctrKeyword.GetString());
+    std::string strEncryptResult = clsAes.EncryptString(ctrLeftText.GetString());
+    SetDlgItemText(IDC_EDIT_TEXT2, strEncryptResult.c_str());
 }
 
 void CTextDeEncryptDlg::OnBnClickedButtondecryptr2l()
 {
     CString ctrKeyword;
     GetDlgItemText(IDC_EDIT_KEYWORD, ctrKeyword);
-    __int64 i64Keyword = atol(ctrKeyword.GetString());
     CString ctrRigthText;
     GetDlgItemText(IDC_EDIT_TEXT2, ctrRigthText);
-    char szDecryptResult[BUFFER_SIZE] = {0};
-    AES_Decrypt1(szDecryptResult, sizeof(szDecryptResult), i64Keyword, ctrRigthText.GetString());
-    SetDlgItemText(IDC_EDIT_TEXT1, szDecryptResult);
+    AesEncryptor clsAes((unsigned char *)ctrKeyword.GetString());
+    std::string strDecryptResult = clsAes.DecryptString(ctrRigthText.GetString());
+    SetDlgItemText(IDC_EDIT_TEXT1, strDecryptResult.c_str());
 }
 
 void CTextDeEncryptDlg::OnBnClickedButtondecryptl2r()
 {
     CString ctrKeyword;
     GetDlgItemText(IDC_EDIT_KEYWORD, ctrKeyword);
-    __int64 i64Keyword = atol(ctrKeyword.GetString());
     CString ctrLeftText;
     GetDlgItemText(IDC_EDIT_TEXT1, ctrLeftText);
-    char szDecryptResult[BUFFER_SIZE] = {0};
-    AES_Decrypt1(szDecryptResult, sizeof(szDecryptResult), i64Keyword, ctrLeftText.GetString());
-    SetDlgItemText(IDC_EDIT_TEXT2, szDecryptResult);
+    AesEncryptor clsAes((unsigned char *)ctrKeyword.GetString());
+    std::string strDecryptResult = clsAes.DecryptString(ctrLeftText.GetString());
+    SetDlgItemText(IDC_EDIT_TEXT2, strDecryptResult.c_str());
 }
 
 void CTextDeEncryptDlg::OnBnClickedButtonencryptr2l()
 {
     CString ctrKeyword;
     GetDlgItemText(IDC_EDIT_KEYWORD, ctrKeyword);
-    __int64 i64Keyword = atol(ctrKeyword.GetString());
     CString ctrRightText;
     GetDlgItemText(IDC_EDIT_TEXT2, ctrRightText);
-    char szEncryptResult[BUFFER_SIZE] = {0};
-    AES_Encrypt1(szEncryptResult, sizeof(szEncryptResult), i64Keyword, ctrRightText.GetString());
-    SetDlgItemText(IDC_EDIT_TEXT1, szEncryptResult);
+    AesEncryptor clsAes((unsigned char *)ctrKeyword.GetString());
+    std::string strEncryptResult = clsAes.EncryptString(ctrRightText.GetString());
+    SetDlgItemText(IDC_EDIT_TEXT1, strEncryptResult.c_str());
 }
 
 void CTextDeEncryptDlg::OnBnClickedCheck1()
@@ -239,11 +236,11 @@ void CTextDeEncryptDlg::OnBnClickedCheck1()
 
 void CTextDeEncryptDlg::OnBnClickedButtonclean1()
 {
-    SetDlgItemText(IDC_EDIT_TEXT1,"");
+    SetDlgItemText(IDC_EDIT_TEXT1, "");
 }
 
 void CTextDeEncryptDlg::OnBnClickedButtonclean2()
 {
     // TODO: 在此添加控件通知处理程序代码
-    SetDlgItemText(IDC_EDIT_TEXT2,"");
+    SetDlgItemText(IDC_EDIT_TEXT2, "");
 }
