@@ -74,6 +74,10 @@ BEGIN_MESSAGE_MAP(CTextDeEncryptDlg, CDialog)
     ON_BN_CLICKED(IDC_CHECK1, &CTextDeEncryptDlg::OnBnClickedCheck1)
     ON_BN_CLICKED(IDC_BUTTON_clean1, &CTextDeEncryptDlg::OnBnClickedButtonclean1)
     ON_BN_CLICKED(IDC_BUTTON_clean2, &CTextDeEncryptDlg::OnBnClickedButtonclean2)
+    ON_BN_CLICKED(IDC_BUTTON_copy1, &CTextDeEncryptDlg::OnBnClickedButtoncopy1)
+    ON_BN_CLICKED(IDC_BUTTON_copy2, &CTextDeEncryptDlg::OnBnClickedButtoncopy2)
+    ON_BN_CLICKED(IDC_BUTTON_paste1, &CTextDeEncryptDlg::OnBnClickedButtonpaste1)
+    ON_BN_CLICKED(IDC_BUTTON_paste2, &CTextDeEncryptDlg::OnBnClickedButtonpaste2)
 END_MESSAGE_MAP()
 
 
@@ -243,4 +247,68 @@ void CTextDeEncryptDlg::OnBnClickedButtonclean2()
 {
     // TODO: 在此添加控件通知处理程序代码
     SetDlgItemText(IDC_EDIT_TEXT2, "");
+}
+
+void CTextDeEncryptDlg::OnBnClickedButtoncopy1()
+{
+    CString ctrData;
+    GetDlgItemText(IDC_EDIT_TEXT1, ctrData);
+    if(OpenClipboard())
+    {
+        HGLOBAL clipbuffer;
+        char *buffer;
+        EmptyClipboard();
+        clipbuffer = GlobalAlloc(GMEM_DDESHARE, ctrData.GetLength() + 1);
+        buffer = (char *)GlobalLock(clipbuffer);
+        strcpy_s(buffer, ctrData.GetLength() + 1, ctrData.GetString());
+        GlobalUnlock(clipbuffer);
+        SetClipboardData(CF_TEXT, clipbuffer);
+        CloseClipboard();
+    }
+}
+
+void CTextDeEncryptDlg::OnBnClickedButtoncopy2()
+{
+    CString ctrData;
+    GetDlgItemText(IDC_EDIT_TEXT2, ctrData);
+    if(OpenClipboard())
+    {
+        HGLOBAL clipbuffer;
+        char *buffer;
+        EmptyClipboard();
+        clipbuffer = GlobalAlloc(GMEM_DDESHARE, ctrData.GetLength() + 1);
+        buffer = (char *)GlobalLock(clipbuffer);
+        strcpy_s(buffer, ctrData.GetLength() + 1, ctrData.GetString());
+        GlobalUnlock(clipbuffer);
+        SetClipboardData(CF_TEXT, clipbuffer);
+        CloseClipboard();
+    }
+}
+
+void CTextDeEncryptDlg::OnBnClickedButtonpaste1()
+{
+    CString ctrData;
+    if ( OpenClipboard() )
+    {
+        HANDLE hData = GetClipboardData(CF_TEXT);
+        char *buffer = (char *)GlobalLock(hData);
+        ctrData = buffer;
+        GlobalUnlock(hData);
+        CloseClipboard();
+    }
+    SetDlgItemText(IDC_EDIT_TEXT1, ctrData);
+}
+
+void CTextDeEncryptDlg::OnBnClickedButtonpaste2()
+{
+    CString ctrData;
+    if ( OpenClipboard() )
+    {
+        HANDLE hData = GetClipboardData(CF_TEXT);
+        char *buffer = (char *)GlobalLock(hData);
+        ctrData = buffer;
+        GlobalUnlock(hData);
+        CloseClipboard();
+    }
+    SetDlgItemText(IDC_EDIT_TEXT2, ctrData);
 }

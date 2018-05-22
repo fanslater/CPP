@@ -42,4 +42,8 @@ public:
     afx_msg void OnBnClickedCheck1();
     afx_msg void OnBnClickedButtonclean1();
     afx_msg void OnBnClickedButtonclean2();
+    afx_msg void OnBnClickedButtoncopy1();
+    afx_msg void OnBnClickedButtoncopy2();
+    afx_msg void OnBnClickedButtonpaste1();
+    afx_msg void OnBnClickedButtonpaste2();
 };
