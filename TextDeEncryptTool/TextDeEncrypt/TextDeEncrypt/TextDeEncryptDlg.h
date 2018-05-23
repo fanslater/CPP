@@ -5,7 +5,8 @@
 #pragma once
 
 
-#define BUFFER_SIZE        4*1024
+#define BUFFER_SIZE        1024
+#define SLICE_SIZE         127
 
 
 // CTextDeEncryptDlg ¶Ô»°¿ò
@@ -45,5 +46,11 @@ public:
     afx_msg void OnBnClickedButtoncopy1();
     afx_msg void OnBnClickedButtoncopy2();
     afx_msg void OnBnClickedButtonpaste1();
-    afx_msg void OnBnClickedButtonpaste2();
+    afx_msg void OnBnClickedButtonpaste2();    
+private:
+    int Encrypt(CString ctrKey, CString ctrData, CString& ctrResult);
+    int Decrypt(CString ctrKey, CString ctrData, CString& ctrResult);
+    void Byte2Hex(const unsigned char *src, int len, char *dest);
+    void Hex2Byte(const char *src, int len, unsigned char *dest);
+    int  Char2Int(char c);
 };

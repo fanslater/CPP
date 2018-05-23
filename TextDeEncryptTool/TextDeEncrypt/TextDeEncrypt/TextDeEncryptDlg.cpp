@@ -5,7 +5,7 @@
 #include "stdafx.h"
 #include "TextDeEncrypt.h"
 #include "TextDeEncryptDlg.h"
-#include "AesEncryptor.h"
+#include "encrypt.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -113,6 +113,10 @@ BOOL CTextDeEncryptDlg::OnInitDialog()
     SetIcon(m_hIcon, FALSE);		// 设置小图标
 
     // TODO: 在此添加额外的初始化代码
+#ifdef _DEBUG
+    AllocConsole();
+    freopen("CONOUT$", "a+", stdout);
+#endif
 
     return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -170,6 +174,9 @@ HCURSOR CTextDeEncryptDlg::OnQueryDragIcon()
 void CTextDeEncryptDlg::OnClose()
 {
     // TODO: 在此添加消息处理程序代码和/或调用默认值
+#ifdef _DEBUG
+    FreeConsole();
+#endif
 
     CDialog::OnClose();
 }
@@ -183,13 +190,14 @@ void CTextDeEncryptDlg::OnDestroy()
 
 void CTextDeEncryptDlg::OnBnClickedButtonencryptl2r()
 {
+    int iRet = 0;
     CString ctrKeyword;
     GetDlgItemText(IDC_EDIT_KEYWORD, ctrKeyword);
     CString ctrLeftText;
-    GetDlgItemText(IDC_EDIT_TEXT1, ctrLeftText);
-    AesEncryptor clsAes((unsigned char *)ctrKeyword.GetString());
-    std::string strEncryptResult = clsAes.EncryptString(ctrLeftText.GetString());
-    SetDlgItemText(IDC_EDIT_TEXT2, strEncryptResult.c_str());
+    GetDlgItemText(IDC_EDIT_TEXT1, ctrLeftText);   
+    CString ctrResult;
+    Encrypt(ctrKeyword,ctrLeftText,ctrResult);
+    SetDlgItemText(IDC_EDIT_TEXT2, ctrResult);
 }
 
 void CTextDeEncryptDlg::OnBnClickedButtondecryptr2l()
@@ -198,9 +206,9 @@ void CTextDeEncryptDlg::OnBnClickedButtondecryptr2l()
     GetDlgItemText(IDC_EDIT_KEYWORD, ctrKeyword);
     CString ctrRigthText;
     GetDlgItemText(IDC_EDIT_TEXT2, ctrRigthText);
-    AesEncryptor clsAes((unsigned char *)ctrKeyword.GetString());
-    std::string strDecryptResult = clsAes.DecryptString(ctrRigthText.GetString());
-    SetDlgItemText(IDC_EDIT_TEXT1, strDecryptResult.c_str());
+    CString ctrResult;
+    Decrypt(ctrKeyword,ctrRigthText,ctrResult);
+    SetDlgItemText(IDC_EDIT_TEXT1, ctrResult);
 }
 
 void CTextDeEncryptDlg::OnBnClickedButtondecryptl2r()
@@ -209,9 +217,9 @@ void CTextDeEncryptDlg::OnBnClickedButtondecryptl2r()
     GetDlgItemText(IDC_EDIT_KEYWORD, ctrKeyword);
     CString ctrLeftText;
     GetDlgItemText(IDC_EDIT_TEXT1, ctrLeftText);
-    AesEncryptor clsAes((unsigned char *)ctrKeyword.GetString());
-    std::string strDecryptResult = clsAes.DecryptString(ctrLeftText.GetString());
-    SetDlgItemText(IDC_EDIT_TEXT2, strDecryptResult.c_str());
+    CString ctrResult;
+    Decrypt(ctrKeyword,ctrLeftText,ctrResult);
+    SetDlgItemText(IDC_EDIT_TEXT2, ctrResult);
 }
 
 void CTextDeEncryptDlg::OnBnClickedButtonencryptr2l()
@@ -220,9 +228,9 @@ void CTextDeEncryptDlg::OnBnClickedButtonencryptr2l()
     GetDlgItemText(IDC_EDIT_KEYWORD, ctrKeyword);
     CString ctrRightText;
     GetDlgItemText(IDC_EDIT_TEXT2, ctrRightText);
-    AesEncryptor clsAes((unsigned char *)ctrKeyword.GetString());
-    std::string strEncryptResult = clsAes.EncryptString(ctrRightText.GetString());
-    SetDlgItemText(IDC_EDIT_TEXT1, strEncryptResult.c_str());
+    CString ctrResult;
+    Encrypt(ctrKeyword,ctrRightText,ctrResult);
+    SetDlgItemText(IDC_EDIT_TEXT1, ctrResult);
 }
 
 void CTextDeEncryptDlg::OnBnClickedCheck1()
@@ -311,4 +319,87 @@ void CTextDeEncryptDlg::OnBnClickedButtonpaste2()
         CloseClipboard();
     }
     SetDlgItemText(IDC_EDIT_TEXT2, ctrData);
+}
+
+int CTextDeEncryptDlg::Encrypt(CString ctrKey, CString ctrData, CString& ctrResult)
+{
+    __int64 llKey = atol(ctrKey.GetString());
+    int iDataLength = ctrData.GetLength();
+    int iIndex = 0;
+    while (iDataLength > 0)
+    {
+        CString ctrNeedData = ctrData.Mid(iIndex,SLICE_SIZE);      
+        printf("明文=[%s]\n",ctrNeedData.GetString());
+        char szResultBuffer[BUFFER_SIZE] = {0};
+        AES_Encrypt1(szResultBuffer,BUFFER_SIZE,llKey,ctrNeedData.GetString());
+        printf("密文=[%s]\n",szResultBuffer);
+        char szHex[BUFFER_SIZE*2] = {0};
+        Byte2Hex((unsigned char*)szResultBuffer,strlen(szResultBuffer),szHex);
+        printf("16进制=[%s]\n",szHex);
+        ctrResult.Append(szHex);
+        ctrResult.Append("G");
+        iDataLength -= SLICE_SIZE;
+        iIndex += SLICE_SIZE;
+    }    
+    return 0;
+}
+
+int CTextDeEncryptDlg::Decrypt(CString ctrKey, CString ctrData, CString& ctrResult)
+{
+    __int64 llKey = atol(ctrKey.GetString());
+    int iDataLength = ctrData.GetLength();
+    int iIndex = 0;
+    while(1)
+    {
+        int iFlag = ctrData.Find("G",iIndex);
+        if (iFlag == -1)
+        {
+            break;
+        }
+        CString ctrNeedData = ctrData.Mid(iIndex,iFlag - iIndex);
+        printf("16进制=[%s]\n",ctrNeedData.GetString());
+        char szByte[BUFFER_SIZE] = {0};
+        Hex2Byte(ctrNeedData.GetString(),ctrNeedData.GetLength(),(unsigned char*)szByte);
+        printf("密文=[%s]\n",szByte);
+        char szResultBuffer[BUFFER_SIZE] = {0};
+        AES_Decrypt1(szResultBuffer,BUFFER_SIZE,llKey,szByte);
+        printf("明文=[%s]\n",szResultBuffer);
+        ctrResult.Append(szResultBuffer);
+        iIndex = iFlag+1;
+    }
+    return 0;
+}
+
+void CTextDeEncryptDlg::Byte2Hex(const unsigned char *src, int len, char *dest)
+{
+    for (int i = 0; i < len; ++i)
+    {
+        sprintf_s(dest + i * 2, 3, "%02X", src[i]);
+    }
+}
+
+void CTextDeEncryptDlg::Hex2Byte(const char *src, int len, unsigned char *dest)
+{
+    int length = len / 2;
+    for (int i = 0; i < length; ++i)
+    {
+        dest[i] = Char2Int(src[i * 2]) * 16 + Char2Int(src[i * 2 + 1]);
+    }
+}
+
+int CTextDeEncryptDlg::Char2Int(char c)
+{
+    if ('0' <= c && c <= '9')
+    {
+        return (c - '0');
+    }
+    else if ('a' <= c && c <= 'f')
+    {
+        return (c - 'a' + 10);
+    }
+    else if ('A' <= c && c <= 'F')
+    {
+        return (c - 'A' + 10);
+    }
+    return -1;
 }
