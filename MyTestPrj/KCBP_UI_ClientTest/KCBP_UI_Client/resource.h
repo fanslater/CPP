@@ -15,7 +15,7 @@
 #define IDR_MAINFRAME                   128
 #define IDC_LIST_Input_param            1000
 #define IDC_EDIT_kcbp_svr_name          1001
-#define IDC_IPADDRESS_kcbp_svr_ip       1002
+//#define IDC_IPADDRESS_kcbp_svr_ip       1002
 #define IDC_EDIT_kcbp_svr_port          1003
 #define IDC_EDIT_send_queue_name        1004
 #define IDC_EDIT_recv_queue_name        1005
@@ -28,6 +28,8 @@
 #define IDC_COMBO_LBM_NO                1012
 #define IDC_BUTTON_call_lbm             1013
 #define IDC_TAB1                        1014
+#define IDC_EDIT_                       1015
+#define IDC_EDIT_kcbp_ip                1015
 
 // Next default values for new objects
 // 
@@ -35,7 +37,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        132
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1015
+#define _APS_NEXT_CONTROL_VALUE         1016
 #define _APS_NEXT_SYMED_VALUE           113
 #endif
 #endif
