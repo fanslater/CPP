@@ -440,6 +440,7 @@ void CKCBP_UI_ClientDlg::ShowLBMResult()
     }
 
     m_list_ctrl_result_set.InsertColumn(0, "行号", LVCFMT_LEFT, LISTCTRL_WIDTH);
+    //m_list_ctrl_result_set.SetColumnWidth(0,LVSCW_AUTOSIZE);
     m_list_ctrl_result_set.SetColumnCtrlType(0, CCT_EDITBOX);
     int iPianYi = 0;
     do	//结果集循环
@@ -451,10 +452,11 @@ void CKCBP_UI_ClientDlg::ShowLBMResult()
         //加入列名
         for(int i = 1; i <= iColNum; i++)
         {
-            char szFieldName[256] = {0};
+            char szFieldName[1024] = {0};
             KCBPCLI_RsGetColName(m_kcbp_handle, i, szFieldName, sizeof(szFieldName));
             int iIndex = m_list_ctrl_result_set.GetHeaderCtrl()->GetItemCount();
             m_list_ctrl_result_set.InsertColumn(iIndex, szFieldName, LVCFMT_LEFT, LISTCTRL_WIDTH);
+            //m_list_ctrl_result_set.SetColumnWidth(iIndex,LVSCW_AUTOSIZE);
             m_list_ctrl_result_set.SetColumnCtrlType(iIndex, CCT_EDITBOX);
         }
 
@@ -468,7 +470,7 @@ void CKCBP_UI_ClientDlg::ShowLBMResult()
             char szRowId[16] = {0};
             sprintf(szRowId, "%d", iRowId + 1);
             iRowId = m_list_ctrl_result_set.InsertItem(m_list_ctrl_result_set.GetItemCount(), szRowId);
-            char Result[256] = {0};
+            char Result[1024] = {0};
             //打印列值
             for(int iColId = 1; iColId <= iColNum; iColId++)	//单个结果集列循环
             {

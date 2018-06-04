@@ -5,7 +5,6 @@
 #include <map>
 using namespace std;
 
-
 //∫Í∂®“Â
 #define INI_CFG_PATH		"./KCBP_UI_Client.ini"
 #define XML_CFG_PATH		"./KCBP_UI_Client.xml"
@@ -15,7 +14,7 @@ using namespace std;
 #define THREAD_RUNNING		1
 #define SLEEP_INTERVAL		1
 
-#define LISTCTRL_WIDTH		100
+#define LISTCTRL_WIDTH		70
 
 struct lbm_call_cfg
 {
