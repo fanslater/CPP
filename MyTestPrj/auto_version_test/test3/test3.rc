@@ -53,8 +53,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,23
- PRODUCTVERSION 1,0,0,23
+ FILEVERSION 1,0,0,24
+ PRODUCTVERSION 1,0,0,24
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -70,12 +70,12 @@ BEGIN
         BLOCK "080404b0"
         BEGIN
             VALUE "FileDescription", "test3 应用程序"
-            VALUE "FileVersion", "1, 0, 0, 23"
+            VALUE "FileVersion", "1, 0, 0, 24"
             VALUE "InternalName", "test3"
             VALUE "LegalCopyright", "Copyright (C) 2018"
             VALUE "OriginalFilename", "test3.exe"
             VALUE "ProductName", "test3 应用程序"
-            VALUE "ProductVersion", "1, 0, 0, 23"
+            VALUE "ProductVersion", "1, 0, 0, 24"
         END
     END
     BLOCK "VarFileInfo"

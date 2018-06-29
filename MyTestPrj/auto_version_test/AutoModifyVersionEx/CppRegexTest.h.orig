@@ -1,0 +1,12 @@
+#pragma once
+
+class CppRegexTest
+{
+public:
+    CppRegexTest(void);
+    ~CppRegexTest(void);
+public:
+    static void regex_match();
+    static void regex_search();
+    static void regex_replace();
+};

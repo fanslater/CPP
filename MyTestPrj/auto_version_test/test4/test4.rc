@@ -53,8 +53,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,2018,629,170055
- PRODUCTVERSION 1,2018,629,170109
+ FILEVERSION 2,2018,629,170406
+ PRODUCTVERSION 3,2018,629,170406
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -69,13 +69,13 @@ BEGIN
     BEGIN
         BLOCK "080404b0"
         BEGIN
-            VALUE "FileDescription", "AutoModi 应用程序"
-            VALUE "FileVersion", "1, 2018, 629, 170110"
-            VALUE "InternalName", "AutoModi"
+            VALUE "FileDescription", "test4 应用程序"
+            VALUE "FileVersion", "2, 2018, 629, 170406"
+            VALUE "InternalName", "test4"
             VALUE "LegalCopyright", "Copyright (C) 2018"
-            VALUE "OriginalFilename", "AutoModi.exe"
-            VALUE "ProductName", "AutoModi 应用程序"
-            VALUE "ProductVersion", "1, 2018, 629, 170110"
+            VALUE "OriginalFilename", "test4.exe"
+            VALUE "ProductName", "test4 应用程序"
+            VALUE "ProductVersion", "3, 2018, 629, 170406"
         END
     END
     BLOCK "VarFileInfo"
