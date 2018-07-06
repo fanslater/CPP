@@ -1,10 +1,16 @@
 #pragma once
 #include "tstring.h"
 
-#define FORMAT1             "%d,%d,%d,%d"
-#define FORMAT1_REGEX_STR   "(\\d+,\\d+,\\d+,\\d+)"
-#define FORMAT2             "%d, %d, %d, %d"
-#define FORMAT2_REGEX_STR   "(\\d+, \\d+, \\d+, \\d+)"
+#define FORMAT1             "FILEVERSION %d,%d,%d,%d"
+#define FORMAT1_REGEX_STR   "(FILEVERSION \\d+,\\d+,\\d+,\\d+)"
+#define FORMAT2             "\"FileVersion\", \"%d, %d, %d, %d"
+#define FORMAT2_REGEX_STR   "(\"FileVersion\", \"\\d+, \\d+, \\d+, \\d+)"
+
+#define FORMAT3             "PRODUCTVERSION %d,%d,%d,%d"
+#define FORMAT3_REGEX_STR   "(PRODUCTVERSION \\d+,\\d+,\\d+,\\d+)"
+#define FORMAT4             "\"ProductVersion\", \"%d, %d, %d, %d"
+#define FORMAT4_REGEX_STR   "(\"ProductVersion\", \"\\d+, \\d+, \\d+, \\d+)"
+
 
 class CppRegex
 {
