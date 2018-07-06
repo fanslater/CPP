@@ -1,0 +1,1127 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(中华人民共和国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\KDFCFS.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#include ""l.chs\\afxprint.rc""        // printing/print preview resources\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "RES\\App.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+IDB_EXIT_FOCUS          BITMAP                  "res\\exit_foc.bmp"
+IDB_EXIT_NORMAL         BITMAP                  "res\\exit_nor.bmp"
+IDB_HELP_FOCUS          BITMAP                  "res\\hel_focu.bmp"
+IDB_RESTORE_NORMAL      BITMAP                  "res\\res_norm.bmp"
+IDB_MAX_FOCUS           BITMAP                  "res\\max_focu.bmp"
+IDB_MAX_NORMAL          BITMAP                  "res\\max_norm.bmp"
+IDB_MIN_FOCUS           BITMAP                  "res\\min_focu.bmp"
+IDB_MIN_NORMAL          BITMAP                  "res\\min_norm.bmp"
+IDB_RESTORE_FOCUS       BITMAP                  "res\\res_focu.bmp"
+IDB_HELP_NORMAL         BITMAP                  "res\\hel_norm.bmp"
+IDB_IMAGELIST           BITMAP                  "res\\IMAGELIST.BMP"
+IDB_ANIM_IMGLIST        BITMAP                  "res\\bitmap2.bmp"
+IDB_BITMAP_LIST         BITMAP                  "res\\folderbmp.bmp"
+IDB_BITMAP_STATE        BITMAP                  "res\\STATEBMP.BMP"
+IDB_IL_CLASS            BITMAP                  "res\\il_class.bmp"
+IDB_IL_FILE             BITMAP                  "res\\il_file.bmp"
+IDB_IL_RSRC             BITMAP                  "res\\il_rsrc.bmp"
+IDB_IL_TAB              BITMAP                  "res\\il_tab.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR  20, 21
+BEGIN
+    BUTTON      ID_START_KDFCFS
+    SEPARATOR
+    BUTTON      ID_START_GRID
+    BUTTON      ID_STOP_GRID
+    SEPARATOR
+    BUTTON      ID_LOGIN
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU 
+BEGIN
+    POPUP "操作(&A)"
+    BEGIN
+        MENUITEM "启动(&S)\tCtrl+S",              ID_START_KDFCFS
+        MENUITEM "暂停(&P)\tCtrl+P",              ID_PAUSE_KDFCFS
+        MENUITEM "停止(&T)\tCtrl+T",              ID_STOP_KDFCFS
+        MENUITEM SEPARATOR
+        MENUITEM "退出(&X)",                      ID_APP_EXIT
+    END
+    MENUITEM "工具(&T)",                      ID_32792
+    POPUP "视图(&V)"
+    BEGIN
+        MENUITEM "工具条(&T)",                     ID_VIEW_TOOLBAR
+        MENUITEM "状态条(&S)",                     ID_VIEW_STATUS_BAR
+        MENUITEM SEPARATOR
+        MENUITEM "工作空间(&W)",                    CG_ID_VIEW_WORKSPACE
+        MENUITEM "输出栏(&O)",                     CG_ID_VIEW_OUTPUT
+    END
+    POPUP "帮助(&H)"
+    BEGIN
+        MENUITEM "帮助主题(&H)",                    ID_HELP_TITLE
+        MENUITEM SEPARATOR
+        MENUITEM "关于理财服务器(&A)...",              ID_APP_ABOUT
+    END
+END
+
+IDR_POPUP MENU 
+BEGIN
+    POPUP "弹出式菜单"
+    BEGIN
+        MENUITEM "工作空间\tAlt+W",                 CG_ID_VIEW_WORKSPACE
+        MENUITEM "输出栏\tAlt+O",                  CG_ID_VIEW_OUTPUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS 
+BEGIN
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY 
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 235, 153
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 金证科技.理财服务器"
+FONT 9, "宋体", 0, 0, 0x0
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,18,20,20
+    LTEXT           "金证科技.理财服务器系统 1.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "版权所有 (C) 2011",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,177,10,50,14,WS_GROUP
+    LTEXT           "Static",IDC_DISPLAY_HELP,0,52,234,99,SS_SUNKEN
+    LTEXT           "http://www.szkingdom.com",IDC_CORPHOMEPAGE,78,39,101,10
+    LTEXT           "公司主页:",IDC_STATIC,39,39,36,8
+END
+
+IDD_CFG_DLG DIALOG  0, 0, 339, 239
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "三方交易配置管理"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "确定(&O)",ID_CFG_OK,230,218,30,14
+    PUSHBUTTON      "取消(&C)",ID_CFG_CANCEL,267,218,30,14
+    CONTROL         "Tab1",IDC_CFG_TAB,"SysTabControl32",0x0,1,2,337,209
+    PUSHBUTTON      "应用(&A)",IDC_CFG_APPLY,303,218,30,14
+    LTEXT           "",IDC_INFO_NOTICE,1,213,224,24,SS_SUNKEN
+END
+
+IDD_CFG_BASEINFO DIALOGEX 0, 0, 333, 172
+STYLE DS_SETFONT | WS_CHILD
+FONT 10, "System", 0, 0, 0x1
+BEGIN
+    CONTROL         "对接方英文名称:",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,17,19,59,8
+    EDITTEXT        IDC_PEER_ENGNAME,80,17,66,12,ES_AUTOHSCROLL,WS_EX_CLIENTEDGE
+    LTEXT           "对接方运行模式:",IDC_STATIC,17,36,59,8
+    GROUPBOX        "对接方基本信息",IDC_STATIC,7,4,301,69
+    GROUPBOX        "KCXP队列",IDC_STATIC,7,77,301,45
+    LTEXT           "队列管理器名:",IDC_STATIC,23,89,51,8,SS_CENTERIMAGE
+    EDITTEXT        IDC_KCXP_QMGR,80,87,67,12,ES_AUTOHSCROLL
+    LTEXT           "本地请求队列:",IDC_STATIC,163,90,51,8
+    EDITTEXT        IDC_KCXP_LOCALREQQ,220,88,67,12,ES_AUTOHSCROLL
+    LTEXT           "本地应答队列:",IDC_STATIC,22,106,51,8
+    EDITTEXT        IDC_KCXP_LOCALANSQ,80,104,67,12,ES_AUTOHSCROLL
+    LTEXT           "启动运行线称数:",IDC_STATIC,158,36,59,8
+    EDITTEXT        IDC_PEER_RUNTHREAD,220,35,67,12,ES_AUTOHSCROLL
+    RTEXT           "合同序号区间:",IDC_STATIC,23,53,51,8
+    EDITTEXT        IDC_PEER_HTXH,80,53,66,12,ES_AUTOHSCROLL
+    RTEXT           "运行时间区间:",IDC_STATIC,164,54,51,8
+    EDITTEXT        IDC_PEER_ENABLE,220,53,67,12,ES_AUTOHSCROLL
+    RTEXT           "使能状态:",IDC_STATIC,163,107,49,8
+    EDITTEXT        IDC_KCXP_LOCALANSQ2,220,105,67,12,ES_AUTOHSCROLL
+    LTEXT           "通讯协议:",IDC_STATIC,181,19,35,9
+    COMBOBOX        IDC_CMB_PROTOCOL,220,17,68,58,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_CMB_RUNMODE,80,35,68,37,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_CFG_TCPCOMMLAYOUT DIALOG  0, 0, 315, 176
+STYLE DS_SETFONT | WS_CHILD
+FONT 10, "System"
+BEGIN
+    LTEXT           "对接方IP地址:",IDC_STATIC,8,32,50,8
+    LTEXT           "对接方PORT:",IDC_STATIC,135,32,46,8
+    LTEXT           "本地IP地址:",IDC_STATIC,15,50,42,8
+    LTEXT           "本地PORT:",IDC_STATIC,142,50,38,8
+    LTEXT           "连接尝试:",IDC_STATIC,229,50,35,8
+    LTEXT           "运行版本:",IDC_STATIC,230,32,35,8
+    EDITTEXT        IDC_PEER_PORT,182,30,43,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_LOCAL_PORT,182,48,43,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_TRYOUT,266,48,43,13,ES_AUTOHSCROLL
+    GROUPBOX        "通讯协议",IDC_STATIC,3,1,310,66
+    CONTROL         "IPAddress1",IDC_PEER_IPADDRESS,"SysIPAddress32",WS_TABSTOP,59,30,72,13
+    CONTROL         "IPAddress2",IDC_LOCAL_IPADDRESS,"SysIPAddress32",WS_TABSTOP,59,48,72,13
+    GROUPBOX        "通讯规则",IDC_STATIC,3,70,310,105
+    LTEXT           "接收规则:",IDC_STATIC,230,14,35,8
+    LTEXT           "动态库名称:",IDC_STATIC,12,83,43,8
+    EDITTEXT        IDC_EDIT2,57,83,74,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CMB_RUNVERSION,266,30,45,31,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "通讯模式:",IDC_STATIC,23,14,35,8
+    LTEXT           "连接方式:",IDC_STATIC,145,14,35,8
+    COMBOBOX        IDC_CMB_MODE,59,12,72,38,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_CMB_TYPE,182,12,44,38,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_CMB_RCVRULE,266,12,45,43,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "包头长度:",IDC_STATIC,141,83,35,8
+    EDITTEXT        IDC_EDIT1,183,83,41,12,ES_AUTOHSCROLL
+    LTEXT           "包体偏移量:",IDC_STATIC,12,102,43,8
+    LTEXT           "偏移量长度:",IDC_STATIC,136,102,43,8
+    LTEXT           "偏移数据类型:",IDC_STATIC,227,102,51,8
+    LTEXT           "交易代码偏移量:",IDC_STATIC,12,120,59,8
+    LTEXT           "偏移量长度:",IDC_STATIC,136,120,43,8
+    LTEXT           "偏移数据类型:",IDC_STATIC,227,120,51,8
+    LTEXT           "流水号偏移量:",IDC_STATIC,12,139,51,8
+    LTEXT           "偏移量长度:",IDC_STATIC,136,139,43,8
+    LTEXT           "偏移数据类型:",IDC_STATIC,227,139,51,8
+    LTEXT           "业务节点偏移量:",IDC_STATIC,12,157,59,8
+    LTEXT           "偏移量长度:",IDC_STATIC,136,157,43,8
+    LTEXT           "偏移数据类型:",IDC_STATIC,227,157,51,8
+    EDITTEXT        IDC_EDIT3,59,102,72,10,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT4,63,139,67,10,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT5,72,120,58,10,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT6,72,157,58,10,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT7,181,102,43,10,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT8,181,120,43,10,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT9,181,139,43,10,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT10,181,157,43,10,ES_AUTOHSCROLL
+    COMBOBOX        IDC_CMB_BODYDATATYPE,279,102,31,31,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_CMB_TRANSCODEDATATYPE,279,120,31,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_CMB_TRANSSERIESDATATYPE,279,139,31,31,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_CMB_APPNODECODEDATATYPE,279,157,31,32,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_CFG_DBFCOMMLAYOUT DIALOG  0, 0, 333, 189
+STYLE DS_SETFONT | WS_CHILD
+FONT 10, "System"
+BEGIN
+    GROUPBOX        "对接方的请求",IDC_STATIC,3,0,329,47
+    GROUPBOX        "对接方的应答",IDC_STATIC,3,48,329,44
+    GROUPBOX        "我方的请求",IDC_STATIC,3,99,329,41
+    GROUPBOX        "我方的应答",IDC_STATIC,3,140,329,48
+END
+
+IDD_GETDATA_BRANCHNO DIALOG  0, 0, 170, 241
+STYLE DS_SETFONT | WS_CHILD
+FONT 10, "System"
+BEGIN
+    CONTROL         "Tree1",IDC_GETBRANCH_DATA,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | TVS_CHECKBOXES | TVS_FULLROWSELECT | TVS_INFOTIP | WS_BORDER | WS_TABSTOP,1,1,167,219
+    PUSHBUTTON      "确定(&O)",IDC_OK,137,224,30,12
+END
+
+IDD_CFG_BIZLAYOUT DIALOG  0, 0, 263, 144
+STYLE DS_SETFONT | WS_CHILD
+FONT 10, "System"
+BEGIN
+    LTEXT           "加载动态库名:",IDC_STATIC,13,22,51,8
+    EDITTEXT        IDC_BIZ_LOADDLLNAME,71,20,89,13,ES_AUTOHSCROLL
+    LTEXT           "解析脚本文件:",IDC_STATIC,13,46,51,8
+    EDITTEXT        IDC_BIZ_XMLPARSERNAME,71,44,89,13,ES_AUTOHSCROLL
+    LTEXT           "运行模式:",IDC_STATIC,164,22,35,8
+    COMBOBOX        IDC_CMB_BIZ_RUNMODE,209,20,46,46,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "使能状态:",IDC_STATIC,164,44,35,8
+    COMBOBOX        IDC_CMB_ENABLESTATUS,209,44,45,40,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "业务接口解析层",IDC_STATIC,7,6,254,61
+END
+
+IDD_CFG_DBLIBLAYOUT DIALOG  0, 0, 187, 98
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,130,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,130,24,50,14
+END
+
+IDD_CFG_APPNODECODELAYOUT DIALOG  0, 0, 288, 143
+STYLE DS_SETFONT | WS_CHILD
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "新建(&N)...",IDOK,245,16,36,14
+    PUSHBUTTON      "修改(&M)...",IDCANCEL,245,39,37,14
+    CONTROL         "List1",IDC_LIST_APPNODECODE,"SysListView32",LVS_REPORT | WS_BORDER | WS_TABSTOP,3,3,235,138
+    PUSHBUTTON      "删除(&D)",IDC_BUTTON1,245,63,38,14
+END
+
+IDD_CFG_KCBPCLILAYOUT DIALOG  0, 0, 187, 98
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,136,0,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,136,24,50,14
+END
+
+IDD_BATCH_SENDREQ DIALOG  0, 0, 187, 98
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,130,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,130,24,50,14
+END
+
+IDD_TABDIALOG DIALOG  0, 0, 187, 268
+STYLE DS_SETFONT | WS_POPUP
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,129,230,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,129,247,50,14
+END
+
+IDD_GETDATA_DLG DIALOG  0, 0, 425, 264
+STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "转帐数据管理"
+FONT 10, "System"
+BEGIN
+    CONTROL         "Tab1",IDC_GETDATA_TAB,"SysTabControl32",0x0,2,4,422,258
+END
+
+IDD_GETDATA_TRACING DIALOG  0, 0, 418, 241
+STYLE DS_SETFONT | WS_CHILD
+FONT 10, "System"
+BEGIN
+    CONTROL         "List1",IDC_LIST_RCVING,"SysListView32",LVS_REPORT | WS_BORDER | WS_TABSTOP,1,1,416,125
+    CONTROL         "List2",IDC_LIST_SENDING,"SysListView32",LVS_REPORT | WS_BORDER | WS_TABSTOP,0,127,417,113
+END
+
+IDD_DLG_WENXIN DIALOGEX 0, 0, 142, 43
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "温馨提示 ~^_^~"
+FONT 10, "微软雅黑", 400, 0, 0x86
+BEGIN
+    DEFPUSHBUTTON   "残忍退出",IDOK,8,26,50,14
+    PUSHBUTTON      "继续使用",IDCANCEL,76,26,50,14
+    LTEXT           "您真的要退出KDFCFS定时任务系统？",IDC_STATIC,12,9,123,11
+END
+
+IDD_SFCG_FILE DIALOG  0, 0, 291, 53
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "银行对帐文件名"
+FONT 10, "宋体"
+BEGIN
+    EDITTEXT        IDC_FILE,34,6,220,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "浏览..",IDC_BROW,257,6,30,14
+    DEFPUSHBUTTON   "确定",IDOK,188,27,47,14
+    PUSHBUTTON      "取消",IDCANCEL,241,27,46,14
+    LTEXT           "文件名:",IDC_STATIC,4,9,27,8
+END
+
+IDD_DIALOG1 DIALOG  0, 0, 187, 98
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,130,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,130,24,50,14
+END
+
+IDD_CFG_SRVCONN DIALOGEX 0, 0, 548, 288
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "KDRF服务器参数配置"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_TAB_CFG_SRVCONN,"SysTabControl32",0x0,3,3,540,241
+    PUSHBUTTON      "保存所有",IDC_CFG_OK,130,257,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "取消",IDC_BTN_SRV_CANCEL,366,257,50,14,NOT WS_VISIBLE
+END
+
+IDD_CFG_SRVCONN_NET DIALOGEX 0, 0, 316, 180
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "IP/机器名:",IDC_STATIC,21,21,58,8
+    EDITTEXT        IDC_EDIT_ADDR,114,23,175,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PORT,114,49,175,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "连接超时(秒):",IDC_STATIC,21,78,58,8
+    EDITTEXT        IDC_EDIT_TIMEOUT,114,79,175,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "端口:",IDC_STATIC,21,46,58,8
+    LTEXT           "重连次数:",IDC_STATIC,21,111,58,8
+    EDITTEXT        IDC_EDIT_RECON,114,110,175,12,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "保存",IDC_OF_OK,132,140,50,14
+END
+
+IDD_CFG_SRVCONN_BP DIALOGEX 0, 0, 316, 203
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           " KCBP服务器名称",IDC_STATIC,20,23,60,8
+    EDITTEXT        IDC_BP_SERV_NAME,92,23,170,14,ES_AUTOHSCROLL
+    LTEXT           "地        址",IDC_STATIC,20,48,60,8
+    LTEXT           "请求队列",IDC_STATIC,20,123,60,8
+    EDITTEXT        IDC_BP_REQQ,92,119,170,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_BP_PORT,92,71,170,14,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "端        口",IDC_STATIC,20,73,60,8
+    LTEXT           "连接超时(秒)",IDC_STATIC,20,98,60,8
+    EDITTEXT        IDC_BP_TIMEOUT,92,95,170,14,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "应答队列",IDC_STATIC,20,148,60,8
+    EDITTEXT        IDC_BP_ANSQ,92,143,170,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_BP_IP,92,47,170,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "保存",IDC_BP_OK,132,167,50,14
+END
+
+IDD_LOGIN DIALOGEX 0, 0, 175, 107
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "操作员登录"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_ED_LOGIN_OPCODE,63,20,82,14,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_ED_LOGIN_PSW,63,38,82,14,ES_PASSWORD | ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "登录",IDOK,27,80,67,20
+    PUSHBUTTON      "取消",IDCANCEL,103,80,42,20
+    LTEXT           "操作员",IDC_STATIC,27,22,25,8
+    LTEXT           "密    码",IDC_STATIC,27,40,25,8
+    GROUPBOX        "",IDC_STATIC,7,7,161,55
+    CONTROL         "自动登录",IDC_CHECK_IS_AUTO_LOGIN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,95,64,48,10
+    CONTROL         "保存密码",IDC_CHECK_IS_SAVE_PWD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,29,64,48,10
+END
+
+IDD_CFG_ADD_MTH DIALOGEX 0, 0, 439, 254
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "添加成交接口库配置信息"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "席位名称",-1,24,18,58,8
+    EDITTEXT        IDC_MTH_SEAT,118,18,247,12,ES_AUTOHSCROLL
+    LTEXT           "实时成交库(表)",-1,24,58,58,8
+    EDITTEXT        IDC_MTH_DB,118,55,247,12,ES_AUTOHSCROLL
+    LTEXT           "接口类型",-1,24,42,58,8
+    LTEXT           "扫描间隔(毫秒)",-1,24,71,58,8
+    EDITTEXT        IDC_MTH_INTERVAL,118,71,247,12,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_MTH_DSN,118,88,247,12,ES_AUTOHSCROLL
+    LTEXT           "数据库名",-1,24,106,58,8
+    EDITTEXT        IDC_MTH_DATABASE,118,104,247,12,ES_AUTOHSCROLL
+    LTEXT           "服务器名",-1,24,89,58,8
+    LTEXT           "用户名",-1,24,125,58,8
+    EDITTEXT        IDC_MTH_DBUSER,118,124,247,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_MTH_DBPWD,118,141,247,12,ES_AUTOHSCROLL
+    LTEXT           "检索字段",-1,24,164,58,8
+    EDITTEXT        IDC_MTH_KEYF,118,160,247,12,ES_AUTOHSCROLL
+    LTEXT           "密码",-1,24,145,58,8
+    LTEXT           "检索字段类型",-1,24,183,58,8
+    COMBOBOX        IDC_MTH_TYPE,118,37,247,52,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_MTH_KEYTYPE,118,180,247,40,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "确定 ",IDC_BTN_ADD_MTH,133,218,50,14
+    PUSHBUTTON      "取消",IDC_BTN_ADD_MTH_CANCEL,255,218,50,14
+    PUSHBUTTON      "浏览",IDC_BTN_SZ_MTH,375,54,50,14
+END
+
+IDD_CFG_PUSHQ DIALOGEX 0, 0, 316, 180
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "队列数据生命周期(秒)",-1,21,21,83,8
+    EDITTEXT        IDC_PUSH_LIFE,114,23,175,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "固定成交推送队列",-1,21,78,81,8
+    EDITTEXT        IDC_PUSH_Q,114,79,175,12,ES_AUTOHSCROLL
+    LTEXT           "是否固定推送队列",-1,21,49,71,8
+    COMBOBOX        IDC_PUSH_ISFIX,114,48,175,37,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "保存",IDC_MTHQ_OK,132,124,50,14
+END
+
+IDD_CFG_MATCH DIALOGEX 0, 0, 535, 206
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST_MATCH,"SysListView32",LVS_SINGLESEL | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,0,7,535,154,WS_EX_LEFTSCROLLBAR
+    PUSHBUTTON      "增加",IDC_BTN_ADD,119,170,50,14
+    PUSHBUTTON      "删除",IDC_BTN_DEL,236,170,50,14
+    PUSHBUTTON      "修改",IDC_BTN_UPD,366,170,50,14
+END
+
+IDD_CFG_HQ DIALOGEX 0, 0, 446, 180
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "深圳证券信息库",-1,14,21,57,8
+    EDITTEXT        IDC_SZ_HQ,82,19,288,12,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "上海证券信息库",-1,14,75,60,8
+    EDITTEXT        IDC_SH_HQ,82,75,288,12,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "保存",IDC_HQ_OK,197,124,50,14
+    PUSHBUTTON      "浏览",IDC_BTN_SZ_BRO,376,18,50,14
+    PUSHBUTTON      "浏览",IDC_BTN_SH_BRO,376,74,50,14
+    LTEXT           "新三板证券信息库",-1,14,49,64,8
+    EDITTEXT        IDC_SB_HQ,82,48,288,12,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "浏览",IDC_BTN_SB_BRO,376,46,50,14
+END
+
+IDD_CFG_TASK DIALOGEX 0, 0, 535, 221
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST_TASK,"SysListView32",LVS_SINGLESEL | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,0,7,535,109,WS_EX_LEFTSCROLLBAR
+    PUSHBUTTON      "修改服务参数",IDC_BTN_TASK_UPD,223,131,78,14
+    LTEXT           "服务器名",IDC_STATIC,74,164,39,8
+    EDITTEXT        IDC_ED_SERV_NAME,133,160,237,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "修改服务器名",IDC_BTN_SERV_NAME,403,158,59,14
+END
+
+IDD_DLG_TASKITEM DIALOGEX 0, 0, 320, 353
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "理财服务参数修改"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,68,332,50,14
+    PUSHBUTTON      "取消",IDCANCEL,200,332,50,14
+    LTEXT           "界面日志级别",-1,16,25,58,8
+    COMBOBOX        IDC_CBX_DISPLEVEL,99,23,186,99,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "文件日志级别",-1,16,47,58,8
+    COMBOBOX        IDC_CBX_FILELEVEL,99,44,186,99,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "数据库连接",IDC_GRP_DB,14,71,270,66
+    LTEXT           "DSN名称",-1,26,86,37,14
+    EDITTEXT        IDC_EDIT_DSN,100,82,168,14,ES_AUTOHSCROLL
+    LTEXT           "用户名",-1,26,102,37,14
+    EDITTEXT        IDC_EDIT_DBUSER,100,97,168,14,ES_AUTOHSCROLL
+    LTEXT           "密码",-1,26,118,37,14
+    EDITTEXT        IDC_EDIT_DBPWD,100,114,168,14,ES_AUTOHSCROLL
+    GROUPBOX        "KCXP连接",IDC_GRP_KCXP,14,151,270,84
+    LTEXT           "KCXPIP",-1,26,166,37,14
+    EDITTEXT        IDC_EDIT_KCXPIP,100,162,168,14,ES_AUTOHSCROLL | WS_GROUP
+    LTEXT           "KCXP端口",-1,26,182,37,14
+    EDITTEXT        IDC_EDIT_KCXPPORT,100,177,168,14,ES_AUTOHSCROLL | ES_NUMBER | WS_GROUP
+    LTEXT           "请求队列",-1,26,198,37,14
+    EDITTEXT        IDC_EDIT_REQ,100,194,168,14,ES_AUTOHSCROLL | WS_GROUP
+    LTEXT           "应答队列",-1,26,213,37,14
+    EDITTEXT        IDC_EDIT_ANS,100,211,168,14,ES_AUTOHSCROLL | WS_GROUP
+    GROUPBOX        "OpenFire连接",IDC_GRP_OF,14,236,270,84
+    LTEXT           "用户1",-1,26,251,37,14
+    EDITTEXT        IDC_EDIT_USER1,100,247,168,14,ES_AUTOHSCROLL
+    LTEXT           "密码1",-1,26,267,37,14
+    EDITTEXT        IDC_EDIT_PWD1,100,263,168,14,ES_AUTOHSCROLL
+    LTEXT           "用户2",-1,26,283,37,14
+    EDITTEXT        IDC_EDIT_USER2,100,279,168,14,ES_AUTOHSCROLL
+    LTEXT           "密码2",-1,26,298,37,14
+    EDITTEXT        IDC_EDIT_PWD2,100,298,168,14,ES_AUTOHSCROLL
+END
+
+IDD_CFG_ADD_LBM DIALOGEX 0, 0, 360, 177
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "添加成交接口库配置信息"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "请求功能号",-1,13,15,58,8
+    EDITTEXT        IDC_LBM_REQNO,60,15,290,12,ES_AUTOHSCROLL
+    LTEXT           "扫描间隔(秒)",-1,13,46,58,8
+    EDITTEXT        IDC_LBM_INTERVAL,60,46,290,12,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_LBM_INPUT,60,62,290,30,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+    LTEXT           "出参信息",-1,13,98,40,8
+    EDITTEXT        IDC_LBM_OUTPUT,60,100,290,32,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+    LTEXT           "入参信息",-1,13,64,33,8
+    PUSHBUTTON      "确定 ",IDC_BTN_LBM_ADD,107,145,50,14
+    PUSHBUTTON      "取消",IDC_BTN_LBM_CANCEL,203,145,50,14
+    LTEXT           "任务名称",-1,13,30,58,8
+    EDITTEXT        IDC_LBM_TASKNAME,60,30,290,12,ES_AUTOHSCROLL
+END
+
+IDD_DIALOG_KDFCFS_CFG_SET DIALOGEX 0, 0, 214, 235
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "KDFCFS参数设置"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "保存配置",IDC_BUTTON_SAVE_CFG,7,204,50,24
+    PUSHBUTTON      "取消",IDC_BUTTON_CHACEL,157,204,50,24
+    LTEXT           "KCBP地址",IDC_STATIC,31,9,34,8
+    EDITTEXT        IDC_EDIT_KCBP_PORT,73,29,100,15,ES_AUTOHSCROLL
+    LTEXT           "KCBP端口",IDC_STATIC,31,31,34,8
+    LTEXT           "KCBP名称",IDC_STATIC,31,53,34,8
+    EDITTEXT        IDC_EDIT_KCBP_NAME,73,51,100,15,ES_AUTOHSCROLL
+    LTEXT           "请求队列名",IDC_STATIC,24,75,41,8
+    EDITTEXT        IDC_EDIT_REQ_QUEUE,73,73,100,15,ES_AUTOHSCROLL
+    LTEXT           "应答队列名",IDC_STATIC,24,97,41,8
+    EDITTEXT        IDC_EDIT_RESP_QUEUE,73,95,100,15,ES_AUTOHSCROLL
+    LTEXT           "KCBP用户名",IDC_STATIC,23,119,42,8
+    EDITTEXT        IDC_EDIT_USER,73,117,100,15,ES_AUTOHSCROLL
+    LTEXT           "KCBP密码",IDC_STATIC,31,141,34,8
+    EDITTEXT        IDC_EDIT_PASSWORD,73,139,100,15,ES_AUTOHSCROLL
+    LTEXT           "日志显示级别",IDC_STATIC,16,162,49,8
+    COMBOBOX        IDC_COMBO_LOG_LVL,73,161,100,30,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT_KCBP_IP,73,7,100,15,ES_AUTOHSCROLL
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,2018,706,2024
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "FileDescription", "KDFCFS Microsoft 基础类应用程序"
+            VALUE "FileVersion", "1, 2018, 706, 2024"
+            VALUE "InternalName", "定时任务网关"
+            VALUE "LegalCopyright", "版权所有 (C) 2018"
+            VALUE "OriginalFilename", "KDFCFS.EXE"
+            VALUE "ProductName", "定时任务网关"
+            VALUE "ProductVersion", "1, 0, 0, 1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        RIGHTMARGIN, 234
+        TOPMARGIN, 2
+        BOTTOMMARGIN, 151
+    END
+
+    IDD_CFG_DLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 1
+        RIGHTMARGIN, 338
+        BOTTOMMARGIN, 238
+    END
+
+    IDD_CFG_BASEINFO, DIALOG
+    BEGIN
+        LEFTMARGIN, 1
+        RIGHTMARGIN, 331
+        TOPMARGIN, 2
+    END
+
+    IDD_CFG_TCPCOMMLAYOUT, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 175
+    END
+
+    IDD_CFG_DBFCOMMLAYOUT, DIALOG
+    BEGIN
+        RIGHTMARGIN, 331
+        TOPMARGIN, 2
+        BOTTOMMARGIN, 181
+    END
+
+    IDD_GETDATA_BRANCHNO, DIALOG
+    BEGIN
+        LEFTMARGIN, 1
+        RIGHTMARGIN, 169
+        TOPMARGIN, 1
+        BOTTOMMARGIN, 239
+    END
+
+    IDD_CFG_BIZLAYOUT, DIALOG
+    BEGIN
+        LEFTMARGIN, 1
+        RIGHTMARGIN, 261
+        TOPMARGIN, 1
+        BOTTOMMARGIN, 142
+    END
+
+    IDD_CFG_DBLIBLAYOUT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 180
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 91
+    END
+
+    IDD_CFG_APPNODECODELAYOUT, DIALOG
+    BEGIN
+        RIGHTMARGIN, 286
+    END
+
+    IDD_CFG_KCBPCLILAYOUT, DIALOG
+    BEGIN
+        RIGHTMARGIN, 186
+        BOTTOMMARGIN, 95
+    END
+
+    IDD_BATCH_SENDREQ, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 180
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 91
+    END
+
+    IDD_TABDIALOG, DIALOG
+    BEGIN
+        RIGHTMARGIN, 185
+        BOTTOMMARGIN, 267
+    END
+
+    IDD_GETDATA_DLG, DIALOG
+    BEGIN
+        RIGHTMARGIN, 424
+        BOTTOMMARGIN, 262
+    END
+
+    IDD_DLG_WENXIN, DIALOG
+    BEGIN
+        RIGHTMARGIN, 135
+        BOTTOMMARGIN, 40
+    END
+
+    IDD_SFCG_FILE, DIALOG
+    BEGIN
+        RIGHTMARGIN, 289
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_DIALOG1, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 180
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 91
+    END
+
+    IDD_CFG_SRVCONN, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 543
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 281
+    END
+
+    IDD_CFG_SRVCONN_NET, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 173
+    END
+
+    IDD_CFG_SRVCONN_BP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 4
+        BOTTOMMARGIN, 181
+    END
+
+    IDD_LOGIN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 168
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 100
+    END
+
+    IDD_CFG_ADD_MTH, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 432
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 247
+    END
+
+    IDD_CFG_PUSHQ, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 308
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 173
+    END
+
+    IDD_CFG_MATCH, DIALOG
+    BEGIN
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 199
+    END
+
+    IDD_CFG_HQ, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 435
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 173
+    END
+
+    IDD_CFG_TASK, DIALOG
+    BEGIN
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 183
+        BOTTOMMARGIN, 158
+    END
+
+    IDD_DLG_TASKITEM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 313
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 346
+    END
+
+    IDD_CFG_ADD_LBM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 172
+    END
+
+    IDD_DIALOG_KDFCFS_CFG_SET, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 207
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 228
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+IDC_HANDCUR             CURSOR                  "res\\ICR_HAND.CUR"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_CFG_PUSHQ DLGINIT
+BEGIN
+    IDC_PUSH_ISFIX, 0x403, 6, 0
+0x2d30, 0xb72d, 0x00f1, 
+    IDC_PUSH_ISFIX, 0x403, 6, 0
+0x2d31, 0xca2d, 0x00c7, 
+    0
+END
+
+IDD_CFG_ADD_MTH DLGINIT
+BEGIN
+    IDC_MTH_TYPE, 0x403, 7, 0
+0x2d30, 0x532d, 0x4c51, "\000" 
+    IDC_MTH_TYPE, 0x403, 7, 0
+0x2d31, 0x442d, 0x4642, "\000" 
+    IDC_MTH_KEYTYPE, 0x403, 7, 0
+0x2d30, 0x492d, 0x544e, "\000" 
+    IDC_MTH_KEYTYPE, 0x403, 8, 0
+0x2d31, 0x432d, 0x4148, 0x0052, 
+    0
+END
+
+IDD_DLG_TASKITEM DLGINIT
+BEGIN
+    IDC_CBX_DISPLEVEL, 0x403, 8, 0
+0x2d30, 0xb52d, 0xcaf7, 0x00d4, 
+    IDC_CBX_DISPLEVEL, 0x403, 8, 0
+0x2d31, 0xcc2d, 0xcae1, 0x00be, 
+    IDC_CBX_DISPLEVEL, 0x403, 8, 0
+0x2d32, 0xbe2d, 0xb8af, 0x00e6, 
+    IDC_CBX_DISPLEVEL, 0x403, 8, 0
+0x2d33, 0xb42d, 0xceed, 0x00f3, 
+    IDC_CBX_DISPLEVEL, 0x403, 8, 0
+0x2d34, 0xd12d, 0xd6cf, 0x00d8, 
+    IDC_CBX_FILELEVEL, 0x403, 8, 0
+0x2d30, 0xb52d, 0xcaf7, 0x00d4, 
+    IDC_CBX_FILELEVEL, 0x403, 8, 0
+0x2d31, 0xcc2d, 0xcae1, 0x00be, 
+    IDC_CBX_FILELEVEL, 0x403, 8, 0
+0x2d32, 0xbe2d, 0xb8af, 0x00e6, 
+    IDC_CBX_FILELEVEL, 0x403, 8, 0
+0x2d33, 0xb42d, 0xceed, 0x00f3, 
+    IDC_CBX_FILELEVEL, 0x403, 8, 0
+0x2d34, 0xd12d, 0xd6cf, 0x00d8, 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDR_MAINFRAME           "KDRF服务器\n\nKDRF服务器\n\n\nKDRF服务器.Document\nKDRF Document"
+    IDS_COL_1               "Column One"
+    IDS_COL_2               "Column Two"
+    IDS_COL_3               "Column Three"
+    IDS_SAMPLE_TEXT         "                    "
+    IDS_PANE_EDIT           "          "
+    IDS_PANE_SLIDER_CTRL    "  "
+    IDS_PANE_BUTTON         " "
+    IDS_PANE_PROGRESS       "  "
+    IDS_PANE_ANIMATE        " "
+    IDS_PANE_LABEL          "  "
+    IDS_PANE_LOGIN          "未登录转融通"
+    IDS_PANE_OPNAME         "操作员"
+    IDS_PANE_MASTER_FALG    "系统主备状态"
+    IDS_PANE_CUR_TIME       "当前系统时间"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "金证KDRF服务器"
+    AFX_IDS_IDLEMESSAGE     "就绪"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_INDICATOR_EXT        "扩展名"
+    ID_INDICATOR_CAPS       "大写"
+    ID_INDICATOR_NUM        "数字"
+    ID_INDICATOR_SCRL       "滚动"
+    ID_INDICATOR_OVR        "改写"
+    ID_INDICATOR_REC        "记录"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_FILE_NEW             "建立新文档\n启动"
+    ID_FILE_OPEN            "打开一个现有文档\n打开"
+    ID_FILE_CLOSE           "关闭活动文档\n关闭"
+    ID_FILE_SAVE            "保存活动文档\n保存"
+    ID_FILE_SAVE_AS         "将活动文档以一个新文件名保存\n另存为"
+    ID_FILE_PAGE_SETUP      "改变打印选项\n页面设置"
+    ID_FILE_PRINT_SETUP     "改变打印机及打印选项\n打印设置"
+    ID_FILE_PRINT           "打印活动文档\n打印"
+    ID_FILE_PRINT_PREVIEW   "显示整页\n打印预览"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_APP_ABOUT            "显示程序信息，版本号和版权\n关于"
+    ID_APP_EXIT             "退出应用程序；提示保存文档\n退出"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_FILE_MRU_FILE1       "打开该文档"
+    ID_FILE_MRU_FILE2       "打开该文档"
+    ID_FILE_MRU_FILE3       "打开该文档"
+    ID_FILE_MRU_FILE4       "打开该文档"
+    ID_FILE_MRU_FILE5       "打开该文档"
+    ID_FILE_MRU_FILE6       "打开该文档"
+    ID_FILE_MRU_FILE7       "打开该文档"
+    ID_FILE_MRU_FILE8       "打开该文档"
+    ID_FILE_MRU_FILE9       "打开该文档"
+    ID_FILE_MRU_FILE10      "打开该文档"
+    ID_FILE_MRU_FILE11      "打开该文档"
+    ID_FILE_MRU_FILE12      "打开该文档"
+    ID_FILE_MRU_FILE13      "打开该文档"
+    ID_FILE_MRU_FILE14      "打开该文档"
+    ID_FILE_MRU_FILE15      "打开该文档"
+    ID_FILE_MRU_FILE16      "打开该文档"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_NEXT_PANE            "切换到下一个窗格\n下一窗格"
+    ID_PREV_PANE            "切换回前一个窗格\n前一窗格"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_WINDOW_SPLIT         "将活动的窗口分隔成窗格\n分隔"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_EDIT_CLEAR           "删除被选对象\n删除"
+    ID_EDIT_CLEAR_ALL       "全部删除\n全部删除"
+    ID_EDIT_COPY            "复制被选对象并将其置于剪贴板上\n复制"
+    ID_EDIT_CUT             "剪切被选对象并将其置于剪贴板上\n剪切"
+    ID_EDIT_FIND            "查找指定的正文\n查找"
+    ID_EDIT_PASTE           "插入剪贴板内容\n粘贴"
+    ID_EDIT_REPEAT          "重复上一步操作\n重复"
+    ID_EDIT_REPLACE         "用不同的正文替换指定的正文\n替换"
+    ID_EDIT_SELECT_ALL      "选择整个文档\n选择全部"
+    ID_EDIT_UNDO            "撤消最后一步操作\n撤消"
+    ID_EDIT_REDO            "重新执行先前已撤消的操作\n重新执行"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "显示或隐藏工具栏\n显隐工具栏"
+    ID_VIEW_STATUS_BAR      "显示或隐藏状态栏\n显隐状态栏"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "改变窗口大小"
+    AFX_IDS_SCMOVE          "改变窗口位置"
+    AFX_IDS_SCMINIMIZE      "将窗口缩小成图标"
+    AFX_IDS_SCMAXIMIZE      "把窗口放大到最大尺寸"
+    AFX_IDS_SCNEXTWINDOW    "切换到下一个文档窗口"
+    AFX_IDS_SCPREVWINDOW    "切换到先前的文档窗口"
+    AFX_IDS_SCCLOSE         "关闭活动的窗口并提示保存所有文档"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "把窗口恢复到正常大小"
+    AFX_IDS_SCTASKLIST      "激活任务表"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_PREVIEW_CLOSE   "当前系统时间"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_START_KDFCFS         "启动服务器"
+    ID_HELP_TITLE           "帮助主题"
+    ID_PAUSE_KDFCFS         "暂时停止某一对接方的交易"
+    ID_STOP_KDFCFS          "停止服务器"
+    ID_CFG_SANF             "配置管理三方交易系统"
+    ID_GETDATA_BRANCHNO     "把营业部的转帐数据取过来"
+    ID_QUERY_START          "启运重发服务"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_QUERY_END            "停止重发服务"
+    ID_START_GRID           "启动选中的服务"
+    ID_STOP_GRID            "停止选中的服务"
+END
+
+#endif    // 中文(中华人民共和国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\KDFCFS.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#include "l.chs\afxprint.rc"        // printing/print preview resources
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
