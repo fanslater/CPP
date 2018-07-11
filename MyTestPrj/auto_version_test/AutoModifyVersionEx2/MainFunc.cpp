@@ -9,22 +9,16 @@
 #include "BaseTool.h"
 #include "CppRegex.h"
 
+#define VERSION_FILE    "./version.h"
+
 typedef std::vector<tstring> stringvec;
 
 int _tmain( int argc, _TCHAR* argv[] )
 {
-    tstring strRcFilePath = "./AutoModifyVersion.rc";
-    bool bIsTimeMode = false;
+    tstring strRcFilePath = VERSION_FILE;
     if( argc >= 2 )
     {
         strRcFilePath = argv[1];
-        if( argc == 3 )
-        {
-            if( 0 == strcmp( argv[2], "time" ) )
-            {
-                bIsTimeMode = true;
-            }
-        }
     }
     if( strRcFilePath.length() == 0 )
     {
@@ -59,14 +53,7 @@ int _tmain( int argc, _TCHAR* argv[] )
     {
         tstring strLine = ( *svit );
         tstring strNewLine;
-        if (bIsTimeMode)
-        {
-            CppRegex::replase_line_bytime( strLine, strNewLine );
-        }
-        else
-        {
-            CppRegex::replase_line( strLine, strNewLine );
-        }        
+        CppRegex::replase_line_both( strLine, strNewLine );
         ofsFile << strNewLine << "\n";
     }
     ofsFile.close();

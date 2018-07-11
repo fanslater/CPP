@@ -1,6 +1,7 @@
 // Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
+#include "version.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
@@ -53,8 +54,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,2018,0711,111651
- PRODUCTVERSION 3,2018,0711,111651
+ FILEVERSION FILE_MAJOR,FILE_MINOR,FILE_REVISION,FILE_BUILD
+ PRODUCTVERSION PRODUCT_MAJOR,PRODUCT_MINOR,PRODUCT_REVISION,PRODUCT_BUILD
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -69,13 +70,13 @@ BEGIN
     BEGIN
         BLOCK "080404b0"
         BEGIN
-            VALUE "FileDescription", "test4 应用程序"
-            VALUE "FileVersion", "2, 2018, 0711, 111651"
-            VALUE "InternalName", "test4"
+            VALUE "FileDescription", "test5 应用程序"
+            VALUE "FileVersion", FILE_VERSION_STR
+            VALUE "InternalName", "test5"
             VALUE "LegalCopyright", "Copyright (C) 2018"
-            VALUE "OriginalFilename", "test4.exe"
-            VALUE "ProductName", "test4 应用程序"
-            VALUE "ProductVersion", "3, 2018, 0711, 111651"
+            VALUE "OriginalFilename", "test5.exe"
+            VALUE "ProductName", "test5 应用程序"
+            VALUE "ProductVersion", PRODUCT_VERSION_STR
         END
     END
     BLOCK "VarFileInfo"

@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="test4"
-	ProjectGUID="{73DB28A5-7EA5-41C3-8199-C19B2449DAF2}"
-	RootNamespace="test4"
+	Name="test5"
+	ProjectGUID="{2E0EF4B5-8FD2-4D5C-AA1B-AE5A4583E28A}"
+	RootNamespace="test5"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -25,7 +25,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="AutoModifyVersionEx.exe  $(ProjectName).rc  time"
+				CommandLine="AutoModifyVersionEx2.exe version.h"
+				ExcludedFromBuild="false"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -99,7 +100,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="AutoModifyVersionEx.exe  $(ProjectName).rc  time"
+				CommandLine="AutoModifyVersionEx2.exe version.h time"
+				ExcludedFromBuild="false"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -194,7 +196,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\test4.cpp"
+				RelativePath=".\test5.cpp"
 				>
 			</File>
 		</Filter>
@@ -226,7 +228,7 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath=".\test4.rc"
+				RelativePath=".\test5.rc"
 				>
 			</File>
 		</Filter>

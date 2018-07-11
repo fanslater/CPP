@@ -2,11 +2,12 @@
 //
 
 #include "stdafx.h"
+#include "version.h"
 
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-    int i = 0;
+    
 	return 0;
 }
 

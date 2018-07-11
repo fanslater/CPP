@@ -101,6 +101,60 @@ void CppRegex::replase_line_bytime( const tstring& src, tstring& dst )
     }
 }
 
+void CppRegex::replase_line_ex( const tstring& src, tstring& dst )
+{
+    dst = src;
+    std::tr1::regex fmtreg( PRODUCT_BUILD_REGEX_STR );
+    std::tr1::smatch result;
+    if( std::tr1::regex_search( src, result, fmtreg ) )
+    {
+        tstring strBuildNoLine = result[0];
+        long long llBuildNo = 0;
+        sscanf_s( strBuildNoLine.c_str(), PRODUCT_BUILD_FORMAT, &llBuildNo );
+        llBuildNo++;
+        tstring strNewLine = CBaseTool::tformat( PRODUCT_BUILD_FORMAT, llBuildNo );
+        dst = std::tr1::regex_replace( src, std::tr1::regex( strBuildNoLine ), strNewLine );
+    }
+}
+
+void CppRegex::replase_line_bytime_ex( const tstring& src, tstring& dst )
+{
+    dst = src;
+    std::tr1::smatch result;
+    std::tr1::regex rgxBuild( PRODUCT_BUILD_REGEX_STR );
+    if( std::tr1::regex_search( src, result, rgxBuild ) )
+    {
+        tstring strBuildNoLine = result[0];
+        long long llDateTime = CBaseTool::GetPhysicsDateTime_Asll();
+        tstring strNewLine = CBaseTool::tformat( PRODUCT_BUILD_FORMAT, llDateTime );
+        dst = std::tr1::regex_replace( src, rgxBuild, strNewLine );
+    }
+}
+
+void CppRegex::replase_line_both( const tstring& src, tstring& dst )
+{
+    dst = src;
+    std::tr1::smatch result;
+    std::tr1::regex rgxFileBld( FILE_BUILD_REGEX_STR );
+    if( std::tr1::regex_search( src, result, rgxFileBld ) )
+    {
+        tstring strBuildNoLine = result[0];
+        long long llBuildNo = 0;
+        sscanf_s( strBuildNoLine.c_str(), FILE_BUILD_FORMAT, &llBuildNo );
+        llBuildNo++;
+        tstring strNewLine = CBaseTool::tformat( FILE_BUILD_FORMAT, llBuildNo );
+        dst = std::tr1::regex_replace( src, std::tr1::regex( strBuildNoLine ), strNewLine );
+    }
+    std::tr1::regex rgxProBld( PRODUCT_BUILD_REGEX_STR );
+    if( std::tr1::regex_search( src, result, rgxProBld ) )
+    {
+        tstring strBuildNoLine = result[0];
+        long long llDateTime = CBaseTool::GetPhysicsDateTime_Asll();
+        tstring strNewLine = CBaseTool::tformat( PRODUCT_BUILD_FORMAT, llDateTime );
+        dst = std::tr1::regex_replace( src, rgxProBld, strNewLine );
+    }
+}
+
 void CppRegex::test_func()
 {
     //tstring strText = " FILEVERSION 1,0,0,3";
@@ -122,17 +176,18 @@ tstring CppRegex::VersionAdd( const tstring& strVersionNo )
     std::tr1::regex reg3( FORMAT3_REGEX_STR );
     std::tr1::regex reg4( FORMAT4_REGEX_STR );
     std::tr1::smatch result;
-    bool bFlag1, bFlag2,bFlag3,bFlag4;
+    bool bFlag1, bFlag2, bFlag3, bFlag4;
     bFlag1 = std::tr1::regex_search( strVersionNo, result, reg1 );
     bFlag2 = std::tr1::regex_search( strVersionNo, result, reg2 );
     bFlag3 = std::tr1::regex_search( strVersionNo, result, reg3 );
     bFlag4 = std::tr1::regex_search( strVersionNo, result, reg4 );
     if( bFlag1 || bFlag2 || bFlag3 || bFlag4 )
     {
+        tstring strFormat = ( bFlag1 ? FORMAT1 : ( bFlag2 ? FORMAT2 : ( bFlag3 ? FORMAT3 : FORMAT4 ) ) );
         int Num[4] = {0};
-        sscanf_s( strVersionNo.c_str(), ( bFlag1 ? FORMAT1 : (bFlag2?FORMAT2:(bFlag3?FORMAT3:FORMAT4)) ), &Num[0], &Num[1], &Num[2], &Num[3] );
+        sscanf_s( strVersionNo.c_str(), strFormat.c_str(), &Num[0], &Num[1], &Num[2], &Num[3] );
         Num[3]++;
-        return CBaseTool::tformat( ( bFlag1 ? FORMAT1 : FORMAT2 ), Num[0], Num[1], Num[2], Num[3] );
+        return CBaseTool::tformat( strFormat.c_str(), Num[0], Num[1], Num[2], Num[3] );
     }
     return strVersionNo;
 }
@@ -141,17 +196,22 @@ tstring CppRegex::MakeVersionByTime( const tstring& strVersionNo )
 {
     std::tr1::regex reg1( FORMAT1_REGEX_STR );
     std::tr1::regex reg2( FORMAT2_REGEX_STR );
+    std::tr1::regex reg3( FORMAT3_REGEX_STR );
+    std::tr1::regex reg4( FORMAT4_REGEX_STR );
     std::tr1::smatch result;
-    bool bFlag1, bFlag2;
+    bool bFlag1, bFlag2, bFlag3, bFlag4;
     bFlag1 = std::tr1::regex_search( strVersionNo, result, reg1 );
     bFlag2 = std::tr1::regex_search( strVersionNo, result, reg2 );
-    if( bFlag1 || bFlag2 )
+    bFlag3 = std::tr1::regex_search( strVersionNo, result, reg3 );
+    bFlag4 = std::tr1::regex_search( strVersionNo, result, reg4 );
+    if( bFlag1 || bFlag2 || bFlag3 || bFlag4 )
     {
+        tstring strFormat = ( bFlag1 ? FORMAT1 : ( bFlag2 ? FORMAT2 : ( bFlag3 ? FORMAT3 : FORMAT4 ) ) );
         int iDate = CBaseTool::GetPhysicsDate_AsInt();
         int iTime = CBaseTool::GetPhysicsTime_AsInt();
         int Num[4] = {0};
-        sscanf_s( strVersionNo.c_str(), ( bFlag1 ? FORMAT1 : FORMAT2 ), &Num[0], &Num[1], &Num[2], &Num[3] );
-        return CBaseTool::tformat( ( bFlag1 ? FORMAT1 : FORMAT2 ), Num[0], iDate / 10000, iDate % 10000, iTime );
+        sscanf_s( strVersionNo.c_str(), strFormat.c_str(), &Num[0], &Num[1], &Num[2], &Num[3] );
+        return CBaseTool::tformat( strFormat.c_str(), Num[0], iDate / 10000, iDate % 10000, iTime );
     }
     return strVersionNo;
 }

@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="test4"
-	ProjectGUID="{73DB28A5-7EA5-41C3-8199-C19B2449DAF2}"
-	RootNamespace="test4"
+	Name="AutoModifyVersionEx2"
+	ProjectGUID="{0314940E-DB83-497D-8144-EB7DA3812CF5}"
+	RootNamespace="AutoModifyVersionEx2"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -21,11 +21,10 @@
 			OutputDirectory="$(SolutionDir)/bin"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="1"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="AutoModifyVersionEx.exe  $(ProjectName).rc  time"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -94,12 +93,11 @@
 			OutputDirectory="$(SolutionDir)/bin"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="1"
+			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="AutoModifyVersionEx.exe  $(ProjectName).rc  time"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -174,6 +172,18 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\BaseTool.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\CppRegex.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MainFunc.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -193,10 +203,6 @@
 					/>
 				</FileConfiguration>
 			</File>
-			<File
-				RelativePath=".\test4.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -204,7 +210,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\resource.h"
+				RelativePath=".\BaseTool.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CppRegex.h"
 				>
 			</File>
 			<File
@@ -216,7 +226,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\version.h"
+				RelativePath=".\tstring.h"
 				>
 			</File>
 		</Filter>
@@ -225,10 +235,6 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
-			<File
-				RelativePath=".\test4.rc"
-				>
-			</File>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"
