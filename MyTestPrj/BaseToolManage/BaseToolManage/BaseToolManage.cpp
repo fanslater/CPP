@@ -2,10 +2,15 @@
 //
 
 #include "stdafx.h"
+#include <iostream>
+#include "ThreadUnitEx.h"
 
-
-int _tmain(int argc, _TCHAR* argv[])
+int _tmain( int argc, _TCHAR* argv[] )
 {
-	return 0;
+    CThreadUnitEx cls;
+    cls.StartThread();
+    getchar();
+    cls.StopThread();
+    return 0;
 }
 
