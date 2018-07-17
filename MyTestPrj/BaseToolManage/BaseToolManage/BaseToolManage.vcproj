@@ -269,6 +269,14 @@
 				RelativePath=".\tstring.h"
 				>
 			</File>
+			<File
+				RelativePath=".\XmlIniParser.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\XmlIniParser.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"
