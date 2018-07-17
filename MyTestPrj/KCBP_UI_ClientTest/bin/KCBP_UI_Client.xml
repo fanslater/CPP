@@ -3,14 +3,20 @@
   <config>
     <kcbp_svr_name value="KCBPB01"/>
     <kcbp_svr_protocal value="0"/>
-    <kcbp_svr_ip value="127.0.0.1"/>
+    <kcbp_svr_ip value="192.168.202.98"/>
     <kcbp_svr_port value="21000"/>
-    <send_queue_name value="req_otcts_test"/>
-    <recv_queue_name value="ans_otcts_test"/>
+    <send_queue_name value="req_otcts_test1"/>
+    <recv_queue_name value="ans_otcts_test1"/>
     <user_name value="KCXP00"/>
     <user_pwd value="888888"/>
   </config>
   <lbms DefParam="F_FUNCTION:,F_SUBSYS:14,F_OP_USER:8888,F_OP_ROLE:2,F_OP_SITE:127.0.0.1,F_CHANNEL:0,F_SESSION:aaaaaaaaaaaaaaaa,F_RUNTIME:,F_REMOTE_OP_ORG:,F_REMOTE_OP_USER:,F_OP_ORG:0,">
+    <lbm Id="L2620363" NeedDef="0" >
+      <![CDATA[F_FUNCTION:,F_SUBSYS:13,F_OP_USER:8888,F_OP_ROLE:2,F_OP_SITE:111111,F_CHANNEL:0,F_SESSION:aaaaaaaaaaaaaaaa,F_RUNTIME:,F_REMOTE_OP_ORG:,F_REMOTE_OP_USER:,F_OP_ORG:0,CUST_CODE:107501,BGN_DATE:20180619,END_DATE:20180819,]]>
+    </lbm>
+    <lbm Id="L2612465" NeedDef="0" >
+      <![CDATA[F_FUNCTION:,F_SUBSYS:13,F_OP_USER:8888,F_OP_ROLE:2,F_OP_SITE:111111,F_CHANNEL:0,F_SESSION:aaaaaaaaaaaaaaaa,F_RUNTIME:,F_REMOTE_OP_ORG:,F_REMOTE_OP_USER:,F_OP_ORG:0,INST_ID:LC101,PARAM_STR:'ISS_CODE,INST_CODE,INST_ID,INST_SNAME,INST_TYPE,INST_CLS,SUB_INST_FLAG,FIRST_MIN_BUY,MIN_SUBS_AMT,MIN_BIDS_AMT,ORG_FIRST_MIN_BUY,ORG_MIN_SUBS_AMT,ORG_MIN_BIDS_AMT,APPEND_MIN_BUY,ORG_APPEND_MIN_BUY,']]>
+    </lbm>
     <lbm Id="L2620200" NeedDef="1" >
       <![CDATA[CUST_CODE:,CUACCT_CODE:,TA_ACCT:,ISS_CODE:,INST_CODE:,INST_ID:,INT_ORG:,TA_CODES:,MKT_CODE:,INST_TYPE:,INST_CLS:,PAGE_RECNUM:,PAGE_RECCNT:,USER_TYPE:,]]>
     </lbm>

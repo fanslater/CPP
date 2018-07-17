@@ -48,7 +48,11 @@ tstring CBaseTool::GetPhysicsTime_AsStr()
 
 long long CBaseTool::GetPhysicsDateTime_Asll()
 {
-    return (long long)(GetPhysicsDate_AsInt() * 1000000 + GetPhysicsTime_AsInt());
+    tstring tmp = GetPhysicsDateTime_AsStr();
+    tstringstream tss( tmp.c_str() );
+    long long llRet;
+    tss >> llRet;
+    return llRet;
 }
 
 tstring CBaseTool::GetPhysicsDateTime_AsStr()
