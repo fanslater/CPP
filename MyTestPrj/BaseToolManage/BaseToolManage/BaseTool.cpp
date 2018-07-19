@@ -426,6 +426,12 @@ tstring CBaseTool::get_json_val( Json::Value& json, const tstring& key )
     return strRet;
 }
 
+Json::Value CBaseTool::make_json( const tstring& name, const tstring& value )
+{
+    Json::Value jsTmp;
+    jsTmp[name] = value;
+    return jsTmp;
+}
 tstring CBaseTool::get_ptree_val_secure( const boost::property_tree::ptree& node, const tstring& path )
 {
     std::string value;

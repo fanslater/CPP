@@ -57,6 +57,7 @@ public:
     static tstring json_to_str( Json::Value& json );
     static int str_to_json( tstring& str, Json::Value& json, tstring& err );
     static tstring get_json_val( Json::Value& json, const tstring& key );
+    static Json::Value make_json( const tstring& name, const tstring& value );
 
     //xmlœ‡πÿ
     static tstring get_ptree_val_secure( const boost::property_tree::ptree& node, const tstring& path );
