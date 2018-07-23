@@ -3,7 +3,7 @@
 //头文件
 #include <iostream>
 #include <map>
-using namespace std;
+#include "tstring.h"
 
 //宏定义
 #define INI_CFG_PATH		"./KCBP_UI_Client.ini"
@@ -18,14 +18,14 @@ using namespace std;
 
 struct lbm_call_cfg
 {
-    string lbm_Id;
-    string lbm_NeedDef;
-    string lbm_Param;
+    tstring lbm_Id;
+    tstring lbm_NeedDef;
+    tstring lbm_Param;
 };
 
-typedef map<string,lbm_call_cfg> lbmInfo;
-typedef pair<string,lbm_call_cfg> lbmPair;
+typedef std::map<tstring,lbm_call_cfg> lbmInfo;
+typedef std::pair<tstring,lbm_call_cfg> lbmPair;
 
-typedef map<string,string> kvmap;
-typedef pair<string,string> kvpair;
+typedef std::map<tstring,tstring> kvmap;
+typedef std::pair<tstring,tstring> kvpair;
 

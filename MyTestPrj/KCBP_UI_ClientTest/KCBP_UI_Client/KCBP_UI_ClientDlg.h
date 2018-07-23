@@ -7,9 +7,9 @@
 #include "comm_def.h"
 #include "XmlIniReader.h"
 #include "EditableListCtrl.h"
-#include "KCBPCli.h"
 #include "afxwin.h"
 #include "afxcmn.h"
+#include "KcbpVisitor.h"
 
 // CKCBP_UI_ClientDlg ¶Ô»°¿ò
 class CKCBP_UI_ClientDlg : public CDialog
@@ -36,33 +36,32 @@ protected:
     afx_msg HCURSOR OnQueryDragIcon();
     DECLARE_MESSAGE_MAP()
 
-public:
+private:
     CXmlIniReader m_clsCfg;
-    KCBPCLIHANDLE m_kcbp_handle;
-    lbmInfo m_lbm_map;
+    CKcbpVisitor m_clsKcbp;
+    lbmInfo m_liLBM;
     CString m_ctrDefaultParam;
 
 public:
-    void init();
-    void uninit();
-    void open_console();
-    void close_console();
-    void showerror();
-    void printTree( boost::property_tree::ptree root );
-    void call_lbm( lbm_call_cfg& lbm );
-    void AnalysisInput( const string input, kvmap& paramlist );
-    string& trim( string& s );
-    void ShowLBMResult();
-    void modifyWindowsShow( BOOL bflag );
+    void Init();
+    void Uninit();
+    void OpenConsole();
+    void CloseConsole();
+    void ShowError();
+    void PrintTree( boost::property_tree::ptree root );
+    void CallLbm( lbm_call_cfg& lbm );
+    void AnalysisInput( const tstring input, kvmap& paramlist );
+    void AnalysisParams( const tstring& strInput, Json::Value& jsParams );
+    void ShowResultToView( const Json::Value& jsResultSet );
+    void ModifyWindowsShow( BOOL bflag );
 
 public:
     afx_msg void OnClose();
-    CEditableListCtrl m_list_ctrl_result_set;
+    CEditableListCtrl m_etlcResultSet;
     afx_msg void OnBnClickedButtonsaveconnectcfg();
     afx_msg void OnBnClickedButtonconnectsvr();
     afx_msg void OnBnClickedButtondisconnectsvr();
-    CComboBox m_cbx_lbm_no;
+    CComboBox m_cbxLbmNo;
     afx_msg void OnCbnSelchangeComboLbmNo();
     afx_msg void OnBnClickedButtoncalllbm();
-    CTabCtrl m_tab;
 };

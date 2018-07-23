@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "KCBP_UI_Client.h"
 #include "KCBP_UI_ClientDlg.h"
+#include "BaseTool.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -56,8 +57,8 @@ CKCBP_UI_ClientDlg::CKCBP_UI_ClientDlg( CWnd* pParent /*=NULL*/ )
 void CKCBP_UI_ClientDlg::DoDataExchange( CDataExchange* pDX )
 {
     CDialog::DoDataExchange( pDX );
-    DDX_Control( pDX, IDC_LIST_Input_param, m_list_ctrl_result_set );
-    DDX_Control( pDX, IDC_COMBO_LBM_NO, m_cbx_lbm_no );
+    DDX_Control( pDX, IDC_LIST_Input_param, m_etlcResultSet );
+    DDX_Control( pDX, IDC_COMBO_LBM_NO, m_cbxLbmNo );
 }
 
 BEGIN_MESSAGE_MAP( CKCBP_UI_ClientDlg, CDialog )
@@ -101,7 +102,7 @@ BOOL CKCBP_UI_ClientDlg::OnInitDialog()
     SetIcon( m_hIcon, TRUE );       // 设置大图标
     SetIcon( m_hIcon, FALSE );      // 设置小图标
     // TODO: 在此添加额外的初始化代码
-    init();
+    Init();
     return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -152,10 +153,9 @@ HCURSOR CKCBP_UI_ClientDlg::OnQueryDragIcon()
 }
 
 
-void CKCBP_UI_ClientDlg::init()
+void CKCBP_UI_ClientDlg::Init()
 {
-    m_kcbp_handle = NULL;
-    modifyWindowsShow( TRUE );    
+    ModifyWindowsShow( TRUE );
     //open_console();
     m_clsCfg.loadfile( xml_file, XML_CFG_PATH );
     //在界面显示配置文件中的值
@@ -174,19 +174,19 @@ void CKCBP_UI_ClientDlg::init()
     ctrTmp = m_clsCfg.get( "root.config.user_pwd.<xmlattr>.value" ).c_str();
     SetDlgItemText( IDC_EDIT_user_pwd, ctrTmp );
     //这里设置控件风格
-    DWORD dwStyle = ::GetWindowLong( m_list_ctrl_result_set.GetSafeHwnd(), GWL_STYLE );
+    DWORD dwStyle = ::GetWindowLong( m_etlcResultSet.GetSafeHwnd(), GWL_STYLE );
     dwStyle |= LVS_SINGLESEL;       //只可单行选中
     dwStyle |= LVS_SHOWSELALWAYS;   //Always show selection
-    ::SetWindowLong( m_list_ctrl_result_set.GetSafeHwnd(), GWL_STYLE, dwStyle );
-    DWORD dwStyleEx = m_list_ctrl_result_set.GetExtendedStyle();
+    ::SetWindowLong( m_etlcResultSet.GetSafeHwnd(), GWL_STYLE, dwStyle );
+    DWORD dwStyleEx = m_etlcResultSet.GetExtendedStyle();
     dwStyleEx |= LVS_EX_GRIDLINES;        //网格线
     dwStyleEx |= LVS_EX_FULLROWSELECT;    //整行高亮
     //dwStyleEx |= LVS_EX_CHECKBOXES;       //Item前生成check box
-    m_list_ctrl_result_set.SetExtendedStyle( dwStyleEx );
+    m_etlcResultSet.SetExtendedStyle( dwStyleEx );
     //初始化lbmcbx
     m_ctrDefaultParam = m_clsCfg.get( "root.lbms.<xmlattr>.DefParam" ).c_str();
     boost::property_tree::ptree xml = m_clsCfg.getTree();
-    m_lbm_map.clear();
+    m_liLBM.clear();
     BOOST_FOREACH( boost::property_tree::ptree::value_type & kv, xml.get_child( "root.lbms" ) )
     {
         try
@@ -195,8 +195,8 @@ void CKCBP_UI_ClientDlg::init()
             lcc.lbm_Id = kv.second.get<string>( "<xmlattr>.Id" );
             lcc.lbm_NeedDef = kv.second.get<string>( "<xmlattr>.NeedDef" );
             lcc.lbm_Param = kv.second.get_value<std::string>();
-            m_cbx_lbm_no.InsertString( m_cbx_lbm_no.GetCount(), lcc.lbm_Id.c_str() );
-            m_lbm_map.insert( lbmPair( lcc.lbm_Id, lcc ) );
+            m_cbxLbmNo.InsertString( m_cbxLbmNo.GetCount(), lcc.lbm_Id.c_str() );
+            m_liLBM.insert( lbmPair( lcc.lbm_Id, lcc ) );
         }
         catch( boost::property_tree::ptree_error ex )
         {
@@ -211,26 +211,25 @@ void CKCBP_UI_ClientDlg::init()
     }
 }
 
-void CKCBP_UI_ClientDlg::uninit()
+void CKCBP_UI_ClientDlg::Uninit()
 {
-    m_kcbp_handle = NULL;
     //close_console();
 }
 
 void CKCBP_UI_ClientDlg::OnClose()
 {
-    uninit();
+    Uninit();
     CDialog::OnClose();
 }
 
-void CKCBP_UI_ClientDlg::open_console()
+void CKCBP_UI_ClientDlg::OpenConsole()
 {
     AllocConsole();
     freopen( "CONOUT$", "w+t", stdout );
     freopen( "CONIN$", "r+t", stdin );
 }
 
-void CKCBP_UI_ClientDlg::close_console()
+void CKCBP_UI_ClientDlg::CloseConsole()
 {
     fclose( stdout );
     fclose( stdin );
@@ -238,17 +237,12 @@ void CKCBP_UI_ClientDlg::close_console()
 }
 
 
-void CKCBP_UI_ClientDlg::showerror()
+void CKCBP_UI_ClientDlg::ShowError()
 {
-    int iErr = 0;
-    char szErr[1024] = {0};
-    KCBPCLI_GetErr( m_kcbp_handle, &iErr, szErr );
-    CString ctrErr;
-    ctrErr.Format( "errcode=[%d] errmsg=[%s]", iErr, szErr );
-    AfxMessageBox( ctrErr );
+    AfxMessageBox( m_clsKcbp.GetErrorMsg().c_str() );
 }
 
-void CKCBP_UI_ClientDlg::printTree( boost::property_tree::ptree root )
+void CKCBP_UI_ClientDlg::PrintTree( boost::property_tree::ptree root )
 {
     BOOST_FOREACH( boost::property_tree::ptree::value_type & v1, root )
     {
@@ -257,7 +251,7 @@ void CKCBP_UI_ClientDlg::printTree( boost::property_tree::ptree root )
         {
             BOOST_FOREACH( boost::property_tree::ptree::value_type & vAttr, v1.second )
             {
-                cout << vAttr.first << "=" << vAttr.second.data() << " ";
+                std::cout << vAttr.first << "=" << vAttr.second.data() << " ";
             }
             printf( "\n" );
         }
@@ -272,7 +266,7 @@ void CKCBP_UI_ClientDlg::printTree( boost::property_tree::ptree root )
             {
                 //打印当前节点的名称
                 std::cout << v1.first << std::endl;
-                printTree( v1.second );
+                PrintTree( v1.second );
                 if( v1.second.size() == 0x01 )
                     std::cout << root.get<std::string>( v1.first ) << std::endl;
             }
@@ -280,10 +274,10 @@ void CKCBP_UI_ClientDlg::printTree( boost::property_tree::ptree root )
     }
 }
 
-void CKCBP_UI_ClientDlg::call_lbm( lbm_call_cfg& lbm )
+void CKCBP_UI_ClientDlg::CallLbm( lbm_call_cfg& lbm )
 {
-    lbmInfo::iterator itLBM = m_lbm_map.find( lbm.lbm_Id );
-    if( itLBM == m_lbm_map.end() )
+    lbmInfo::iterator itLBM = m_liLBM.find( lbm.lbm_Id );
+    if( itLBM == m_liLBM.end() )
     {
         AfxMessageBox( "lbm no found" );
         return;
@@ -294,52 +288,23 @@ void CKCBP_UI_ClientDlg::call_lbm( lbm_call_cfg& lbm )
         strFullParam = m_ctrDefaultParam.GetString();
     }
     strFullParam.append( lbm.lbm_Param );
-    kvmap paramlist;
-    AnalysisInput( strFullParam, paramlist );
-    if( m_kcbp_handle == NULL )
-    {
-        AfxMessageBox( "KCBP句柄为空" );
-        return;
-    }
+    Json::Value jsParamList;
+    AnalysisParams( strFullParam, jsParamList );
     int iRet = 0;
-    iRet = KCBPCLI_BeginWrite( m_kcbp_handle );
+    tstring strRet;
+    Json::Value jsResultSet;
+    iRet = m_clsKcbp.CallLbm_AllResult( lbm.lbm_Id, jsParamList, jsResultSet, strRet );
     if( iRet != 0 )
     {
-        showerror();
+        AfxMessageBox( strRet.c_str() );
         return;
     }
-    //写入参数
-    kvmap::iterator it;
-    for( it = paramlist.begin(); it != paramlist.end(); it ++ )
-    {
-        KCBPCLI_SetValue( m_kcbp_handle, ( char* )it->first.c_str(), ( char* )it->second.c_str() );
-    }
-    //发起调用
-    iRet = KCBPCLI_CallProgramAndCommit( m_kcbp_handle, ( char* )lbm.lbm_Id.c_str() );
-    if( iRet != 0 )
-    {
-        showerror();
-        return;
-    }
-    //打开结果
-    iRet = KCBPCLI_RsOpen( m_kcbp_handle );
-    if( iRet != 0 )
-    {
-        showerror();
-        return;
-    }
-    //显示结果
-    ShowLBMResult();
-    //关闭结果
-    iRet = KCBPCLI_RsClose( m_kcbp_handle );
-    if( iRet != 0 )
-    {
-        showerror();
-        return;
-    }
+    tstring strResultSet = CBaseTool::json_to_str( jsResultSet );
+    printf( strResultSet.c_str() );
+    ShowResultToView( jsResultSet );
 }
 
-void CKCBP_UI_ClientDlg::AnalysisInput( const string input, kvmap& paramlist )
+void CKCBP_UI_ClientDlg::AnalysisInput( const tstring input, kvmap& paramlist )
 {
     std::string src( input );
     if( src.length() == 0 )
@@ -354,19 +319,19 @@ void CKCBP_UI_ClientDlg::AnalysisInput( const string input, kvmap& paramlist )
         {
             break;
         }
-        std::string one_param = trim( src.substr( iFind, iPos - iFind ) );
+        std::string one_param = CBaseTool::trim( src.substr( iFind, iPos - iFind ) );
         if( one_param.find( ":'" ) != std::string::npos )
         {
             int iDYHZ = src.find( ":'", iFind );
             int iDYHY = src.find( "'", iDYHZ + 2 );
-            one_param = trim( src.substr( iFind, iDYHY - iFind + 1 ) );
+            one_param = CBaseTool::trim( src.substr( iFind, iDYHY - iFind + 1 ) );
             iPos = iDYHY;
         }
         int iSeparate = one_param.find( ":" );
         if( iSeparate > 0 )
         {
-            std::string key = trim( one_param.substr( 0, iSeparate ) );
-            std::string value = trim( one_param.substr( iSeparate + 1 ) );
+            std::string key = CBaseTool::trim( one_param.substr( 0, iSeparate ) );
+            std::string value = CBaseTool::trim( one_param.substr( iSeparate + 1 ) );
             if( value.find( "'" ) != std::string::npos )
             {
                 value = value.substr( 1, value.length() - 2 );
@@ -377,17 +342,15 @@ void CKCBP_UI_ClientDlg::AnalysisInput( const string input, kvmap& paramlist )
     }
 }
 
-string& CKCBP_UI_ClientDlg::trim( string& s )
+void CKCBP_UI_ClientDlg::AnalysisParams( const tstring& strInput, Json::Value& jsParams )
 {
-    if( s.empty() )
+    kvmap paramlist;
+    AnalysisInput( strInput, paramlist );
+    for( kvmap::iterator it = paramlist.begin() ; it != paramlist.end() ; ++it )
     {
-        return s;
+        jsParams[it->first] = it->second;
     }
-    s.erase( 0, s.find_first_not_of( " " ) );
-    s.erase( s.find_last_not_of( " " ) + 1 );
-    return s;
 }
-
 
 //for (int i = 0 ; i < 10 ; i ++)
 //{
@@ -416,59 +379,56 @@ string& CKCBP_UI_ClientDlg::trim( string& s )
 //m_list_ctrl_input_param.SetItemText(nItem, 2, TEXT("Male"));
 //m_list_ctrl_input_param.SetItemText(nItem, 3, TEXT("12"));
 
-void CKCBP_UI_ClientDlg::ShowLBMResult()
+void CKCBP_UI_ClientDlg::ShowResultToView( const Json::Value& jsResultSet )
 {
     //清理整个控件
-    m_list_ctrl_result_set.DeleteAllItems();
-    int nCols = m_list_ctrl_result_set.GetHeaderCtrl()->GetItemCount();
+    m_etlcResultSet.DeleteAllItems();   //删除所有行
+    int nCols = m_etlcResultSet.GetHeaderCtrl()->GetItemCount();
     for( int i = 0 ; i < nCols ; i ++ )
     {
-        m_list_ctrl_result_set.DeleteColumn( 0 );
+        m_etlcResultSet.DeleteColumn( 0 ); //删除所有表格列
     }
-    m_list_ctrl_result_set.InsertColumn( 0, "行号", LVCFMT_LEFT, LISTCTRL_WIDTH );
-    //m_list_ctrl_result_set.SetColumnWidth(0,LVSCW_AUTOSIZE);
-    m_list_ctrl_result_set.SetColumnCtrlType( 0, CCT_EDITBOX );
-    int iPianYi = 0;
-    do  //结果集循环
+    m_etlcResultSet.InsertColumn( 0, "行号", LVCFMT_LEFT, LISTCTRL_WIDTH );
+    m_etlcResultSet.SetColumnCtrlType( 0, CCT_EDITBOX );
+    Json::Value jsShowResultSet;
+    int iResultSetCount = jsResultSet.size();
+    if( iResultSetCount == 1 )      //只有第一结果集
     {
-        int iColNum = 0, iRowNum = 0;
-        KCBPCLI_RsGetColNum( m_kcbp_handle, &iColNum );
-        KCBPCLI_RsGetRowNum( m_kcbp_handle, &iRowNum );
-        //加入列名
-        for( int i = 1; i <= iColNum; i++ )
-        {
-            char szFieldName[1024] = {0};
-            KCBPCLI_RsGetColName( m_kcbp_handle, i, szFieldName, sizeof( szFieldName ) );
-            int iIndex = m_list_ctrl_result_set.GetHeaderCtrl()->GetItemCount();
-            m_list_ctrl_result_set.InsertColumn( iIndex, szFieldName, LVCFMT_LEFT, LISTCTRL_WIDTH );
-            //m_list_ctrl_result_set.SetColumnWidth(iIndex,LVSCW_AUTOSIZE);
-            m_list_ctrl_result_set.SetColumnCtrlType( iIndex, CCT_EDITBOX );
-        }
-        int iRowId = 0;
-        while( 1 )  //单个结果集行循环
-        {
-            if( 0 != KCBPCLI_RsFetchRow( m_kcbp_handle ) )
-            {
-                break;
-            }
-            char szRowId[16] = {0};
-            sprintf( szRowId, "%d", iRowId + 1 );
-            iRowId = m_list_ctrl_result_set.InsertItem( m_list_ctrl_result_set.GetItemCount(), szRowId );
-            char Result[1024] = {0};
-            //打印列值
-            for( int iColId = 1; iColId <= iColNum; iColId++ )  //单个结果集列循环
-            {
-                KCBPCLI_RsGetCol( m_kcbp_handle, iColId, Result );
-                m_list_ctrl_result_set.SetItemText( iRowId, iColId + iPianYi, Result );
-            }
-        }
-        iPianYi += iColNum;
+        jsShowResultSet = jsResultSet.get( "result1", Json::nullValue );
     }
-    while( 0 == KCBPCLI_RsMore( m_kcbp_handle ) );
+    else
+    {
+        jsShowResultSet =  jsResultSet.get( "result2", Json::nullValue );
+    }
+    if( jsShowResultSet.type() != Json::arrayValue )
+    {
+        AfxMessageBox( "无法获取结果集" );
+        return;
+    }
+    Json::Value::Members jvmNames = jsShowResultSet[0u].getMemberNames();
+    for( Json::Value::Members::iterator jvmit = jvmNames.begin() ;  jvmit != jvmNames.end() ; ++jvmit )
+    {
+        int iIndex = m_etlcResultSet.GetHeaderCtrl()->GetItemCount();
+        m_etlcResultSet.InsertColumn( iIndex, ( *jvmit ).c_str(), LVCFMT_LEFT, LISTCTRL_WIDTH );
+        m_etlcResultSet.SetColumnCtrlType( iIndex, CCT_EDITBOX );
+    }
+    for( Json::Value::iterator jvit = jsShowResultSet.begin() ; jvit != jsShowResultSet.end() ; ++ jvit )
+    {
+        int iCurCount = m_etlcResultSet.GetItemCount();
+        int iRowId = m_etlcResultSet.InsertItem( iCurCount, CBaseTool::tformat( "%d", iCurCount + 1 ).c_str() );
+        Json::Value jsRow = *jvit;
+        int iColId = 1;
+        for( Json::Value::Members::iterator jvmit = jvmNames.begin() ;  jvmit != jvmNames.end() ; ++jvmit )
+        {
+            tstring strValue = CBaseTool::get_json_val( jsRow, *jvmit );
+            m_etlcResultSet.SetItemText( iRowId, iColId, strValue.c_str() );
+            iColId++;
+        }
+    }
 }
 
 
-void CKCBP_UI_ClientDlg::modifyWindowsShow( BOOL bflag )
+void CKCBP_UI_ClientDlg::ModifyWindowsShow( BOOL bflag )
 {
     GetDlgItem( IDC_BUTTON_connect_svr )->EnableWindow( bflag );
     GetDlgItem( IDC_BUTTON_disconnect_svr )->EnableWindow( !bflag );
@@ -504,8 +464,7 @@ void CKCBP_UI_ClientDlg::OnBnClickedButtonsaveconnectcfg()
 
 void CKCBP_UI_ClientDlg::OnBnClickedButtonconnectsvr()
 {
-    CString kcbp_svr_name, kcbp_svr_protocal, kcbp_svr_ip, kcbp_svr_port, send_queue_name, recv_queue_name, user_name, user_pwd;
-    kcbp_svr_protocal = m_clsCfg.get( "root.config.kcbp_svr_protocal.<xmlattr>.value" ).c_str();
+    CString kcbp_svr_name, kcbp_svr_ip, kcbp_svr_port, send_queue_name, recv_queue_name, user_name, user_pwd;
     GetDlgItemText( IDC_EDIT_kcbp_svr_name, kcbp_svr_name );
     GetDlgItemText( IDC_EDIT_kcbp_ip, kcbp_svr_ip );
     GetDlgItemText( IDC_EDIT_kcbp_svr_port, kcbp_svr_port );
@@ -513,80 +472,49 @@ void CKCBP_UI_ClientDlg::OnBnClickedButtonconnectsvr()
     GetDlgItemText( IDC_EDIT_recv_queue_name, recv_queue_name );
     GetDlgItemText( IDC_EDIT_user_name, user_name );
     GetDlgItemText( IDC_EDIT_user_pwd, user_pwd );
+    KcbpConfig stKcbp;
+    stKcbp.strIp = kcbp_svr_ip.GetString();
+    stKcbp.strName = kcbp_svr_name.GetString();
+    stKcbp.strPort = kcbp_svr_port.GetString();
+    stKcbp.strProtocal = m_clsCfg.get( "root.config.kcbp_svr_protocal.<xmlattr>.value" );
+    stKcbp.strPwd = user_pwd.GetString();
+    stKcbp.strReqQue = send_queue_name.GetString();
+    stKcbp.strRespQue = recv_queue_name.GetString();
+    stKcbp.strTimeOut = "30";
+    stKcbp.strUser = user_name.GetString();
     int iRet = 0;
-    if( m_kcbp_handle != NULL )
-    {
-        AfxMessageBox( "KCBP句柄非空！" );
-        return;
-    }
-    //初始化
-    iRet = KCBPCLI_Init( &m_kcbp_handle );
+    tstring strRet;
+    m_clsKcbp.SetConfig( stKcbp );
+    iRet = m_clsKcbp.Connect( strRet );
     if( iRet != 0 )
     {
-        showerror();
+        AfxMessageBox( strRet.c_str() );
         return;
-    }
-    //设置参数
-    tagKCBPConnectOption stKCBPConnection = {0};
-    strcpy( stKCBPConnection.szServerName, kcbp_svr_name.GetString() );
-    stKCBPConnection.nProtocal = atoi( kcbp_svr_protocal.GetString() );
-    strcpy( stKCBPConnection.szAddress, kcbp_svr_ip.GetString() );
-    stKCBPConnection.nPort = atoi( kcbp_svr_port.GetString() );
-    strcpy( stKCBPConnection.szSendQName, send_queue_name.GetString() );
-    strcpy( stKCBPConnection.szReceiveQName, recv_queue_name.GetString() );
-    iRet = KCBPCLI_SetOptions( m_kcbp_handle, KCBP_OPTION_CONNECT, &stKCBPConnection, sizeof( stKCBPConnection ) );
-    if( iRet != 0 )
-    {
-        showerror();
-        return;
-    }
-    //链接服务
-    iRet = KCBPCLI_ConnectServer( m_kcbp_handle, ( char* )kcbp_svr_name.GetString(), ( char* )user_name.GetString(), ( char* )user_pwd.GetString() );
-    if( iRet != 0 )
-    {
-        showerror();
-        KCBPCLI_Exit( m_kcbp_handle );
-        m_kcbp_handle = NULL;
-        return ;
     }
     //链接按钮置灰，断开按钮还原
-    modifyWindowsShow( FALSE );
+    ModifyWindowsShow( FALSE );
 }
 
 void CKCBP_UI_ClientDlg::OnBnClickedButtondisconnectsvr()
 {
     int iRet = 0;
-    if( m_kcbp_handle == NULL )
-    {
-        AfxMessageBox( "KCBP句柄为空！" );
-        return;
-    }
-    //断开
-    iRet = KCBPCLI_DisConnect( m_kcbp_handle );
+    tstring strRet;
+    m_clsKcbp.Disconnect( strRet );
     if( iRet != 0 )
     {
-        showerror();
-        KCBPCLI_Exit( m_kcbp_handle );
+        AfxMessageBox( strRet.c_str() );
         return;
     }
-    //反初始化
-    iRet = KCBPCLI_Exit( m_kcbp_handle );
-    if( iRet != 0 )
-    {
-        showerror();
-        return;
-    }
-    m_kcbp_handle = NULL;
     //链接按钮置灰，断开按钮还原
-    modifyWindowsShow( TRUE );
+    ModifyWindowsShow( TRUE );
 }
 
 void CKCBP_UI_ClientDlg::OnCbnSelchangeComboLbmNo()
 {
     CString lbm_no;
-    m_cbx_lbm_no.GetLBText( m_cbx_lbm_no.GetCurSel(), lbm_no );
-    lbmInfo::iterator it = m_lbm_map.find( lbm_no.GetString() );
-    if( it != m_lbm_map.end() )
+    m_cbxLbmNo.GetLBText( m_cbxLbmNo.GetCurSel(), lbm_no );
+    lbmInfo::iterator it = m_liLBM.find( lbm_no.GetString() );
+    if( it != m_liLBM.end() )
     {
         SetDlgItemText( IDC_EDIT_LBM_PARAMLIST, it->second.lbm_Param.c_str() );
     }
@@ -606,6 +534,6 @@ void CKCBP_UI_ClientDlg::OnBnClickedButtoncalllbm()
     lbm_call_cfg lbm;
     lbm.lbm_Id = lbm_no.GetString();
     lbm.lbm_Param = lbm_param.GetString();
-    call_lbm( lbm );
+    CallLbm( lbm );
 }
 
