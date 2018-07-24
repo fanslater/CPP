@@ -39,8 +39,9 @@ protected:
 private:
     CXmlIniReader m_clsCfg;
     CKcbpVisitor m_clsKcbp;
-    lbmInfo m_liLBM;
-    CString m_ctrDefaultParam;
+    LbmInfoMap m_mpLbmInfo;
+    CComboBox m_cbxLbmNo;
+    CEditableListCtrl m_etlcResultSet;
 
 public:
     void Init();
@@ -49,19 +50,18 @@ public:
     void CloseConsole();
     void ShowError();
     void PrintTree( boost::property_tree::ptree root );
-    void CallLbm( lbm_call_cfg& lbm );
-    void AnalysisInput( const tstring input, kvmap& paramlist );
+    void CallLbm( const LbmInfo& lbm );
     void AnalysisParams( const tstring& strInput, Json::Value& jsParams );
     void ShowResultToView( const Json::Value& jsResultSet );
     void ModifyWindowsShow( BOOL bflag );
 
 public:
     afx_msg void OnClose();
-    CEditableListCtrl m_etlcResultSet;
     afx_msg void OnBnClickedButtonsaveconnectcfg();
     afx_msg void OnBnClickedButtonconnectsvr();
     afx_msg void OnBnClickedButtondisconnectsvr();
-    CComboBox m_cbxLbmNo;
     afx_msg void OnCbnSelchangeComboLbmNo();
-    afx_msg void OnBnClickedButtoncalllbm();
+    afx_msg void OnBnClickedButtoncalllbm();    
+    afx_msg void OnBnClickedButtonaddthislbminfo();
+    afx_msg void OnBnClickedButtonsavethislibminfo();
 };

@@ -166,6 +166,7 @@ int CKcbpVisitor::CallLbm_AllResult( const tstring& strLbmNo, const Json::Value&
         errmsg = GetErrorMsg();
         return iRet;
     }
+    //tstring strTmp = CBaseTool::json_to_str(Json::Value(jsInParam));
     Json::Value::Members jvmNames = jsInParam.getMemberNames();
     for( Json::Value::Members::iterator jvmit = jvmNames.begin() ; jvmit != jvmNames.end() ; ++jvmit )
     {

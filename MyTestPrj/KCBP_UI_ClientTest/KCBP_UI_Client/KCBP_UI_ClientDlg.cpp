@@ -6,6 +6,7 @@
 #include "KCBP_UI_Client.h"
 #include "KCBP_UI_ClientDlg.h"
 #include "BaseTool.h"
+#include <regex>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -72,6 +73,8 @@ BEGIN_MESSAGE_MAP( CKCBP_UI_ClientDlg, CDialog )
     ON_BN_CLICKED( IDC_BUTTON_disconnect_svr, &CKCBP_UI_ClientDlg::OnBnClickedButtondisconnectsvr )
     ON_CBN_SELCHANGE( IDC_COMBO_LBM_NO, &CKCBP_UI_ClientDlg::OnCbnSelchangeComboLbmNo )
     ON_BN_CLICKED( IDC_BUTTON_call_lbm, &CKCBP_UI_ClientDlg::OnBnClickedButtoncalllbm )
+    ON_BN_CLICKED( IDC_BUTTON_add_this_lbm_info, &CKCBP_UI_ClientDlg::OnBnClickedButtonaddthislbminfo )
+    ON_BN_CLICKED( IDC_BUTTON_save_this_libm_info, &CKCBP_UI_ClientDlg::OnBnClickedButtonsavethislibminfo )
 END_MESSAGE_MAP()
 
 
@@ -184,19 +187,16 @@ void CKCBP_UI_ClientDlg::Init()
     //dwStyleEx |= LVS_EX_CHECKBOXES;       //Item前生成check box
     m_etlcResultSet.SetExtendedStyle( dwStyleEx );
     //初始化lbmcbx
-    m_ctrDefaultParam = m_clsCfg.get( "root.lbms.<xmlattr>.DefParam" ).c_str();
+    tstring strDefParam = m_clsCfg.get( "root.lbms.<xmlattr>.DefParam" ).c_str();
     boost::property_tree::ptree xml = m_clsCfg.getTree();
-    m_liLBM.clear();
     BOOST_FOREACH( boost::property_tree::ptree::value_type & kv, xml.get_child( "root.lbms" ) )
     {
         try
         {
-            lbm_call_cfg lcc;
-            lcc.lbm_Id = kv.second.get<string>( "<xmlattr>.Id" );
-            lcc.lbm_NeedDef = kv.second.get<string>( "<xmlattr>.NeedDef" );
-            lcc.lbm_Param = kv.second.get_value<std::string>();
-            m_cbxLbmNo.InsertString( m_cbxLbmNo.GetCount(), lcc.lbm_Id.c_str() );
-            m_liLBM.insert( lbmPair( lcc.lbm_Id, lcc ) );
+            LbmInfo stLbm;
+            stLbm.strLbmNo = kv.second.get<tstring>( "<xmlattr>.Id" );
+            stLbm.strParams = kv.second.get_value<std::string>();
+            m_mpLbmInfo.insert( LbmInfoPair( stLbm.strLbmNo, stLbm ) );
         }
         catch( boost::property_tree::ptree_error ex )
         {
@@ -209,11 +209,18 @@ void CKCBP_UI_ClientDlg::Init()
             OutputDebugStringA( ex.what() );
         }
     }
+    //排序后插入combox
+    for( LbmInfoMap::iterator it = m_mpLbmInfo.begin() ; it != m_mpLbmInfo.end() ; ++it )
+    {
+        m_cbxLbmNo.InsertString( m_cbxLbmNo.GetCount(), it->first.c_str() );
+    }
 }
 
 void CKCBP_UI_ClientDlg::Uninit()
 {
     //close_console();
+    m_mpLbmInfo.clear();
+    m_cbxLbmNo.Clear();
 }
 
 void CKCBP_UI_ClientDlg::OnClose()
@@ -274,26 +281,14 @@ void CKCBP_UI_ClientDlg::PrintTree( boost::property_tree::ptree root )
     }
 }
 
-void CKCBP_UI_ClientDlg::CallLbm( lbm_call_cfg& lbm )
+void CKCBP_UI_ClientDlg::CallLbm( const LbmInfo& lbm )
 {
-    lbmInfo::iterator itLBM = m_liLBM.find( lbm.lbm_Id );
-    if( itLBM == m_liLBM.end() )
-    {
-        AfxMessageBox( "lbm no found" );
-        return;
-    }
-    std::string strFullParam;
-    if( itLBM->second.lbm_NeedDef == "1" )
-    {
-        strFullParam = m_ctrDefaultParam.GetString();
-    }
-    strFullParam.append( lbm.lbm_Param );
     Json::Value jsParamList;
-    AnalysisParams( strFullParam, jsParamList );
+    AnalysisParams( lbm.strParams, jsParamList );
     int iRet = 0;
     tstring strRet;
     Json::Value jsResultSet;
-    iRet = m_clsKcbp.CallLbm_AllResult( lbm.lbm_Id, jsParamList, jsResultSet, strRet );
+    iRet = m_clsKcbp.CallLbm_AllResult( lbm.strLbmNo, jsParamList, jsResultSet, strRet );
     if( iRet != 0 )
     {
         AfxMessageBox( strRet.c_str() );
@@ -304,9 +299,9 @@ void CKCBP_UI_ClientDlg::CallLbm( lbm_call_cfg& lbm )
     ShowResultToView( jsResultSet );
 }
 
-void CKCBP_UI_ClientDlg::AnalysisInput( const tstring input, kvmap& paramlist )
+void CKCBP_UI_ClientDlg::AnalysisParams( const tstring& strInput, Json::Value& jsParams )
 {
-    std::string src( input );
+    std::string src( strInput );
     if( src.length() == 0 )
     {
         return;
@@ -336,19 +331,9 @@ void CKCBP_UI_ClientDlg::AnalysisInput( const tstring input, kvmap& paramlist )
             {
                 value = value.substr( 1, value.length() - 2 );
             }
-            paramlist.insert( kvpair( key, value ) );
+            jsParams[key] = value;
         }
         iFind = iPos + 1;
-    }
-}
-
-void CKCBP_UI_ClientDlg::AnalysisParams( const tstring& strInput, Json::Value& jsParams )
-{
-    kvmap paramlist;
-    AnalysisInput( strInput, paramlist );
-    for( kvmap::iterator it = paramlist.begin() ; it != paramlist.end() ; ++it )
-    {
-        jsParams[it->first] = it->second;
     }
 }
 
@@ -443,23 +428,41 @@ void CKCBP_UI_ClientDlg::ModifyWindowsShow( BOOL bflag )
 
 void CKCBP_UI_ClientDlg::OnBnClickedButtonsaveconnectcfg()
 {
-    //把界面上的配置写入文件
-    CString ctrTmp;
-    GetDlgItemText( IDC_EDIT_kcbp_svr_name, ctrTmp );
-    m_clsCfg.set( "root.config.kcbp_svr_name.<xmlattr>.value", ctrTmp.GetString() );
-    GetDlgItemText( IDC_EDIT_kcbp_ip, ctrTmp );
-    m_clsCfg.set( "root.config.kcbp_svr_ip.<xmlattr>.value", ctrTmp.GetString() );
-    GetDlgItemText( IDC_EDIT_kcbp_svr_port, ctrTmp );
-    m_clsCfg.set( "root.config.kcbp_svr_port.<xmlattr>.value", ctrTmp.GetString() );
-    GetDlgItemText( IDC_EDIT_send_queue_name, ctrTmp );
-    m_clsCfg.set( "root.config.send_queue_name.<xmlattr>.value", ctrTmp.GetString() );
-    GetDlgItemText( IDC_EDIT_recv_queue_name, ctrTmp );
-    m_clsCfg.set( "root.config.recv_queue_name.<xmlattr>.value", ctrTmp.GetString() );
-    GetDlgItemText( IDC_EDIT_user_name, ctrTmp );
-    m_clsCfg.set( "root.config.user_name.<xmlattr>.value", ctrTmp.GetString() );
-    GetDlgItemText( IDC_EDIT_user_pwd, ctrTmp );
-    m_clsCfg.set( "root.config.user_pwd.<xmlattr>.value", ctrTmp.GetString() );
-    m_clsCfg.savefile( XML_CFG_PATH );
+    CString ctrKcbpSvrName, ctrKcbpSvrIp, ctrKcbpSvrPort, ctrSendQueueName, ctrRecvQueueName, ctrUserName, ctrUserPwd;
+    GetDlgItemText( IDC_EDIT_kcbp_svr_name, ctrKcbpSvrName );
+    GetDlgItemText( IDC_EDIT_kcbp_ip, ctrKcbpSvrIp );
+    GetDlgItemText( IDC_EDIT_kcbp_svr_port, ctrKcbpSvrPort );
+    GetDlgItemText( IDC_EDIT_send_queue_name, ctrSendQueueName );
+    GetDlgItemText( IDC_EDIT_recv_queue_name, ctrRecvQueueName );
+    GetDlgItemText( IDC_EDIT_user_name, ctrUserName );
+    GetDlgItemText( IDC_EDIT_user_pwd, ctrUserPwd );
+    std::ifstream ifsFile;
+    ifsFile.open( XML_CFG_PATH );
+    if( ifsFile.is_open() == false )
+    {
+        AfxMessageBox( CBaseTool::tformat( "%s file open fail", XML_CFG_PATH ).c_str() );
+        return;
+    }
+    tstringstream stmXmlFileStream;
+    stmXmlFileStream << ifsFile.rdbuf();
+    tstring strFileData = stmXmlFileStream.str();
+    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<kcbp_svr_name value=\"\\S+\"/>" ), CBaseTool::tformat( "<kcbp_svr_name value=\"%s\"/>", ctrKcbpSvrName.GetString() ) );
+    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<kcbp_svr_ip value=\"\\S+\"/>" ), CBaseTool::tformat( "<kcbp_svr_ip value=\"%s\"/>", ctrKcbpSvrIp.GetString() ) );
+    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<kcbp_svr_port value=\"\\S+\"/>" ), CBaseTool::tformat( "<kcbp_svr_port value=\"%s\"/>", ctrKcbpSvrPort.GetString() ) );
+    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<send_queue_name value=\"\\S+\"/>" ), CBaseTool::tformat( "<send_queue_name value=\"%s\"/>", ctrSendQueueName.GetString() ) );
+    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<recv_queue_name value=\"\\S+\"/>" ), CBaseTool::tformat( "<recv_queue_name value=\"%s\"/>", ctrRecvQueueName.GetString() ) );
+    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<user_name value=\"\\S+\"/>" ), CBaseTool::tformat( "<user_name value=\"%s\"/>", ctrUserName.GetString() ) );
+    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<user_pwd value=\"\\S+\"/>" ), CBaseTool::tformat( "<user_pwd value=\"%s\"/>", ctrUserPwd.GetString() ) );
+    std::ofstream ofsFile;
+    ofsFile.open( XML_CFG_PATH );
+    if( ofsFile.is_open() == false )
+    {
+        AfxMessageBox( CBaseTool::tformat( "%s file open fail", XML_CFG_PATH ).c_str() );
+        return;
+    }
+    ofsFile << strFileData;
+    ofsFile.close();
+    AfxMessageBox( "链接配置保存成功" );
 }
 
 void CKCBP_UI_ClientDlg::OnBnClickedButtonconnectsvr()
@@ -513,27 +516,115 @@ void CKCBP_UI_ClientDlg::OnCbnSelchangeComboLbmNo()
 {
     CString lbm_no;
     m_cbxLbmNo.GetLBText( m_cbxLbmNo.GetCurSel(), lbm_no );
-    lbmInfo::iterator it = m_liLBM.find( lbm_no.GetString() );
-    if( it != m_liLBM.end() )
+    LbmInfoMap::iterator it = m_mpLbmInfo.find( lbm_no.GetString() );
+    if( it != m_mpLbmInfo.end() )
     {
-        SetDlgItemText( IDC_EDIT_LBM_PARAMLIST, it->second.lbm_Param.c_str() );
+        SetDlgItemText( IDC_EDIT_LBM_PARAMLIST, it->second.strParams.c_str() );
     }
 }
 
 void CKCBP_UI_ClientDlg::OnBnClickedButtoncalllbm()
 {
-    CString lbm_no;
-    GetDlgItemText( IDC_COMBO_LBM_NO, lbm_no );
-    CString lbm_param;
-    GetDlgItemText( IDC_EDIT_LBM_PARAMLIST, lbm_param );
-    if( lbm_no.IsEmpty() )
+    CString ctrLbmNo;
+    GetDlgItemText( IDC_COMBO_LBM_NO, ctrLbmNo );
+    CString ctrParams;
+    GetDlgItemText( IDC_EDIT_LBM_PARAMLIST, ctrParams );
+    if( ctrLbmNo.IsEmpty() )
     {
         AfxMessageBox( "没有选中LBM" );
         return;
     }
-    lbm_call_cfg lbm;
-    lbm.lbm_Id = lbm_no.GetString();
-    lbm.lbm_Param = lbm_param.GetString();
+    LbmInfo lbm;
+    lbm.strLbmNo = ctrLbmNo.GetString();
+    lbm.strParams = ctrParams.GetString();
     CallLbm( lbm );
 }
 
+
+
+void CKCBP_UI_ClientDlg::OnBnClickedButtonaddthislbminfo()
+{
+    CString ctrLbmNo;
+    GetDlgItemText( IDC_COMBO_LBM_NO, ctrLbmNo );
+    CString ctrParams;
+    GetDlgItemText( IDC_EDIT_LBM_PARAMLIST, ctrParams );
+    LbmInfo lbm;
+    lbm.strLbmNo = ctrLbmNo.GetString();
+    lbm.strParams = ctrParams.GetString();
+    //写入配置
+    std::ifstream ifsFile;
+    ifsFile.open( XML_CFG_PATH );
+    if( ifsFile.is_open() == false )
+    {
+        AfxMessageBox( CBaseTool::tformat( "%s file open fail", XML_CFG_PATH ).c_str() );
+        return;
+    }
+    tstringstream stmXmlFileStream;
+    stmXmlFileStream << ifsFile.rdbuf();
+    tstring strFileData = stmXmlFileStream.str();
+    if( strFileData.find( CBaseTool::tformat( "\"%s\"", lbm.strLbmNo.c_str() ) ) != tstring::npos )
+    {
+        AfxMessageBox( CBaseTool::tformat( "%s 已经存在于配置中", lbm.strLbmNo.c_str() ).c_str() );
+        return;
+    }
+    tstring strNewLbm = CBaseTool::tformat( "\n    <lbm Id=\"%s\">\n      <![CDATA[%s]]>\n    </lbm>\n", lbm.strLbmNo.c_str(), lbm.strParams.c_str() );
+    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "</lbm>\\s+</lbms>" ), CBaseTool::tformat( "</lbm>%s  </lbms>", strNewLbm.c_str() ) );
+    std::ofstream ofsFile;
+    ofsFile.open( XML_CFG_PATH );
+    if( ofsFile.is_open() == false )
+    {
+        AfxMessageBox( CBaseTool::tformat( "%s file open fail", XML_CFG_PATH ).c_str() );
+        return;
+    }
+    ofsFile << strFileData;
+    ofsFile.close();
+    //写入控件和缓存
+    m_mpLbmInfo.insert( LbmInfoPair( lbm.strLbmNo, lbm ) );
+    m_cbxLbmNo.InsertString( m_cbxLbmNo.GetCount(), lbm.strLbmNo.c_str() );
+    AfxMessageBox( "新增案例成功" );
+}
+
+void CKCBP_UI_ClientDlg::OnBnClickedButtonsavethislibminfo()
+{
+    CString ctrLbmNo;
+    GetDlgItemText( IDC_COMBO_LBM_NO, ctrLbmNo );
+    CString ctrParams;
+    GetDlgItemText( IDC_EDIT_LBM_PARAMLIST, ctrParams );
+    LbmInfo lbm;
+    lbm.strLbmNo = ctrLbmNo.GetString();
+    lbm.strParams = ctrParams.GetString();
+    //写入配置
+    std::ifstream ifsFile;
+    ifsFile.open( XML_CFG_PATH );
+    if( ifsFile.is_open() == false )
+    {
+        AfxMessageBox( CBaseTool::tformat( "%s file open fail", XML_CFG_PATH ).c_str() );
+        return;
+    }
+    tstringstream stmXmlFileStream;
+    stmXmlFileStream << ifsFile.rdbuf();
+    tstring strFileData = stmXmlFileStream.str();
+    if( strFileData.find( CBaseTool::tformat( "\"%s\"", lbm.strLbmNo.c_str() ) ) == tstring::npos )
+    {
+        AfxMessageBox( CBaseTool::tformat( "%s 不存在于配置中，请点击新增", lbm.strLbmNo.c_str() ).c_str() );
+        return;
+    }
+    tstring strRegex = CBaseTool::tformat( "<lbm Id=\"%s\">\\s+<!\\[CDATA\\[\\S+\\]\\]>\\s+</lbm>", lbm.strLbmNo.c_str() );
+    std::tr1::regex rgxSearch( strRegex );
+    std::tr1::smatch result;
+    bool bFlag = std::tr1::regex_search( strFileData, result, rgxSearch );
+    tstring strNewData = CBaseTool::tformat( "<lbm Id=\"%s\">\n      <![CDATA[%s]]>\n    </lbm>", lbm.strLbmNo.c_str(), lbm.strParams.c_str() );
+    strFileData = std::tr1::regex_replace( strFileData, rgxSearch, strNewData );
+    std::ofstream ofsFile;
+    ofsFile.open( XML_CFG_PATH );
+    if( ofsFile.is_open() == false )
+    {
+        AfxMessageBox( CBaseTool::tformat( "%s file open fail", XML_CFG_PATH ).c_str() );
+        return;
+    }
+    ofsFile << strFileData;
+    ofsFile.close();
+    //写入缓存
+    m_mpLbmInfo[lbm.strLbmNo] = lbm;
+    AfxMessageBox( "参数保存成功" );
+}
