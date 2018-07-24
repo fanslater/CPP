@@ -3,12 +3,12 @@
   <config>
     <kcbp_svr_name value="KCBPB01"/>
     <kcbp_svr_protocal value="0"/>
-    <kcbp_svr_ip value="192.168.202.98"/>
+    <kcbp_svr_ip value="127.0.0.1"/>
     <kcbp_svr_port value="21000"/>
-    <send_queue_name value="req_otcts_test1"/>
-    <recv_queue_name value="ans_otcts_test1"/>
+    <send_queue_name value="req_otcts_test"/>
+    <recv_queue_name value="ans_otcts_test"/>
     <user_name value="KCXP00"/>
-    <user_pwd value="888888"/>
+    <user_pwd value="888888"/>    
   </config>
   <lbms DefParam="F_FUNCTION:,F_SUBSYS:14,F_OP_USER:8888,F_OP_ROLE:2,F_OP_SITE:127.0.0.1,F_CHANNEL:0,F_SESSION:aaaaaaaaaaaaaaaa,F_RUNTIME:,F_REMOTE_OP_ORG:,F_REMOTE_OP_USER:,F_OP_ORG:0,">
     <lbm Id="L2620363" NeedDef="0" >
@@ -47,8 +47,10 @@
       <![CDATA[PRODUCT_NAME:,]]>
     </lbm>
     <lbm Id="L0000507" NeedDef="1" >
-      <![CDATA[USER_CODE:8888,USER_ROLE:2,AUTH_DATA:3kht448AdJu1AKn+Hp5x6g==,SECRECY_CODE:0000,"/>
-    <lbm Id="L2700531" NeedDef="1" ><![CDATA[SCDM:0,]]>
+      <![CDATA[USER_CODE:8888,USER_ROLE:2,AUTH_DATA:3kht448AdJu1AKn+Hp5x6g==,SECRECY_CODE:0000,]]>
+    </lbm>
+    <lbm Id="L2700531" NeedDef="1" >
+      <![CDATA[SCDM:0,]]>
     </lbm>
     <lbm Id="L2700240" NeedDef="1" >
       <![CDATA[CPBM:LCCP93,JYRQ:20170822,]]>
