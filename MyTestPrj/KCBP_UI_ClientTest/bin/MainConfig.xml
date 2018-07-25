@@ -143,6 +143,12 @@
     <lbm Id="L2620686">
       <![CDATA[F_FUNCTION:,F_SUBSYS:14,F_OP_USER:8888,F_OP_ROLE:2,F_OP_SITE:127.0.0.1,F_CHANNEL:0,F_SESSION:aaaaaaaaaaaaaaaa,F_RUNTIME:,F_REMOTE_OP_ORG:,F_REMOTE_OP_USER:,F_OP_ORG:0,PAGE_RECCNT:1000,PAGE_RECNUM:1]]>
     </lbm>
+    <lbm Id="L00001">
+      <![CDATA[A:1,B:2,C:3,]]>
+    </lbm>
+    <lbm Id="L00002">
+      <![CDATA[A:1,B:2,C:3,D:4,]]>
+    </lbm>
   </lbms>
 </root>
 

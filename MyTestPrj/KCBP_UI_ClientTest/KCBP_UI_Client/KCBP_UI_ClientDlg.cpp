@@ -446,13 +446,13 @@ void CKCBP_UI_ClientDlg::OnBnClickedButtonsaveconnectcfg()
     tstringstream stmXmlFileStream;
     stmXmlFileStream << ifsFile.rdbuf();
     tstring strFileData = stmXmlFileStream.str();
-    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<kcbp_svr_name value=\"\\S+\"/>" ), CBaseTool::tformat( "<kcbp_svr_name value=\"%s\"/>", ctrKcbpSvrName.GetString() ) );
-    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<kcbp_svr_ip value=\"\\S+\"/>" ), CBaseTool::tformat( "<kcbp_svr_ip value=\"%s\"/>", ctrKcbpSvrIp.GetString() ) );
-    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<kcbp_svr_port value=\"\\S+\"/>" ), CBaseTool::tformat( "<kcbp_svr_port value=\"%s\"/>", ctrKcbpSvrPort.GetString() ) );
-    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<send_queue_name value=\"\\S+\"/>" ), CBaseTool::tformat( "<send_queue_name value=\"%s\"/>", ctrSendQueueName.GetString() ) );
-    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<recv_queue_name value=\"\\S+\"/>" ), CBaseTool::tformat( "<recv_queue_name value=\"%s\"/>", ctrRecvQueueName.GetString() ) );
-    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<user_name value=\"\\S+\"/>" ), CBaseTool::tformat( "<user_name value=\"%s\"/>", ctrUserName.GetString() ) );
-    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<user_pwd value=\"\\S+\"/>" ), CBaseTool::tformat( "<user_pwd value=\"%s\"/>", ctrUserPwd.GetString() ) );
+    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<kcbp_svr_name\\s+value=\"\\S+\"\\s*/>" ), CBaseTool::tformat( "<kcbp_svr_name value=\"%s\"/>", ctrKcbpSvrName.GetString() ) );
+    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<kcbp_svr_ip\\s+value=\"\\S+\"\\s*/>" ), CBaseTool::tformat( "<kcbp_svr_ip value=\"%s\"/>", ctrKcbpSvrIp.GetString() ) );
+    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<kcbp_svr_port\\s+value=\"\\S+\"\\s*/>" ), CBaseTool::tformat( "<kcbp_svr_port value=\"%s\"/>", ctrKcbpSvrPort.GetString() ) );
+    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<send_queue_name\\s+value=\"\\S+\"\\s*/>" ), CBaseTool::tformat( "<send_queue_name value=\"%s\"/>", ctrSendQueueName.GetString() ) );
+    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<recv_queue_name\\s+value=\"\\S+\"\\s*/>" ), CBaseTool::tformat( "<recv_queue_name value=\"%s\"/>", ctrRecvQueueName.GetString() ) );
+    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<user_name\\s+value=\"\\S+\"\\s*/>" ), CBaseTool::tformat( "<user_name value=\"%s\"/>", ctrUserName.GetString() ) );
+    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "<user_pwd\\s+value=\"\\S+\"\\s*/>" ), CBaseTool::tformat( "<user_pwd value=\"%s\"/>", ctrUserPwd.GetString() ) );
     std::ofstream ofsFile;
     ofsFile.open( XML_CFG_PATH );
     if( ofsFile.is_open() == false )
@@ -568,7 +568,7 @@ void CKCBP_UI_ClientDlg::OnBnClickedButtonaddthislbminfo()
         return;
     }
     tstring strNewLbm = CBaseTool::tformat( "\n    <lbm Id=\"%s\">\n      <![CDATA[%s]]>\n    </lbm>\n", lbm.strLbmNo.c_str(), lbm.strParams.c_str() );
-    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "</lbm>\\s+</lbms>" ), CBaseTool::tformat( "</lbm>%s  </lbms>", strNewLbm.c_str() ) );
+    strFileData = std::tr1::regex_replace( strFileData, std::tr1::regex( "</lbm>\\s*</lbms>" ), CBaseTool::tformat( "</lbm>%s  </lbms>", strNewLbm.c_str() ) );
     std::ofstream ofsFile;
     ofsFile.open( XML_CFG_PATH );
     if( ofsFile.is_open() == false )
@@ -609,7 +609,7 @@ void CKCBP_UI_ClientDlg::OnBnClickedButtonsavethislibminfo()
         AfxMessageBox( CBaseTool::tformat( "%s 不存在于配置中，请点击新增", lbm.strLbmNo.c_str() ).c_str() );
         return;
     }
-    tstring strRegex = CBaseTool::tformat( "<lbm Id=\"%s\">\\s+<!\\[CDATA\\[\\S+\\]\\]>\\s+</lbm>", lbm.strLbmNo.c_str() );
+    tstring strRegex = CBaseTool::tformat( "<lbm\\s+Id=\"%s\"\\s*>\\s*<!\\[CDATA\\[\\S*\\]\\]>\\s*</lbm>", lbm.strLbmNo.c_str() );
     std::tr1::regex rgxSearch( strRegex );
     std::tr1::smatch result;
     bool bFlag = std::tr1::regex_search( strFileData, result, rgxSearch );
