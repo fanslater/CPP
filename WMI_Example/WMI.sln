@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RecvEventNotify", "RecvEventNotify\RecvEventNotify.vcxproj", "{E1277934-5466-4A51-B58F-ABF07311C8E0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E1277934-5466-4A51-B58F-ABF07311C8E0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E1277934-5466-4A51-B58F-ABF07311C8E0}.Debug|Win32.Build.0 = Debug|Win32
+		{E1277934-5466-4A51-B58F-ABF07311C8E0}.Release|Win32.ActiveCfg = Release|Win32
+		{E1277934-5466-4A51-B58F-ABF07311C8E0}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
