@@ -181,7 +181,7 @@ int CXPPutMsg_UIClientDlg::init()
 	CString ctrKcxpIp = m_clsConfig.get("UIClient.kcxp_ip").c_str();
 	CString ctrChannelNameList = m_clsConfig.get("UIClient.kcxp_channel_name").c_str();
 	m_iThreadNum = boost::lexical_cast<int>(m_clsConfig.get("UIClient.thread_num").c_str());
-	SetDlgItemText(IDC_IPADDRESS_KCXP_IP,ctrKcxpIp);
+	SetDlgItemText(IDC_EDIT_KCXP_IP,ctrKcxpIp);    
 
 	int iFind = 0;
 	int iId = 0;
@@ -422,7 +422,7 @@ void CXPPutMsg_UIClientDlg::OnBnClickedButtonOpen()
 	m_cbChannelName.GetLBText(iChannelName,ctrChannelName);
 
 	CString ctrKcxpIp;
-	GetDlgItemText(IDC_IPADDRESS_KCXP_IP,ctrKcxpIp);
+	GetDlgItemText(IDC_EDIT_KCXP_IP,ctrKcxpIp);
 
 	//打开通道
 	if (0L != m_clsKCXP.Open(ctrKcxpIp.GetString(),ctrChannelName.GetString()))
@@ -437,7 +437,7 @@ void CXPPutMsg_UIClientDlg::OnBnClickedButtonOpen()
 
 	GetDlgItem(IDC_BUTTON_Open)->EnableWindow(FALSE);
 	GetDlgItem(IDC_BUTTON_Close)->EnableWindow(TRUE);
-	GetDlgItem(IDC_IPADDRESS_KCXP_IP)->EnableWindow(FALSE);
+	GetDlgItem(IDC_EDIT_KCXP_IP)->EnableWindow(FALSE);
 	GetDlgItem(IDC_COMBO_channel)->EnableWindow(FALSE);
 }
 
@@ -456,6 +456,6 @@ void CXPPutMsg_UIClientDlg::OnBnClickedButtonClose()
 
 	GetDlgItem(IDC_BUTTON_Open)->EnableWindow(TRUE);
 	GetDlgItem(IDC_BUTTON_Close)->EnableWindow(FALSE);
-	GetDlgItem(IDC_IPADDRESS_KCXP_IP)->EnableWindow(TRUE);
+	GetDlgItem(IDC_EDIT_KCXP_IP)->EnableWindow(TRUE);
 	GetDlgItem(IDC_COMBO_channel)->EnableWindow(TRUE);
 }
