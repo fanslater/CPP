@@ -19,18 +19,18 @@ class CWMI
 {
 public:
     CWMI();
-    ~CWMI(void);
+    ~CWMI( void );
 public:
     HRESULT ExcuteFun();
 protected:
-    VOID SetNamespace(wstring wstrNamespace);
+    VOID SetNamespace( wstring wstrNamespace );
 private:
     HRESULT InitialCom();
     HRESULT SetComSecLevels();
-    HRESULT ObtainLocator2WMI(CComPtr<IWbemLocator>& pLoc);
-    HRESULT Connect2WMI(CComPtr<IWbemLocator> pLoc,CComPtr<IWbemServices>& pSvc);
-    HRESULT SetProxySecLevels(CComPtr<IWbemServices> pSvc);
-    virtual HRESULT Excute(CComPtr<IWbemServices> pSvc) = 0;
+    HRESULT ObtainLocator2WMI( CComPtr<IWbemLocator>& pLoc );
+    HRESULT Connect2WMI( CComPtr<IWbemLocator> pLoc, CComPtr<IWbemServices>& pSvc );
+    HRESULT SetProxySecLevels( CComPtr<IWbemServices> pSvc );
+    virtual HRESULT Excute( CComPtr<IWbemServices> pSvc ) = 0;
 private:
     wstring m_wstrNamespace;
 };

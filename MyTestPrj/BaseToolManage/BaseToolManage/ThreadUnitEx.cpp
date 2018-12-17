@@ -20,6 +20,20 @@ void CThreadUnitEx::clean()
     m_phdThread = NULL;
 }
 
+UINT WINAPI ThreadFunc( LPVOID pvParam )
+{
+    CThreadUnitEx* pCls = ( CThreadUnitEx* )pvParam;
+    pCls->m_pBarrier->wait();
+    printf( "wait over [%d]\n", GetCurrentThreadId() );
+    while( pCls->m_iThreadNeedRun )
+    {
+        //线程处理
+        Sleep( 1000 );
+        printf( "this is thread [%d] msg\n", GetCurrentThreadId() );
+    }
+    return 0;
+}
+
 void CThreadUnitEx::StartThread()
 {
     m_iThreadNum = 10;
@@ -48,16 +62,4 @@ void CThreadUnitEx::StopThread()
     }
 }
 
-UINT WINAPI ThreadFunc( LPVOID pvParam )
-{
-    CThreadUnitEx* pCls = ( CThreadUnitEx* )pvParam;
-    pCls->m_pBarrier->wait();
-    printf( "wait over [%d]\n", GetCurrentThreadId() );
-    while( pCls->m_iThreadNeedRun )
-    {
-        //线程处理
-        Sleep( 1000 );
-        printf( "this is thread [%d] msg\n", GetCurrentThreadId() );
-    }
-    return 0;
-}
+
