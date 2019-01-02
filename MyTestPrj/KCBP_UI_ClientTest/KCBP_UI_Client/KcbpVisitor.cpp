@@ -211,7 +211,7 @@ int CKcbpVisitor::CallLbm_AllResult( const tstring& strLbmNo, const Json::Value&
             Json::Value jsRowValues;
             for( int iColId = 1; iColId <= iColNum; ++iColId )
             {
-                char szValue[1024] = {0};
+                char szValue[32 * 1024] = {0};
                 KCBPCLI_RsGetCol( m_kcbp_handle, iColId, szValue );
                 tstring strValue( szValue );
                 jsRowValues[svcFieldNames[iColId - 1]] = strValue;
