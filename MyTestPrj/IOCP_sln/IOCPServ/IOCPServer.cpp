@@ -245,6 +245,10 @@ int CIOCPServer::DataDispose(const std::string &Type, const std::string &recvDat
     {
         iRet = zrjj(recvData,sendData);
     }
+    else if(Type == "XaccHttp")
+    {
+        iRet = XaccHttp(recvData, sendData);
+    }
 
     return iRet;
 }
@@ -356,6 +360,14 @@ int CIOCPServer::zrjj(const std::string& recvData,std::string& sendData)
     sendData = m_clsIni.get("normal.head");
     sendData.append("\r\n\r\n");
     sendData.append(m_clsIni.get("zrjj.return"));
+
+    return 0;
+}
+
+int CIOCPServer::XaccHttp(const std::string& recvData,std::string& sendData)
+{
+    sendData = "HTTP/1.1 200 OK \r\nContent-Type: text/json;charset=gb2312 \r\n\r\n";
+    sendData.append(m_clsIni.get("XaccHttp.return"));
 
     return 0;
 }

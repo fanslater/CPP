@@ -73,4 +73,5 @@ private:
     int EcifHttp(const std::string& recvData,std::string& sendData);
     int PayHttp(const std::string& recvData,std::string& sendData);
     int zrjj(const std::string& recvData,std::string& sendData);
+    int XaccHttp(const std::string& recvData,std::string& sendData);
 };
