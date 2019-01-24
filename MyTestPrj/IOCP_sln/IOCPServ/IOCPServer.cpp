@@ -1,32 +1,30 @@
 #include "StdAfx.h"
 #include "IOCPServer.h"
 
-CIOCPServer::CIOCPServer(void)
+CIOCPServer::CIOCPServer( void )
 {
     m_pBarrier = NULL;
     m_lTotalNum = 0L;
     m_lNormalNum = 0L;
     m_lExceptionNum = 0L;
     m_iPrintFlag = 1;
-    InitializeCriticalSection(&m_cs);
+    InitializeCriticalSection( &m_cs );
 }
 
-CIOCPServer::~CIOCPServer(void)
+CIOCPServer::~CIOCPServer( void )
 {
     m_pBarrier = NULL;
-    DeleteCriticalSection(&m_cs);
+    DeleteCriticalSection( &m_cs );
 }
 
-int CIOCPServer::init(const stCfg &cfg)
+int CIOCPServer::init( const stCfg& cfg )
 {
-    m_clsIni.loadfile(ini_file, cfg.strIniPath);
-    m_ip = m_clsIni.get("IOCP.ListenIp");
-    m_port = boost::lexical_cast<int>(m_clsIni.get("IOCP.ListenPort").c_str());
-    m_iThreadNum = boost::lexical_cast<int>(m_clsIni.get("IOCP.ThreadNum").c_str());
-    m_MoNiType = m_clsIni.get("IOCP.SimulateType");
-
-    printf("配置项：监听地址=[%s:%d] 处理线程数=[%d] 模拟类型=[%s]\n", m_ip.c_str(), m_port, m_iThreadNum, m_MoNiType.c_str());
-
+    m_clsIni.loadfile( ini_file, cfg.strIniPath );
+    m_ip = m_clsIni.get( "IOCP.ListenIp" );
+    m_port = boost::lexical_cast<int>( m_clsIni.get( "IOCP.ListenPort" ).c_str() );
+    m_iThreadNum = boost::lexical_cast<int>( m_clsIni.get( "IOCP.ThreadNum" ).c_str() );
+    m_MoNiType = m_clsIni.get( "IOCP.SimulateType" );
+    printf( "配置项：监听地址=[%s:%d] 处理线程数=[%d] 模拟类型=[%s]\n", m_ip.c_str(), m_port, m_iThreadNum, m_MoNiType.c_str() );
     return 0;
 }
 
@@ -37,7 +35,7 @@ int CIOCPServer::uninit()
 
 int CIOCPServer::run()
 {
-    m_clsIocp.IocpRun(m_ip.c_str(), m_port);
+    m_clsIocp.IocpRun( m_ip.c_str(), m_port );
     StartWorkThread();
     return 0;
 }
@@ -49,25 +47,24 @@ int CIOCPServer::stop()
     return 0;
 }
 
-long CIOCPServer::getCount(int type)
+long CIOCPServer::getCount( int type )
 {
     long lRet = 0L;
-    switch(type)
+    switch( type )
     {
-    case 0:
-        lRet = m_lTotalNum;
-        break;
-    case 1:
-        lRet = m_lNormalNum;
-        break;
-    case 2:
-        lRet = m_lExceptionNum;
-        break;
-    default:
-        lRet = -1L;
-        break;
+        case 0:
+            lRet = m_lTotalNum;
+            break;
+        case 1:
+            lRet = m_lNormalNum;
+            break;
+        case 2:
+            lRet = m_lExceptionNum;
+            break;
+        default:
+            lRet = -1L;
+            break;
     }
-
     return lRet;
 }
 
@@ -78,7 +75,7 @@ void CIOCPServer::resetCount()
     m_lTotalNum = 0L;
 }
 
-void CIOCPServer::setPrint(int flag)
+void CIOCPServer::setPrint( int flag )
 {
     m_iPrintFlag = flag;
 }
@@ -86,11 +83,11 @@ void CIOCPServer::setPrint(int flag)
 void CIOCPServer::StartWorkThread()
 {
     m_iThreadRunFlag = THREAD_RUNNING;
-    m_pBarrier = new boost::barrier(m_iThreadNum + 1);
+    m_pBarrier = new boost::barrier( m_iThreadNum + 1 );
     //m_ThreadPool.create_thread( boost::bind(&CIOCPServer::FreshFunc ,boost::ref(this)) );
-    for (int i = 0; i < m_iThreadNum; i++)
+    for( int i = 0; i < m_iThreadNum; i++ )
     {
-        m_ThreadPool.create_thread( boost::bind( &CIOCPServer::WorkThreadFunc, boost::ref(this) ));
+        m_ThreadPool.create_thread( boost::bind( &CIOCPServer::WorkThreadFunc, boost::ref( this ) ) );
     }
     m_pBarrier->wait();
 }
@@ -104,27 +101,27 @@ void CIOCPServer::StopWorkThread()
 
 //int CIOCPServer::FreshFunc()
 //{
-//	m_pBarrier->wait();
-//	while(THREAD_RUNNING == m_iThreadRunFlag)
-//	{
-//		Sleep(1000);
-//		printf("Count=[%ld]\r",m_lTotalNum);
-//	}
+//  m_pBarrier->wait();
+//  while(THREAD_RUNNING == m_iThreadRunFlag)
+//  {
+//      Sleep(1000);
+//      printf("Count=[%ld]\r",m_lTotalNum);
+//  }
 //
-//	return 0;
+//  return 0;
 //}
 
 int CIOCPServer::WorkThreadFunc()
 {
     m_pBarrier->wait();
-    while ( THREAD_RUNNING == m_iThreadRunFlag )
+    while( THREAD_RUNNING == m_iThreadRunFlag )
     {
         PPER_IO_DATA pPerIo = NULL;
-        m_clsIocp.m_queueRecv.wait_and_pop(pPerIo, SLEEP_INTERVAL);
+        m_clsIocp.m_queueRecv.wait_and_pop( pPerIo, SLEEP_INTERVAL );
         std::string strRecvData;
-        if(pPerIo)
+        if( pPerIo )
         {
-            if(!pPerIo->pHandleData)
+            if( !pPerIo->pHandleData )
             {
                 delete pPerIo;
             }
@@ -133,139 +130,132 @@ int CIOCPServer::WorkThreadFunc()
                 strRecvData = pPerIo->strRecv;
             }
         }
-        if ( strRecvData.length() <= 0 )
+        if( strRecvData.length() <= 0 )
         {
             continue;
         }
-
-        if (m_iPrintFlag)
+        if( m_iPrintFlag )
         {
-            printf("收到数据=[%s]\n", strRecvData.c_str());
+            printf( "收到数据=[%s]\n", strRecvData.c_str() );
         }
-
         //这里要根据收到的数据模拟相应的应答
         std::string strSendData;
-        int iRet = DataDispose(m_MoNiType, strRecvData, strSendData);
-        EnterCriticalSection(&m_cs);
-        if (iRet == 0)
+        int iRet = DataDispose( m_MoNiType, strRecvData, strSendData );
+        EnterCriticalSection( &m_cs );
+        if( iRet == 0 )
         {
             m_lNormalNum++;
         }
         else
         {
             m_lExceptionNum++;
-
         }
         m_lTotalNum++;
-        LeaveCriticalSection(&m_cs);
-
-        if (m_iPrintFlag)
+        LeaveCriticalSection( &m_cs );
+        if( m_iPrintFlag )
         {
-            printf("返回数据=[%s]\n", strSendData.c_str());
+            printf( "返回数据=[%s]\n", strSendData.c_str() );
         }
-
         //返回数据
-        m_clsIocp.SendAnsData(pPerIo->pHandleData, pPerIo, strSendData);
+        m_clsIocp.SendAnsData( pPerIo->pHandleData, pPerIo, strSendData );
     }
     return 0;
 }
 
 
 
-unsigned int CIOCPServer::GenerateCheckSum(const char *buf, const long bufLen)
+unsigned int CIOCPServer::GenerateCheckSum( const char* buf, const long bufLen )
 {
     long idx;
     unsigned int cks;
-    for (idx = 0L, cks = 0; idx < bufLen; cks += (unsigned int)buf[idx++])
+    for( idx = 0L, cks = 0; idx < bufLen; cks += ( unsigned int )buf[idx++] )
         ;
-    return (cks % 256);
+    return ( cks % 256 );
 }
 
-std::string CIOCPServer::ExtractYwData(const std::string str)
+std::string CIOCPServer::ExtractYwData( const std::string str )
 {
-    int iPos = str.find("10=");
-    if (iPos == -1)
+    int iPos = str.find( "10=" );
+    if( iPos == -1 )
     {
-        return std::string("ExtractYwData error");
+        return std::string( "ExtractYwData error" );
     }
-    return str.substr(0, iPos);
+    return str.substr( 0, iPos );
 }
 
-int CIOCPServer::AnalysisData(const std::string str, Json::Value &js)
+int CIOCPServer::AnalysisData( const std::string str, Json::Value& js )
 {
     int iCount = 0;
     int iIndex = 0;
-    while(1)
+    while( 1 )
     {
-        int iParamPos = str.find(0x01, iIndex);
-        if (iParamPos == -1)
+        int iParamPos = str.find( 0x01, iIndex );
+        if( iParamPos == -1 )
         {
             break;
         }
-        std::string cutstr = str.substr(iIndex, iParamPos - iIndex);
-        int iDengPos = cutstr.find("=");
-        if (iDengPos > -1)
+        std::string cutstr = str.substr( iIndex, iParamPos - iIndex );
+        int iDengPos = cutstr.find( "=" );
+        if( iDengPos > -1 )
         {
-            std::string key = cutstr.substr(0, iDengPos);
-            std::string value = cutstr.substr(iDengPos + 1);
+            std::string key = cutstr.substr( 0, iDengPos );
+            std::string value = cutstr.substr( iDengPos + 1 );
             js[key] = value;
             iCount++;
         }
         iIndex = iParamPos + 1;
     }
-
     return iCount;
 }
 
 
-int CIOCPServer::DataDispose(const std::string &Type, const std::string &recvData, std::string &sendData)
+int CIOCPServer::DataDispose( const std::string& Type, const std::string& recvData, std::string& sendData )
 {
     int iRet = 0;
-    if (Type == "normal")
+    if( Type == "normal" )
     {
-        iRet = normal(recvData,sendData);
+        iRet = normal( recvData, sendData );
     }
-    else if (Type == "xhbs" || Type == "xhzf")
+    else if( Type == "xhbs" || Type == "xhzf" )
     {
-        iRet = xhbs_and_xhzf(recvData, sendData);
+        iRet = xhbs_and_xhzf( recvData, sendData );
     }
-    else if (Type == "wjjj")
+    else if( Type == "wjjj" )
     {
-        iRet = wjjj(recvData, sendData);
+        iRet = wjjj( recvData, sendData );
     }
-    else if(Type == "EcifHttp")
+    else if( Type == "EcifHttp" )
     {
-        iRet = EcifHttp(recvData, sendData);
+        iRet = EcifHttp( recvData, sendData );
     }
-    else if(Type == "PayHttp")
+    else if( Type == "PayHttp" )
     {
-        iRet = PayHttp(recvData, sendData);
+        iRet = PayHttp( recvData, sendData );
     }
-    else if(Type == "zrjj")
+    else if( Type == "zrjj" )
     {
-        iRet = zrjj(recvData,sendData);
+        iRet = zrjj( recvData, sendData );
     }
-    else if(Type == "XaccHttp")
+    else if( Type == "XaccTcp" )
     {
-        iRet = XaccHttp(recvData, sendData);
+        iRet = XaccTcp( recvData, sendData );
     }
-
     return iRet;
 }
 
-int CIOCPServer::normal(const std::string& recvData,std::string& sendData)
+int CIOCPServer::normal( const std::string& recvData, std::string& sendData )
 {
-    sendData = m_clsIni.get("normal.head");
-    sendData.append("\r\n\r\n");
-    sendData.append(m_clsIni.get("normal.data"));
+    sendData = m_clsIni.get( "normal.head" );
+    sendData.append( "\r\n\r\n" );
+    sendData.append( m_clsIni.get( "normal.data" ) );
     return 0;
 }
 
-int CIOCPServer::xhbs_and_xhzf(const std::string &recvData, std::string &sendData)
+int CIOCPServer::xhbs_and_xhzf( const std::string& recvData, std::string& sendData )
 {
     int iRet = 0;
     Json::Value jsMap;
-    if (AnalysisData(recvData, jsMap) <= 0)
+    if( AnalysisData( recvData, jsMap ) <= 0 )
     {
         sendData = "AnalysisData error! param count is zero";
         return -1;
@@ -273,102 +263,90 @@ int CIOCPServer::xhbs_and_xhzf(const std::string &recvData, std::string &sendDat
     unsigned int org_check_sum = 0;
     try
     {
-        org_check_sum = boost::lexical_cast<unsigned int>(jsMap["10"].asString().c_str());
+        org_check_sum = boost::lexical_cast<unsigned int>( jsMap["10"].asString().c_str() );
     }
-    catch(boost::bad_lexical_cast &e)
+    catch( boost::bad_lexical_cast& e )
     {
-        printf("boost::lexical_cast强制转换异常 orgstr=[%s] errinfo=[%s]\n", jsMap["10"].asString().c_str(), e.what());
+        printf( "boost::lexical_cast强制转换异常 orgstr=[%s] errinfo=[%s]\n", jsMap["10"].asString().c_str(), e.what() );
         return -1;
     }
-
-    std::string yw_data = ExtractYwData(recvData);
-    unsigned int svr_check_sum = GenerateCheckSum(yw_data.c_str(), yw_data.length());
-
+    std::string yw_data = ExtractYwData( recvData );
+    unsigned int svr_check_sum = GenerateCheckSum( yw_data.c_str(), yw_data.length() );
     sendData.clear();
-    sendData.append(std::string("8=") + jsMap["8"].asString());
+    sendData.append( std::string( "8=" ) + jsMap["8"].asString() );
     sendData += 0x01;
-    sendData.append(std::string("9=") + jsMap["9"].asString());
+    sendData.append( std::string( "9=" ) + jsMap["9"].asString() );
     sendData += 0x01;
-    sendData.append(std::string("35=") + jsMap["35"].asString());
+    sendData.append( std::string( "35=" ) + jsMap["35"].asString() );
     sendData += 0x01;
-
-    if (org_check_sum == svr_check_sum)
+    if( org_check_sum == svr_check_sum )
     {
-        sendData.append("567=0");
+        sendData.append( "567=0" );
         sendData += 0x01;
-        sendData.append("58=处理成功");
+        sendData.append( "58=处理成功" );
         sendData += 0x01;
     }
     else
     {
-        sendData.append("567=-1234");
+        sendData.append( "567=-1234" );
         sendData += 0x01;
-        sendData.append(MyTools::string_format("58=处理失败：校验和验证失败 org=[%u] svr=[%u]", org_check_sum, svr_check_sum));
+        sendData.append( MyTools::string_format( "58=处理失败：校验和验证失败 org=[%u] svr=[%u]", org_check_sum, svr_check_sum ) );
         sendData += 0x01;
-        EnterCriticalSection(&m_cs);
-        SET_COLOR(light_red);
-        printf("校验和验证失败 org=[%u] svr=[%u]\n", org_check_sum, svr_check_sum);
-        SET_COLOR(light_green);
-        LeaveCriticalSection(&m_cs);
+        EnterCriticalSection( &m_cs );
+        SET_COLOR( light_red );
+        printf( "校验和验证失败 org=[%u] svr=[%u]\n", org_check_sum, svr_check_sum );
+        SET_COLOR( light_green );
+        LeaveCriticalSection( &m_cs );
         iRet = -1;
     }
-
-    unsigned int check_sum = GenerateCheckSum(sendData.c_str(), sendData.length());
-    sendData.append(std::string("10=") + boost::lexical_cast<std::string>(check_sum));
+    unsigned int check_sum = GenerateCheckSum( sendData.c_str(), sendData.length() );
+    sendData.append( std::string( "10=" ) + boost::lexical_cast<std::string>( check_sum ) );
     sendData += 0x01;
-
     return iRet;
 }
 
-int CIOCPServer::wjjj(const std::string &recvData, std::string &sendData)
+int CIOCPServer::wjjj( const std::string& recvData, std::string& sendData )
 {
-    int iPos = recvData.find(0x01);
-    if (iPos < 0)
+    int iPos = recvData.find( 0x01 );
+    if( iPos < 0 )
     {
         sendData = "recv data error, can not find the 0x01 separator!";
         return -1;
     }
-
-    std::string msg_type = recvData.substr(0, iPos);
-    std::string msg_data = recvData.substr(iPos + 1);
-
+    std::string msg_type = recvData.substr( 0, iPos );
+    std::string msg_data = recvData.substr( iPos + 1 );
     std::string path = "wjjj.";
-    path.append(msg_type.c_str());
-    sendData = m_clsIni.get(path.c_str());
-
-
+    path.append( msg_type.c_str() );
+    sendData = m_clsIni.get( path.c_str() );
     return 0;
 }
 
-int CIOCPServer::EcifHttp(const std::string &recvData, std::string &sendData)
+int CIOCPServer::EcifHttp( const std::string& recvData, std::string& sendData )
 {
     sendData = "HTTP/1.1 200 OK \r\nContent-Type: text/json;charset=gb2312 \r\n\r\n";
-    sendData.append(m_clsIni.get("EcifHttp.return"));
+    sendData.append( m_clsIni.get( "EcifHttp.return" ) );
     return 0;
 }
 
-int CIOCPServer::PayHttp(const std::string &recvData, std::string &sendData)
-{   
-    sendData = "HTTP/1.1 200 OK \r\nContent-Type: text/json;charset=gb2312 \r\n\r\n";
-    sendData.append(m_clsIni.get("PayHttp.return"));
-
-    return 0;
-}
-
-int CIOCPServer::zrjj(const std::string& recvData,std::string& sendData)
-{
-    sendData = m_clsIni.get("normal.head");
-    sendData.append("\r\n\r\n");
-    sendData.append(m_clsIni.get("zrjj.return"));
-
-    return 0;
-}
-
-int CIOCPServer::XaccHttp(const std::string& recvData,std::string& sendData)
+int CIOCPServer::PayHttp( const std::string& recvData, std::string& sendData )
 {
     sendData = "HTTP/1.1 200 OK \r\nContent-Type: text/json;charset=gb2312 \r\n\r\n";
-    sendData.append(m_clsIni.get("XaccHttp.return"));
+    sendData.append( m_clsIni.get( "PayHttp.return" ) );
+    return 0;
+}
 
+int CIOCPServer::zrjj( const std::string& recvData, std::string& sendData )
+{
+    sendData = m_clsIni.get( "normal.head" );
+    sendData.append( "\r\n\r\n" );
+    sendData.append( m_clsIni.get( "zrjj.return" ) );
+    return 0;
+}
+
+int CIOCPServer::XaccTcp( const std::string& recvData, std::string& sendData )
+{
+    //sendData = "HTTP/1.1 200 OK \r\nContent-Type: text/json;charset=gb2312 \r\n\r\n";
+    sendData.append( m_clsIni.get( "XaccTcp.return" ) );
     return 0;
 }
 
