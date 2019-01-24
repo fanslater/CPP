@@ -80,8 +80,12 @@
 
 int _tmain( int argc, _TCHAR* argv[] )
 {
-    
-
+    CAgreementClient clsNet;
+    std::string strRsp;
+    if( 0 == clsNet.tcp_sync_socket( "127.0.0.1", 8383, "zhoufanss", 1000, 1000, strRsp ) )
+    {
+        printf( "%s\n", strRsp.c_str() );
+    }
     return 0;
 }
 
