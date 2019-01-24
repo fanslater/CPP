@@ -6,6 +6,9 @@
 #include <winsock2.h>       //因为<windows.h>中包含了<winsock.h>头文件。为了防止WINSOCK.H与winsock2.h中的重定义。
 #include <Windows.h>
 
+#define ZeroDynamicMemory( m, l ) memset( ( m ), 0, l )
+#define ZeroStaticMemory( m )    memset( (void*)&( m ), 0, sizeof( m ) )
+
 
 class CBaseTool
 {
@@ -52,6 +55,8 @@ public:
     static tstring all_upper( tstring& s );
     static tstring all_lower( tstring& s );
     static tstring all_replace( tstring& s, tstring& key = tstring( " " ), tstring& rep = tstring( "" ) );
+    static unsigned char Char2Hex( unsigned char ch );
+    static unsigned char Hex2Char( unsigned char x );
 
     //json相关
     static tstring json_to_str( Json::Value& json );
@@ -84,5 +89,9 @@ public:
     static void StartRefreshCpu();
     static void StopRefreshCpu();
     static void GetCpuUseInfo( long long& llCpuUse, long long& llCpuIdle );
+
+    //加解密相关
+    static tstring URLEncode( const tstring& strSrc );
+    static tstring URLDecode( const tstring& strSrc );
 };
 

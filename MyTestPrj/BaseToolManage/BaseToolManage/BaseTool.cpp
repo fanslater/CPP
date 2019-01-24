@@ -339,6 +339,26 @@ tstring CBaseTool::all_replace( tstring& s, tstring& key /*= tstring(" ")*/, tst
     return s;
 }
 
+unsigned char CBaseTool::Char2Hex( unsigned char ch )
+{
+    //0xa(10)转化为字符'a'(97)，要加上87
+    //0xa(10)转化为字符'A'(65)，要加上55
+    //0x0(0)转化为字符'0'(48)，要加上48
+    return ( unsigned char )( ch > 9 ? ch + 55 : ch + 48 );
+}
+
+
+unsigned char CBaseTool::Hex2Char( unsigned char x )
+{
+    unsigned char y;
+    if( x >= 'A' && x <= 'Z' ) y = x - 'A' + 10;
+    else if( x >= 'a' && x <= 'z' ) y = x - 'a' + 10;
+    else if( x >= '0' && x <= '9' ) y = x - '0';
+    else assert( 0 );
+    return y;
+}
+
+
 tstring CBaseTool::json_to_str( Json::Value& json )
 {
     Json::FastWriter fw;
@@ -432,6 +452,7 @@ Json::Value CBaseTool::make_json( const tstring& name, const tstring& value )
     jsTmp[name] = value;
     return jsTmp;
 }
+
 tstring CBaseTool::get_ptree_val_secure( const boost::property_tree::ptree& node, const tstring& path )
 {
     std::string value;
@@ -441,6 +462,7 @@ tstring CBaseTool::get_ptree_val_secure( const boost::property_tree::ptree& node
     }
     catch( boost::property_tree::ptree_error e )
     {
+        OutputDebugStringEx( e.what() );
         value = "";
     }
     return value;
@@ -688,4 +710,49 @@ void CBaseTool::GetCpuUseInfo( long long& llCpuUse, long long& llCpuIdle )
     CAutoLock lock( m_csCpu );
     llCpuUse = m_llCpuUse > 0 ? m_llCpuUse : 0;
     llCpuIdle = m_llCpuIdle > 0 ? m_llCpuIdle : 0;
+}
+
+tstring CBaseTool::URLEncode( const tstring& strSrc )
+{
+    unsigned char ucTemp;
+    tstring strDest;
+    for( size_t i = 0; i < strSrc.length(); ++i )
+    {
+        ucTemp = ( unsigned char )strSrc[i];
+        if( ( ucTemp >= 'a' && ucTemp <= 'z' ) || ( ucTemp >= 'A' && ucTemp <= 'Z' ) || ( ucTemp >= '0' && ucTemp <= '9' )
+                || strchr( "-_.~*", ucTemp ) )
+        {
+            strDest += ucTemp;
+        }
+        else
+        {
+            strDest += '%';
+            strDest += ( char )Char2Hex( ( unsigned char )( ucTemp >> 4 ) );
+            strDest += ( char )Char2Hex( ( unsigned char )( ucTemp % 16 ) );
+        }
+    }
+    return strDest;
+}
+
+tstring CBaseTool::URLDecode( const tstring& strSrc )
+{
+    char szTemp[2] = {0};
+    tstring strDest;
+    size_t i = 0;
+    while( i < strSrc.length() )
+    {
+        ZeroStaticMemory( szTemp );
+        if( strSrc[i] != '%' )
+        {
+            strDest += strSrc[i++];
+            continue;
+        }
+        i++;
+        szTemp[0] = strSrc[i++];
+        szTemp[1] = strSrc[i++];
+        szTemp[0] = szTemp[0] - 48 - ( ( szTemp[0] >= 'A' ) ? 7 : 0 ) - ( ( szTemp[0] >= 'a' ) ? 32 : 0 );
+        szTemp[1] = szTemp[1] - 48 - ( ( szTemp[1] >= 'A' ) ? 7 : 0 ) - ( ( szTemp[1] >= 'a' ) ? 32 : 0 );
+        strDest += ( szTemp[0] * 16 + szTemp[1] );
+    }
+    return strDest;
 }

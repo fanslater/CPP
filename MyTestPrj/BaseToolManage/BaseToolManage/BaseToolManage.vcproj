@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;F:\__Project\__third_sdk_library__\boost_1_64_0\vs2008\include\boost-1_64\&quot;;F:\__Project\__third_sdk_library__\jsoncpp\include\"
+				AdditionalIncludeDirectories="&quot;F:\__Project\__third_sdk_library__\boost_1_64_0\vs2008\include\boost-1_64\&quot;;F:\__Project\__third_sdk_library__\jsoncpp\include\;F:\__Project\__third_sdk_library__\libcurl\include\;F:\__Project\__third_sdk_library__\kcbp\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,10 +61,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="json_vc71_libmdd.lib"
+				AdditionalDependencies="json_vc71_libmdd.lib libcurl.lib KCBPCli.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_D.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="F:\__Project\__third_sdk_library__\boost_1_64_0\vs2008\lib\;F:\__Project\__third_sdk_library__\jsoncpp\lib\"
+				AdditionalLibraryDirectories="F:\__Project\__third_sdk_library__\boost_1_64_0\vs2008\lib\;F:\__Project\__third_sdk_library__\jsoncpp\lib\;F:\__Project\__third_sdk_library__\libcurl\lib\;F:\__Project\__third_sdk_library__\kcbp\"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -226,6 +226,14 @@
 			Name="com"
 			>
 			<File
+				RelativePath=".\AgreementClient.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\AgreementClient.h"
+				>
+			</File>
+			<File
 				RelativePath=".\BaseTool.cpp"
 				>
 			</File>
@@ -239,6 +247,14 @@
 			</File>
 			<File
 				RelativePath=".\CAutoLock.h"
+				>
+			</File>
+			<File
+				RelativePath=".\KcbpVisitor.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\KcbpVisitor.h"
 				>
 			</File>
 			<File
