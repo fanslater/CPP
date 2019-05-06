@@ -2,9 +2,10 @@
 //
 
 #include "stdafx.h"
-//#include <iostream>
-//#include "json/json.h"
-//#include "BaseTool.h"
+#include <iostream>
+#include "json/json.h"
+#include "BaseTool.h"
+#include "XmlIniParser.h"
 
 //void traversal( Json::Value jsObj )
 //{
@@ -80,12 +81,18 @@
 
 int _tmain( int argc, _TCHAR* argv[] )
 {
-    CAgreementClient clsNet;
-    std::string strRsp;
-    if( 0 == clsNet.tcp_sync_socket( "127.0.0.1", 8383, "zhoufanss", 1000, 1000, strRsp ) )
+    CXmlIniParser clsParser;
+    clsParser.loadfile(xml_file,"./test.xml");
+    boost::property_tree::ptree root = clsParser.getTree();
+    std::cout << "---------------\n";
+    clsParser.tree_traversal(root);
+    std::cout << "---------------\n";
+    
+    for (boost::property_tree::ptree::iterator it = root.get_child("root").begin() ; it != root.get_child("root").end() ; it++)
     {
-        printf( "%s\n", strRsp.c_str() );
+        std::cout << it->first << " " << it->second.data() << "\n";
     }
+    std::cout << "---------------\n";
     return 0;
 }
 
