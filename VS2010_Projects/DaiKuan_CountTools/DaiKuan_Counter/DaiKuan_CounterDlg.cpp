@@ -149,10 +149,10 @@ HCURSOR CDaiKuan_CounterDlg::OnQueryDragIcon()
 
 void CDaiKuan_CounterDlg::initAll()
 {
-    for( int i = 5; i <= 30; i += 5 )
+    for( int i = 1; i <= 6; i ++ )
     {
         CString showStr;
-        showStr.Format( "%d年（%d期）", i, i * 12 );
+        showStr.Format( "%d年（%d期）", i * 5, i * 60 );
         ( ( CComboBox* )GetDlgItem( IDC_COMBO_DaiKuanShiChang ) )->AddString( showStr );
     }
     ( ( CComboBox* )GetDlgItem( IDC_COMBO_DaiKuanShiChang ) )->SetCurSel( 5 );
@@ -263,7 +263,7 @@ void CDaiKuan_CounterDlg::OnBnClickedButtonAcount()
     GJJ_INPUT_INFO Info = { 0 };
     Info.dLoanAmount = atof( csDaiKuanBenJin.GetString() );
     Info.dRate = atof( csDaiKuanLiLv.GetString() );
-    Info.iYearNums = iCurSel + 1;
+    Info.iYearNums = ( iCurSel + 1 ) * 5;
     int iBenXi = ( ( CButton* )GetDlgItem( IDC_RADIO_BenXi ) )->GetCheck();
     int iBenJin = ( ( CButton* )GetDlgItem( IDC_RADIO_BenJin ) )->GetCheck();
     if( iBenXi == 1 && iBenJin == 0 )
