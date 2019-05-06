@@ -149,13 +149,13 @@ HCURSOR CDaiKuan_CounterDlg::OnQueryDragIcon()
 
 void CDaiKuan_CounterDlg::initAll()
 {
-    for( int i = 1; i <= 30; i++ )
+    for( int i = 5; i <= 30; i += 5 )
     {
         CString showStr;
         showStr.Format( "%d年（%d期）", i, i * 12 );
         ( ( CComboBox* )GetDlgItem( IDC_COMBO_DaiKuanShiChang ) )->AddString( showStr );
     }
-    ( ( CComboBox* )GetDlgItem( IDC_COMBO_DaiKuanShiChang ) )->SetCurSel( 29 );
+    ( ( CComboBox* )GetDlgItem( IDC_COMBO_DaiKuanShiChang ) )->SetCurSel( 5 );
     ( ( CButton* )GetDlgItem( IDC_RADIO_BenXi ) )->SetCheck( 1 );
     m_YueGongLIst.InsertColumn( 0, "月号", LVCFMT_LEFT, 100 );
     m_YueGongLIst.InsertColumn( 1, "月供", LVCFMT_LEFT, 200 );
