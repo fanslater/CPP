@@ -8,5 +8,5 @@ echo  *.suo *.manifest  *.dep
 echo There are Visual C++ and Visual Studio junk
 echo ----------------------------------------------------
 pause
-del /F /S /Q *.aps *.idb *.ncp *.obj *.pch *.sbr *.tmp *.pdb *.bsc *.ilk *.res *.ncb *.opt *.suo *.manifest *.dep *.ipch *.sdf
+del /F /S /Q *.aps *.idb *.ncp *.obj *.pch *.sbr *.tmp *.pdb *.bsc *.ilk *.res *.ncb *.opt *.suo *.manifest *.dep *.ipch *.sdf *.tlog
 pause

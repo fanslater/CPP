@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DaiKuan_Counter", "DaiKuan_Counter\DaiKuan_Counter.vcxproj", "{DA7C41DF-9145-4072-8866-DBC9E7E10500}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TiQianHuanKuan_Counter", "TiQianHuanKuan_Counter\TiQianHuanKuan_Counter.vcxproj", "{C508E580-F4FF-4A7B-BF58-5457F86C90B7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_counter", "test_counter\test_counter.vcxproj", "{17957A0A-3FB6-4223-A68A-2EEE069EA7E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +17,14 @@ Global
 		{DA7C41DF-9145-4072-8866-DBC9E7E10500}.Debug|Win32.Build.0 = Debug|Win32
 		{DA7C41DF-9145-4072-8866-DBC9E7E10500}.Release|Win32.ActiveCfg = Release|Win32
 		{DA7C41DF-9145-4072-8866-DBC9E7E10500}.Release|Win32.Build.0 = Release|Win32
+		{C508E580-F4FF-4A7B-BF58-5457F86C90B7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C508E580-F4FF-4A7B-BF58-5457F86C90B7}.Debug|Win32.Build.0 = Debug|Win32
+		{C508E580-F4FF-4A7B-BF58-5457F86C90B7}.Release|Win32.ActiveCfg = Release|Win32
+		{C508E580-F4FF-4A7B-BF58-5457F86C90B7}.Release|Win32.Build.0 = Release|Win32
+		{17957A0A-3FB6-4223-A68A-2EEE069EA7E2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{17957A0A-3FB6-4223-A68A-2EEE069EA7E2}.Debug|Win32.Build.0 = Debug|Win32
+		{17957A0A-3FB6-4223-A68A-2EEE069EA7E2}.Release|Win32.ActiveCfg = Release|Win32
+		{17957A0A-3FB6-4223-A68A-2EEE069EA7E2}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
