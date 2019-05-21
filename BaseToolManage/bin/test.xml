@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<root>
+	<Test attr1="1" attr2="10" />
+	<Test attr1="2" attr2="9" />
+	<Test attr1="3" attr2="8" />
+	<Test attr1="4" attr2="7" />
+	<Test attr1="5" attr2="6" />
+	<Test attr1="6" attr2="5" />
+	<Test attr1="7" attr2="4" />
+	<Test attr1="8" attr2="3" />
+	<Test attr1="9" attr2="2" />
+	<Test attr1="10" attr2="1" />
+  <Array attr = "list">
+    <Unit name="1"/>
+    <Unit name="2"/>
+    <Unit name="3"/>
+  </Array>
+</root>

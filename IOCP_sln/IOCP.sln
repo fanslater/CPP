@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IOCPServ", "IOCPServ\IOCPServ.vcproj", "{89EF1A83-D3F4-452A-8025-A6A21D427C61}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IOCPServer", "IOCPServer\IOCPServer.vcproj", "{78BAB9A4-30FF-4093-B8E5-3B646AF23ECA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IOCP_MFC_SERVER", "IOCP_MFC_SERVER\IOCP_MFC_SERVER.vcproj", "{B87B6F80-E47F-48DC-99F7-03787D0D7759}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PaybServer", "PaybServer\PaybServer.vcproj", "{418F68B7-C11E-4CB8-A180-AAEDB6CCBEEA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89EF1A83-D3F4-452A-8025-A6A21D427C61}.Debug|Win32.ActiveCfg = Debug|Win32
+		{89EF1A83-D3F4-452A-8025-A6A21D427C61}.Debug|Win32.Build.0 = Debug|Win32
+		{89EF1A83-D3F4-452A-8025-A6A21D427C61}.Release|Win32.ActiveCfg = Release|Win32
+		{89EF1A83-D3F4-452A-8025-A6A21D427C61}.Release|Win32.Build.0 = Release|Win32
+		{78BAB9A4-30FF-4093-B8E5-3B646AF23ECA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{78BAB9A4-30FF-4093-B8E5-3B646AF23ECA}.Debug|Win32.Build.0 = Debug|Win32
+		{78BAB9A4-30FF-4093-B8E5-3B646AF23ECA}.Release|Win32.ActiveCfg = Release|Win32
+		{78BAB9A4-30FF-4093-B8E5-3B646AF23ECA}.Release|Win32.Build.0 = Release|Win32
+		{B87B6F80-E47F-48DC-99F7-03787D0D7759}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B87B6F80-E47F-48DC-99F7-03787D0D7759}.Debug|Win32.Build.0 = Debug|Win32
+		{B87B6F80-E47F-48DC-99F7-03787D0D7759}.Release|Win32.ActiveCfg = Release|Win32
+		{B87B6F80-E47F-48DC-99F7-03787D0D7759}.Release|Win32.Build.0 = Release|Win32
+		{418F68B7-C11E-4CB8-A180-AAEDB6CCBEEA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{418F68B7-C11E-4CB8-A180-AAEDB6CCBEEA}.Debug|Win32.Build.0 = Debug|Win32
+		{418F68B7-C11E-4CB8-A180-AAEDB6CCBEEA}.Release|Win32.ActiveCfg = Release|Win32
+		{418F68B7-C11E-4CB8-A180-AAEDB6CCBEEA}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
