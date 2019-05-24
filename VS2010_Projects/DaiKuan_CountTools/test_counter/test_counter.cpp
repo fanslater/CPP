@@ -55,6 +55,8 @@ void TiQianHuanKuanCounter( double dOldBenJin, double dOldLiLv, int iOldMonthNum
     BenXinCounter( dShengYuBenJin - dTiQianHuanKuan, dOldLiLv, iOldMonthNum - iDangQianQiShu, stResult );
 }
 
+#include <float.h>
+
 //希望验证一下提前还款和重新贷款的利益优劣，是否和重新贷款，还款金额，新旧利率有关。尝试计算出临界点。
 int _tmain( int argc, _TCHAR* argv[] )
 {
@@ -63,11 +65,20 @@ int _tmain( int argc, _TCHAR* argv[] )
     double dHuanKuan = 200000.0;
     double dNewDaiKuan = 1200000.0;
     double dGJJDaiKuan = 900000.0;
-    int iQiShu = 36;
+    int iQiShu = 37;
     double dOldRate = 4.9 * 0.95;
     double dGJJRate = 3.25 * 1.0;
     double dNewRate = 4.9 * 1.1;
-    if( 0 )
+    if( 1 )
+    {
+        //for( int i = 0 ; i < 100000 ; i++ )
+        {
+            double dNum = 2.5;
+            printf("%p\n",&dNum);
+        }
+        return 0;
+    }
+    if( 1 )
     {
         DaiKuanResult st1;
         BenXinCounter( dOldDaiKuan, dOldRate, iOldQiXian, st1 );
@@ -81,7 +92,7 @@ int _tmain( int argc, _TCHAR* argv[] )
     if( 1 )
     {
         DaiKuanResult st0;
-        BenXinCounter( dGJJDaiKuan, dGJJRate, iOldQiXian, st0 );        
+        BenXinCounter( dGJJDaiKuan, dGJJRate, iOldQiXian, st0 );
         DaiKuanResult st1;
         TiQianHuanKuanCounter( dOldDaiKuan, dOldRate, iOldQiXian, iQiShu, dHuanKuan, st1 );
         DaiKuanResult st2;
@@ -160,4 +171,5 @@ int _tmain( int argc, _TCHAR* argv[] )
     }
     return 0;
 }
+
 
