@@ -613,6 +613,11 @@ void CKCBP_UI_ClientDlg::OnBnClickedButtonsavethislibminfo()
     std::tr1::regex rgxSearch( strRegex );
     std::tr1::smatch result;
     bool bFlag = std::tr1::regex_search( strFileData, result, rgxSearch );
+    if( !bFlag )
+    {
+        AfxMessageBox( CBaseTool::tformat( "虽然[%s]存在，但正则表达式[%s]无法匹配成功", lbm.strLbmNo.c_str(), strRegex.c_str() ).c_str() );
+        return;
+    }
     tstring strNewData = CBaseTool::tformat( "<lbm Id=\"%s\">\n      <![CDATA[%s]]>\n    </lbm>", lbm.strLbmNo.c_str(), lbm.strParams.c_str() );
     strFileData = std::tr1::regex_replace( strFileData, rgxSearch, strNewData );
     std::ofstream ofsFile;
