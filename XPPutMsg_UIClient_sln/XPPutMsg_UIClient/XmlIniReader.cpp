@@ -44,7 +44,7 @@ void CXmlIniReader::showerror( std::string msg )
 
 void CXmlIniReader::loadfile( int filetype, const std::string& filepath )
 {
-    m_ptree.clear();
+    clean();
     try
     {
         if( filetype == ini_file )
