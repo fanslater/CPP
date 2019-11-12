@@ -60,6 +60,8 @@ int CKcbpVisitor::Connect( tstring& errmsg )
         m_kcbp_handle = NULL;
         return -1;
     }
+    //int nAuthentication = 0;
+    //iRet = KCBPCLI_SetOption( m_kcbp_handle, KCBP_OPTION_AUTHENTICATION, &nAuthentication );      //设置这个可以绕过BP的checkin
     int iTimeOut = atoi( m_stConfig.strTimeOut.c_str() );
     iTimeOut = ( iTimeOut == 0 ? 60 : iTimeOut );
     iRet = KCBPCLI_SetCliTimeOut( m_kcbp_handle, iTimeOut );
