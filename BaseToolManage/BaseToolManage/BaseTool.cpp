@@ -395,7 +395,7 @@ int CBaseTool::str_to_json( tstring& str, Json::Value& json, tstring& err )
     return 0;
 }
 
-tstring CBaseTool::get_json_val( Json::Value& json, const tstring& key )
+tstring CBaseTool::get_json_val( Json::Value& json, const tstring& key, bool bNeedTrim )
 {
     tstring strRet = "";
     if( json.type() != Json::objectValue )
@@ -442,7 +442,10 @@ tstring CBaseTool::get_json_val( Json::Value& json, const tstring& key )
             strRet = "unknow json value type";
             break;
     }
-    strRet = trim( strRet );
+    if( bNeedTrim )
+    {
+        strRet = trim( strRet );
+    }
     return strRet;
 }
 
