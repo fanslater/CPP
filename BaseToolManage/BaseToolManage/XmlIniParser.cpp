@@ -162,7 +162,7 @@ void CXmlIniParser::savefile( std::string filepath, int filetype )
     {
         filetype = m_file_type;
     }
-    boost::property_tree::xml_writer_settings<std::string> settings( '\t', 1, "gb2312" );
+    boost::property_tree::xml_writer_settings<std::string> settings( ' ', 2, "gb2312" );
     try
     {
         if( filetype == ini_file )
