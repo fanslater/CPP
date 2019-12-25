@@ -405,7 +405,7 @@ void CKCBP_UI_ClientDlg::ShowResultToView( const Json::Value& jsResultSet )
         int iColId = 1;
         for( Json::Value::Members::iterator jvmit = jvmNames.begin() ;  jvmit != jvmNames.end() ; ++jvmit )
         {
-            tstring strValue = CBaseTool::get_json_val( jsRow, *jvmit );
+            tstring strValue = CBaseTool::get_json_val( jsRow, *jvmit, false );
             m_etlcResultSet.SetItemText( iRowId, iColId, strValue.c_str() );
             iColId++;
         }
