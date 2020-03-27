@@ -64,4 +64,5 @@ public:
     afx_msg void OnBnClickedButtoncalllbm();    
     afx_msg void OnBnClickedButtonaddthislbminfo();
     afx_msg void OnBnClickedButtonsavethislibminfo();
+    afx_msg void OnBnClickedButtonCleanParamlist();
 };

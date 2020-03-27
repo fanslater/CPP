@@ -38,6 +38,7 @@ public:
     static tstring GetPhysicsDateTime_AsStr();
     static long long GetTimestamp_Milli();
     static long long GetTimestamp_Micro();
+    static tstring GetTimestamp_AsStr();
 
     //×Ö·û´®Ïà¹Ø
     static tstring tformat( const char* format, ... );

@@ -75,6 +75,7 @@ BEGIN_MESSAGE_MAP( CKCBP_UI_ClientDlg, CDialog )
     ON_BN_CLICKED( IDC_BUTTON_call_lbm, &CKCBP_UI_ClientDlg::OnBnClickedButtoncalllbm )
     ON_BN_CLICKED( IDC_BUTTON_add_this_lbm_info, &CKCBP_UI_ClientDlg::OnBnClickedButtonaddthislbminfo )
     ON_BN_CLICKED( IDC_BUTTON_save_this_libm_info, &CKCBP_UI_ClientDlg::OnBnClickedButtonsavethislibminfo )
+    ON_BN_CLICKED(IDC_BUTTON_CLEAN_PARAMLIST, &CKCBP_UI_ClientDlg::OnBnClickedButtonCleanParamlist)
 END_MESSAGE_MAP()
 
 
@@ -288,10 +289,14 @@ void CKCBP_UI_ClientDlg::CallLbm( const LbmInfo& lbm )
     int iRet = 0;
     tstring strRet;
     Json::Value jsResultSet;
+    tstring strTmp = CBaseTool::tformat( "开始 %s\n", CBaseTool::GetTimestamp_AsStr().c_str() );
+    SetDlgItemText( IDC_STATIC_CALL_LBM_LOG, strTmp.c_str() );
     iRet = m_clsKcbp.CallLbm_AllResult( lbm.strLbmNo, jsParamList, jsResultSet, strRet );
+    strTmp.append( CBaseTool::tformat( "结束 %s", CBaseTool::GetTimestamp_AsStr().c_str() ) );
+    SetDlgItemText( IDC_STATIC_CALL_LBM_LOG, strTmp.c_str() );
     if( iRet != 0 )
     {
-        AfxMessageBox( strRet.c_str() );
+        AfxMessageBox( CBaseTool::tformat( "[%d]=[%s]", iRet, strRet.c_str() ).c_str() );
         return;
     }
     tstring strResultSet = CBaseTool::json_to_str( jsResultSet );
@@ -632,4 +637,9 @@ void CKCBP_UI_ClientDlg::OnBnClickedButtonsavethislibminfo()
     //写入缓存
     m_mpLbmInfo[lbm.strLbmNo] = lbm;
     AfxMessageBox( "参数保存成功" );
+}
+
+void CKCBP_UI_ClientDlg::OnBnClickedButtonCleanParamlist()
+{
+    SetDlgItemText(IDC_EDIT_LBM_PARAMLIST,"");
 }
