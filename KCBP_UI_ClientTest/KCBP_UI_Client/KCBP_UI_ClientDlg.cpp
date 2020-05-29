@@ -382,12 +382,12 @@ void CKCBP_UI_ClientDlg::ShowResultToView( const Json::Value& jsResultSet )
 {
     //清理整个控件
     m_etlcFirstResultSet.DeleteAllItems();
-    m_etlcSecondResultSet.DeleteAllItems();   //删除所有行
-    int iCols = m_etlcSecondResultSet.GetHeaderCtrl()->GetItemCount();
+    int iCols = m_etlcFirstResultSet.GetHeaderCtrl()->GetItemCount();
     for( int i = 0 ; i < iCols ; ++i )
     {
         m_etlcFirstResultSet.DeleteColumn( 0 );
     }
+    m_etlcSecondResultSet.DeleteAllItems();   //删除所有行
     iCols = m_etlcSecondResultSet.GetHeaderCtrl()->GetItemCount();
     for( int i = 0 ; i < iCols ; i ++ )
     {
