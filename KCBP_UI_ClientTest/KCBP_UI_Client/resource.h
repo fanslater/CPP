@@ -14,6 +14,7 @@
 #define IDR_HTML_PAGE14                 112
 #define IDR_MAINFRAME                   128
 #define IDC_LIST_Input_param            1000
+#define IDC_LIST_RESULT_SET_2           1000
 #define IDC_EDIT_kcbp_svr_name          1001
 #define IDC_EDIT_kcbp_svr_port          1003
 #define IDC_EDIT_send_queue_name        1004
@@ -33,8 +34,8 @@
 #define IDC_BUTTON1                     1017
 #define IDC_BUTTON_save_this_libm_info  1017
 #define IDC_STATIC_CALL_LBM_LOG         1018
-#define IDC_BUTTON_CLEAN_               1019
 #define IDC_BUTTON_CLEAN_PARAMLIST      1019
+#define IDC_LIST_RESULT_SET_1           1020
 
 // Next default values for new objects
 // 
@@ -42,7 +43,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        132
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1020
+#define _APS_NEXT_CONTROL_VALUE         1021
 #define _APS_NEXT_SYMED_VALUE           113
 #endif
 #endif

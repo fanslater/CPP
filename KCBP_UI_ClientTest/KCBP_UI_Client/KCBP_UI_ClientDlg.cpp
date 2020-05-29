@@ -58,8 +58,9 @@ CKCBP_UI_ClientDlg::CKCBP_UI_ClientDlg( CWnd* pParent /*=NULL*/ )
 void CKCBP_UI_ClientDlg::DoDataExchange( CDataExchange* pDX )
 {
     CDialog::DoDataExchange( pDX );
-    DDX_Control( pDX, IDC_LIST_Input_param, m_etlcResultSet );
+    DDX_Control( pDX, IDC_LIST_RESULT_SET_2, m_etlcSecondResultSet );
     DDX_Control( pDX, IDC_COMBO_LBM_NO, m_cbxLbmNo );
+    DDX_Control( pDX, IDC_LIST_RESULT_SET_1, m_etlcFirstResultSet );
 }
 
 BEGIN_MESSAGE_MAP( CKCBP_UI_ClientDlg, CDialog )
@@ -75,7 +76,7 @@ BEGIN_MESSAGE_MAP( CKCBP_UI_ClientDlg, CDialog )
     ON_BN_CLICKED( IDC_BUTTON_call_lbm, &CKCBP_UI_ClientDlg::OnBnClickedButtoncalllbm )
     ON_BN_CLICKED( IDC_BUTTON_add_this_lbm_info, &CKCBP_UI_ClientDlg::OnBnClickedButtonaddthislbminfo )
     ON_BN_CLICKED( IDC_BUTTON_save_this_libm_info, &CKCBP_UI_ClientDlg::OnBnClickedButtonsavethislibminfo )
-    ON_BN_CLICKED(IDC_BUTTON_CLEAN_PARAMLIST, &CKCBP_UI_ClientDlg::OnBnClickedButtonCleanParamlist)
+    ON_BN_CLICKED( IDC_BUTTON_CLEAN_PARAMLIST, &CKCBP_UI_ClientDlg::OnBnClickedButtonCleanParamlist )
 END_MESSAGE_MAP()
 
 
@@ -178,15 +179,23 @@ void CKCBP_UI_ClientDlg::Init()
     ctrTmp = m_clsCfg.get( "root.config.user_pwd.<xmlattr>.value" ).c_str();
     SetDlgItemText( IDC_EDIT_user_pwd, ctrTmp );
     //这里设置控件风格
-    DWORD dwStyle = ::GetWindowLong( m_etlcResultSet.GetSafeHwnd(), GWL_STYLE );
-    dwStyle |= LVS_SINGLESEL;       //只可单行选中
-    dwStyle |= LVS_SHOWSELALWAYS;   //Always show selection
-    ::SetWindowLong( m_etlcResultSet.GetSafeHwnd(), GWL_STYLE, dwStyle );
-    DWORD dwStyleEx = m_etlcResultSet.GetExtendedStyle();
-    dwStyleEx |= LVS_EX_GRIDLINES;        //网格线
-    dwStyleEx |= LVS_EX_FULLROWSELECT;    //整行高亮
+    DWORD dwLong1 = ::GetWindowLong( m_etlcFirstResultSet.GetSafeHwnd(), GWL_STYLE );
+    DWORD dwLong2 = ::GetWindowLong( m_etlcSecondResultSet.GetSafeHwnd(), GWL_STYLE );
+    dwLong1 |= LVS_SINGLESEL;       //只可单行选中
+    dwLong2 |= LVS_SINGLESEL;       //只可单行选中
+    dwLong1 |= LVS_SHOWSELALWAYS;   //Always show selection
+    dwLong2 |= LVS_SHOWSELALWAYS;   //Always show selection
+    ::SetWindowLong( m_etlcFirstResultSet.GetSafeHwnd(), GWL_STYLE, dwLong1 );
+    ::SetWindowLong( m_etlcSecondResultSet.GetSafeHwnd(), GWL_STYLE, dwLong2 );
+    DWORD dwStyle1 = m_etlcFirstResultSet.GetExtendedStyle();
+    DWORD dwStyle2 = m_etlcSecondResultSet.GetExtendedStyle();
+    dwStyle1 |= LVS_EX_GRIDLINES;        //网格线
+    dwStyle2 |= LVS_EX_GRIDLINES;        //网格线
+    dwStyle1 |= LVS_EX_FULLROWSELECT;    //整行高亮
+    dwStyle2 |= LVS_EX_FULLROWSELECT;    //整行高亮
     //dwStyleEx |= LVS_EX_CHECKBOXES;       //Item前生成check box
-    m_etlcResultSet.SetExtendedStyle( dwStyleEx );
+    m_etlcFirstResultSet.SetExtendedStyle( dwStyle1 );
+    m_etlcSecondResultSet.SetExtendedStyle( dwStyle2 );
     //初始化lbmcbx
     tstring strDefParam = m_clsCfg.get( "root.lbms.<xmlattr>.DefParam" ).c_str();
     boost::property_tree::ptree xml = m_clsCfg.getTree();
@@ -372,47 +381,84 @@ void CKCBP_UI_ClientDlg::AnalysisParams( const tstring& strInput, Json::Value& j
 void CKCBP_UI_ClientDlg::ShowResultToView( const Json::Value& jsResultSet )
 {
     //清理整个控件
-    m_etlcResultSet.DeleteAllItems();   //删除所有行
-    int nCols = m_etlcResultSet.GetHeaderCtrl()->GetItemCount();
-    for( int i = 0 ; i < nCols ; i ++ )
+    m_etlcFirstResultSet.DeleteAllItems();
+    m_etlcSecondResultSet.DeleteAllItems();   //删除所有行
+    int iCols = m_etlcSecondResultSet.GetHeaderCtrl()->GetItemCount();
+    for( int i = 0 ; i < iCols ; ++i )
     {
-        m_etlcResultSet.DeleteColumn( 0 ); //删除所有表格列
+        m_etlcFirstResultSet.DeleteColumn( 0 );
     }
-    m_etlcResultSet.InsertColumn( 0, "行号", LVCFMT_LEFT, LISTCTRL_WIDTH );
-    m_etlcResultSet.SetColumnCtrlType( 0, CCT_EDITBOX );
-    Json::Value jsShowResultSet;
-    int iResultSetCount = jsResultSet.size();
-    if( iResultSetCount == 1 )      //只有第一结果集
+    iCols = m_etlcSecondResultSet.GetHeaderCtrl()->GetItemCount();
+    for( int i = 0 ; i < iCols ; i ++ )
     {
-        jsShowResultSet = jsResultSet.get( "result1", Json::nullValue );
+        m_etlcSecondResultSet.DeleteColumn( 0 ); //删除所有表格列
     }
-    else
+    if( jsResultSet.isMember( "result1" ) == false )
     {
-        jsShowResultSet =  jsResultSet.get( "result2", Json::nullValue );
-    }
-    if( jsShowResultSet.type() != Json::arrayValue )
-    {
-        AfxMessageBox( "无法获取结果集" );
+        AfxMessageBox( "没有获取到第一结果集" );
         return;
     }
-    Json::Value::Members jvmNames = jsShowResultSet[0u].getMemberNames();
-    for( Json::Value::Members::iterator jvmit = jvmNames.begin() ;  jvmit != jvmNames.end() ; ++jvmit )
+    m_etlcFirstResultSet.InsertColumn( 0, "行号", LVCFMT_LEFT, LISTCTRL_WIDTH );
+    m_etlcFirstResultSet.SetColumnCtrlType( 0, CCT_EDITBOX );
+    Json::Value jsResult1 = jsResultSet["result1"];
+    if( jsResult1.type() != Json::arrayValue )
     {
-        int iIndex = m_etlcResultSet.GetHeaderCtrl()->GetItemCount();
-        m_etlcResultSet.InsertColumn( iIndex, ( *jvmit ).c_str(), LVCFMT_LEFT, LISTCTRL_WIDTH );
-        m_etlcResultSet.SetColumnCtrlType( iIndex, CCT_EDITBOX );
+        AfxMessageBox( "没有获取到第一结果集" );
+        return;
     }
-    for( Json::Value::iterator jvit = jsShowResultSet.begin() ; jvit != jsShowResultSet.end() ; ++ jvit )
+    //显示第一结果集
     {
-        int iCurCount = m_etlcResultSet.GetItemCount();
-        int iRowId = m_etlcResultSet.InsertItem( iCurCount, CBaseTool::tformat( "%d", iCurCount + 1 ).c_str() );
-        Json::Value jsRow = *jvit;
-        int iColId = 1;
+        Json::Value::Members jvmNames = jsResult1[0u].getMemberNames();
         for( Json::Value::Members::iterator jvmit = jvmNames.begin() ;  jvmit != jvmNames.end() ; ++jvmit )
         {
-            tstring strValue = CBaseTool::get_json_val( jsRow, *jvmit, false );
-            m_etlcResultSet.SetItemText( iRowId, iColId, strValue.c_str() );
-            iColId++;
+            int iIndex = m_etlcFirstResultSet.GetHeaderCtrl()->GetItemCount();
+            m_etlcFirstResultSet.InsertColumn( iIndex, ( *jvmit ).c_str(), LVCFMT_LEFT, LISTCTRL_WIDTH );
+            m_etlcFirstResultSet.SetColumnCtrlType( iIndex, CCT_EDITBOX );
+        }
+        for( Json::Value::iterator jvit = jsResult1.begin() ; jvit != jsResult1.end() ; ++ jvit )
+        {
+            int iCurCount = m_etlcFirstResultSet.GetItemCount();
+            int iRowId = m_etlcFirstResultSet.InsertItem( iCurCount, CBaseTool::tformat( "%d", iCurCount + 1 ).c_str() );
+            Json::Value jsRow = *jvit;
+            int iColId = 1;
+            for( Json::Value::Members::iterator jvmit = jvmNames.begin() ;  jvmit != jvmNames.end() ; ++jvmit )
+            {
+                tstring strValue = CBaseTool::get_json_val( jsRow, *jvmit, false );
+                m_etlcFirstResultSet.SetItemText( iRowId, iColId, strValue.c_str() );
+                iColId++;
+            }
+        }
+    }
+    //显示第二结果集
+    if( jsResultSet.isMember( "result2" ) )
+    {
+        m_etlcSecondResultSet.InsertColumn( 0, "行号", LVCFMT_LEFT, LISTCTRL_WIDTH );
+        m_etlcSecondResultSet.SetColumnCtrlType( 0, CCT_EDITBOX );
+        Json::Value jsResult2 = jsResultSet["result2"];
+        if( jsResult2.type() != Json::arrayValue )
+        {
+            AfxMessageBox( "没有获取到第二结果集" );
+            return;
+        }
+        Json::Value::Members jvmNames = jsResult2[0u].getMemberNames();
+        for( Json::Value::Members::iterator jvmit = jvmNames.begin() ;  jvmit != jvmNames.end() ; ++jvmit )
+        {
+            int iIndex = m_etlcSecondResultSet.GetHeaderCtrl()->GetItemCount();
+            m_etlcSecondResultSet.InsertColumn( iIndex, ( *jvmit ).c_str(), LVCFMT_LEFT, LISTCTRL_WIDTH );
+            m_etlcSecondResultSet.SetColumnCtrlType( iIndex, CCT_EDITBOX );
+        }
+        for( Json::Value::iterator jvit = jsResult2.begin() ; jvit != jsResult2.end() ; ++ jvit )
+        {
+            int iCurCount = m_etlcSecondResultSet.GetItemCount();
+            int iRowId = m_etlcSecondResultSet.InsertItem( iCurCount, CBaseTool::tformat( "%d", iCurCount + 1 ).c_str() );
+            Json::Value jsRow = *jvit;
+            int iColId = 1;
+            for( Json::Value::Members::iterator jvmit = jvmNames.begin() ;  jvmit != jvmNames.end() ; ++jvmit )
+            {
+                tstring strValue = CBaseTool::get_json_val( jsRow, *jvmit, false );
+                m_etlcSecondResultSet.SetItemText( iRowId, iColId, strValue.c_str() );
+                iColId++;
+            }
         }
     }
 }
@@ -641,5 +687,5 @@ void CKCBP_UI_ClientDlg::OnBnClickedButtonsavethislibminfo()
 
 void CKCBP_UI_ClientDlg::OnBnClickedButtonCleanParamlist()
 {
-    SetDlgItemText(IDC_EDIT_LBM_PARAMLIST,"");
+    SetDlgItemText( IDC_EDIT_LBM_PARAMLIST, "" );
 }

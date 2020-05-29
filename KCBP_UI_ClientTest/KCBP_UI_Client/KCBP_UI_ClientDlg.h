@@ -41,7 +41,8 @@ private:
     CKcbpVisitor m_clsKcbp;
     LbmInfoMap m_mpLbmInfo;
     CComboBox m_cbxLbmNo;
-    CEditableListCtrl m_etlcResultSet;
+    CEditableListCtrl m_etlcSecondResultSet;
+    CEditableListCtrl m_etlcFirstResultSet;
 
 public:
     void Init();
@@ -61,7 +62,7 @@ public:
     afx_msg void OnBnClickedButtonconnectsvr();
     afx_msg void OnBnClickedButtondisconnectsvr();
     afx_msg void OnCbnSelchangeComboLbmNo();
-    afx_msg void OnBnClickedButtoncalllbm();    
+    afx_msg void OnBnClickedButtoncalllbm();
     afx_msg void OnBnClickedButtonaddthislbminfo();
     afx_msg void OnBnClickedButtonsavethislibminfo();
     afx_msg void OnBnClickedButtonCleanParamlist();
