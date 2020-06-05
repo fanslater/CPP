@@ -369,16 +369,29 @@ void CKCBP_UI_ClientDlg::AnalysisParamsEx( const tstring& strInput, Json::Value&
         return;
     }
     std::vector<tstring> vcKeyVals;
-    CBaseTool::split_ex_k( strInput, "&", vcKeyVals, false );
-    for( std::vector<tstring>::iterator it = vcKeyVals.begin(); it != vcKeyVals.end(); ++it )
+    try
     {
-        tstring* pstrKeyVal = &( *it );
-        std::vector<tstring> vcEntry;
-        CBaseTool::split_ex_k( *pstrKeyVal, "=", vcEntry, false );
-        if( vcEntry[0].length() > 0 )
+        CBaseTool::split_ex_k( strInput, "&", vcKeyVals, false );
+        for( std::vector<tstring>::iterator it = vcKeyVals.begin(); it != vcKeyVals.end(); ++it )
         {
-            jsParams[vcEntry[0]] = vcEntry[1];
+            tstring* pstrKeyVal = &( *it );
+            std::vector<tstring> vcEntry;
+            CBaseTool::split_ex_k( *pstrKeyVal, "=", vcEntry, false );
+            if( 2 != ( int )vcEntry.size() )
+            {
+                AfxMessageBox( CBaseTool::tformat( "解析入参异常[%s]非键值对", pstrKeyVal->c_str() ).c_str() );
+                return;
+            }
+            if( vcEntry[0].length() > 0 )
+            {
+                jsParams[vcEntry[0]] = vcEntry[1];
+            }
         }
+    }
+    catch( std::exception& e )
+    {
+        AfxMessageBox( CBaseTool::tformat( "[%s]异常=[%s]", __FUNCTION__, e.what() ).c_str() );
+        return;
     }
 }
 
