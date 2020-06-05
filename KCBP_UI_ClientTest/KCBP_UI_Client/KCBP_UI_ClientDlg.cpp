@@ -294,7 +294,18 @@ void CKCBP_UI_ClientDlg::PrintTree( boost::property_tree::ptree root )
 void CKCBP_UI_ClientDlg::CallLbm( const LbmInfo& lbm )
 {
     Json::Value jsParamList;
-    AnalysisParams( lbm.strParams, jsParamList );
+    if( lbm.strParams.find( ":" ) != tstring::npos && lbm.strParams.find( "," ) != tstring::npos )
+    {
+        AnalysisParams( lbm.strParams, jsParamList );
+    }
+    else if( lbm.strParams.find( "=" ) != tstring::npos && lbm.strParams.find( "&" ) != tstring::npos )
+    {
+        AnalysisParamsEx( lbm.strParams, jsParamList );
+    }
+    else
+    {
+        AfxMessageBox( CBaseTool::tformat( "入参列表格式有问题=[%s]", lbm.strParams.c_str() ).c_str() );
+    }
     int iRet = 0;
     tstring strRet;
     Json::Value jsResultSet;
@@ -348,6 +359,26 @@ void CKCBP_UI_ClientDlg::AnalysisParams( const tstring& strInput, Json::Value& j
             jsParams[key] = value;
         }
         iFind = iPos + 1;
+    }
+}
+
+void CKCBP_UI_ClientDlg::AnalysisParamsEx( const tstring& strInput, Json::Value& jsParams )
+{
+    if( strInput.length() == 0 )
+    {
+        return;
+    }
+    std::vector<tstring> vcKeyVals;
+    CBaseTool::split_ex_k( strInput, "&", vcKeyVals, false );
+    for( std::vector<tstring>::iterator it = vcKeyVals.begin(); it != vcKeyVals.end(); ++it )
+    {
+        tstring* pstrKeyVal = &( *it );
+        std::vector<tstring> vcEntry;
+        CBaseTool::split_ex_k( *pstrKeyVal, "=", vcEntry, false );
+        if( vcEntry[0].length() > 0 )
+        {
+            jsParams[vcEntry[0]] = vcEntry[1];
+        }
     }
 }
 

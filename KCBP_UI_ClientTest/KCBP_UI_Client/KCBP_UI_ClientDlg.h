@@ -53,6 +53,7 @@ public:
     void PrintTree( boost::property_tree::ptree root );
     void CallLbm( const LbmInfo& lbm );
     void AnalysisParams( const tstring& strInput, Json::Value& jsParams );
+    void AnalysisParamsEx( const tstring& strInput, Json::Value& jsParams );
     void ShowResultToView( const Json::Value& jsResultSet );
     void ModifyWindowsShow( BOOL bflag );
 
